@@ -32,24 +32,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\MonoGame.Framework.WindowsDX.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Content\Content.mgcb" />
+    <Content Include="Content\Tiles.png" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main\GameMain.cs" />
-    <Compile Include="Main\Program.cs" />
-    <Compile Include="Main\World\Cell.cs" />
-    <Compile Include="Main\World\Chunk.cs" />
-    <Compile Include="Main\World\World.cs" />
+    <Compile Include="Launch\EvolvinaryMain.cs" />
+    <Compile Include="Launch\Launcher.cs" />
+    <Compile Include="Main\GameData.cs" />
+    <Compile Include="Main\Worlds\Cells\Cell.cs" />
+    <Compile Include="Main\Worlds\Chunk.cs" />
+    <Compile Include="Main\Worlds\Tiles\Tile.cs" />
+    <Compile Include="Main\Worlds\World.cs" />
+    <Compile Include="Rendering\Camera.cs" />
+    <Compile Include="Rendering\Renderers\TileRenderer.cs" />
+    <Compile Include="Rendering\Renderers\WorldRenderer.cs" />
+    <Compile Include="Rendering\RenderManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content" />
     <Folder Include="Main" />
-    <Folder Include="Main\World" />
+    <Folder Include="Main\Worlds" />
+    <Folder Include="Main\Worlds\Cells" />
+    <Folder Include="Main\Worlds\Tiles" />
+    <Folder Include="Rendering" />
+    <Folder Include="Rendering\Renderers" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\MonoGame.Framework.WindowsDX.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

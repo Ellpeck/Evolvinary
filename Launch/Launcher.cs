@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace Evolvinary.Main{
-    public class Program{
+namespace Evolvinary.Launch{
+    public class Launcher{
         [STAThread]
         //ReSharper disable once InconsistentNaming
         public static void Main(){
-            var game = new GameMain();
-            game.Run();
+            EvolvinaryMain.get().Run();
         }
     }
 }
