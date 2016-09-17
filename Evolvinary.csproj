@@ -58,6 +58,7 @@
     <Folder Include="Main\Worlds\Tiles" />
     <Folder Include="Rendering" />
     <Folder Include="Rendering\Renderers" />
+    <Folder Include="Utils" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">

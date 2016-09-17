@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Evolvinary.Main.Worlds.Cells;
 using Evolvinary.Rendering.Renderers;
 
 namespace Evolvinary.Main.Worlds{
     public class World{
-        private readonly Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
+        private readonly Dictionary<long, Chunk> chunks = new Dictionary<long, Chunk>();
 
         public readonly WorldRenderer Renderer;
+        public readonly Random SeededRand;
 
-        public World(int defaultSizeX, int defaultSizeY){
+        public World(int defaultSizeX, int defaultSizeY, int seed){
             this.Renderer = new WorldRenderer(this);
+            this.SeededRand = new Random(seed);
 
             for(var x = 0; x < defaultSizeX; x++){
                 for(var y = 0; y < defaultSizeY; y++){
@@ -39,11 +42,11 @@ namespace Evolvinary.Main.Worlds{
             return this.chunks[id];
         }
 
-        public static int getIdForChunk(int chunkX, int chunkY){
-            return chunkX * 13+chunkY * 8;
+        public static long getIdForChunk(int chunkX, int chunkY){
+            return chunkX * 239+chunkY * 83;
         }
 
-        public Dictionary<int, Chunk> getChunks(){
+        public Dictionary<long, Chunk> getChunks(){
             return this.chunks;
         }
     }

@@ -1,4 +1,6 @@
-﻿using Evolvinary.Rendering.Renderers;
+﻿using Evolvinary.Main.Worlds.Cells;
+using Evolvinary.Rendering.Renderers;
+using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Tiles{
     public class Tile{
@@ -14,6 +16,10 @@ namespace Evolvinary.Main.Worlds.Tiles{
         public Tile setTextureCoords(int x, int y){
             this.Renderer = new TileRenderer(x, y);
             return this;
+        }
+
+        public Cell makeCell(World world, Vector2 pos){
+            return new Cell(this, world, pos);
         }
     }
 }

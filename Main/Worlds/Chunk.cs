@@ -1,4 +1,5 @@
-﻿using Evolvinary.Main.Worlds.Cells;
+﻿using System;
+using Evolvinary.Main.Worlds.Cells;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds{
@@ -18,10 +19,10 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public void populate(){
-            var tile = this.PosX == 1 && this.PosY == 1 ? GameData.TileDirt : GameData.TileRock;
             for(var x = 0; x < Size; x++){
                 for(var y = 0; y < Size; y++){
-                    this.Cells[x, y] = new Cell(tile, this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y));
+                    var tileToUse = this.World.SeededRand.NextDouble() >= 0.8 ? GameData.TileRock : GameData.TileDirt;
+                    this.Cells[x, y] = tileToUse.makeCell(this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y));
                 }
             }
         }

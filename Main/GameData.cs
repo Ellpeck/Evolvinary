@@ -12,7 +12,7 @@ namespace Evolvinary.Main{
             TileDirt = new Tile("dirt").setTextureCoords(0, 0);
             TileRock = new Tile("rock").setTextureCoords(1, 0);
 
-            WorldTest = new World(2, 2);
+            WorldTest = new World(12, 12, 78123);
         }
     }
 }

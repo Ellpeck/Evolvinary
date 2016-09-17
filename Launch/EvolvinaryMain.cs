@@ -21,8 +21,6 @@ namespace Evolvinary.Launch{
 
         protected override void Draw(GameTime time){
             base.Draw(time);
-
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
             this.RenderManager.draw(time);
         }
 

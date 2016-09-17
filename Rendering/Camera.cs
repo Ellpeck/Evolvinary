@@ -1,19 +1,46 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Evolvinary.Rendering{
     public class Camera{
-
         public Matrix Transform;
-        public Vector2 Pos;
-        public float Zoom;
+        private Vector2 pos;
+        private float zoom;
+
+        private int lastX;
+        private int lastY;
+        private int lastScroll;
 
         public Camera(float defaultX, float defaultY, float defaultZoom){
-            this.Pos = new Vector2(defaultX, defaultY);
-            this.Zoom = defaultZoom;
+            this.pos = new Vector2(defaultX, defaultY);
+            this.zoom = defaultZoom;
         }
 
-        public void update(){
-            this.Transform = Matrix.CreateScale(this.Zoom) * Matrix.CreateTranslation(-this.Pos.X, -this.Pos.Y, 0F);
+        public void update(int screenWidth, int screenHeight){
+            var state = Mouse.GetState();
+            if(state.RightButton == ButtonState.Pressed){
+                this.pos.X -= state.X-this.lastX;
+                this.pos.Y -= state.Y-this.lastY;
+            }
+
+            if(this.lastScroll != state.ScrollWheelValue){
+                var zoomDiff = (state.ScrollWheelValue-this.lastScroll) / 1000F;
+                var newZoom = Math.Max(0.5F, Math.Min(10F, this.zoom+zoomDiff * this.zoom));
+                if(newZoom != this.zoom){
+                    var zoomChange = 1-newZoom / this.zoom;
+                    this.pos.X -= (this.pos.X+state.X) * zoomChange;
+                    this.pos.Y -= (this.pos.Y+state.Y) * zoomChange;
+
+                    this.zoom = newZoom;
+                }
+            }
+
+            this.lastX = state.X;
+            this.lastY = state.Y;
+            this.lastScroll = state.ScrollWheelValue;
+
+            this.Transform = Matrix.CreateScale(this.zoom) * Matrix.CreateTranslation((int) -this.pos.X, (int) -this.pos.Y, 0F);
         }
     }
 }
