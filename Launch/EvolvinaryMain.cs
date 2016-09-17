@@ -14,23 +14,36 @@ namespace Evolvinary.Launch{
         }
 
         protected override void LoadContent(){
-            GameData.doBootstrap();
+            base.LoadContent();
 
+            GameData.doBootstrap();
             this.RenderManager.loadContent();
         }
 
         protected override void Draw(GameTime time){
             base.Draw(time);
+
             this.RenderManager.draw(time);
         }
 
         protected override void Update(GameTime time){
             base.Update(time);
+
             this.RenderManager.update(time);
         }
 
         public static EvolvinaryMain get(){
             return instance ?? (instance = new EvolvinaryMain());
+        }
+
+        protected override void UnloadContent(){
+            base.UnloadContent();
+
+            this.RenderManager.Dispose();
+            GameData.dispose();
+
+            this.Content.Dispose();
+            this.GraphicsDevice.Dispose();
         }
     }
 }

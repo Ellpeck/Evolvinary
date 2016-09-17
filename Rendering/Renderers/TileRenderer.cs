@@ -4,7 +4,7 @@ using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Rendering.Renderers{
-    public class TileRenderer{
+    public class TileRenderer : IDisposable{
 
         private readonly Rectangle textureRect;
 
@@ -16,5 +16,8 @@ namespace Evolvinary.Rendering.Renderers{
             manager.Batch.Draw(manager.TileTexture, pos, this.textureRect, Color.White);
         }
 
+        public void Dispose(){
+
+        }
     }
 }

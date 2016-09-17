@@ -34,7 +34,6 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="Content\Content.mgcb" />
-    <Content Include="Content\Tiles.png" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

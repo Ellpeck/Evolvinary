@@ -1,6 +1,6 @@
-﻿using System;
-using Evolvinary.Main.Worlds.Cells;
+﻿using Evolvinary.Main.Worlds.Cells;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Evolvinary.Main.Worlds{
     public class Chunk{
@@ -18,11 +18,19 @@ namespace Evolvinary.Main.Worlds{
             this.PosY = posY;
         }
 
-        public void populate(){
-            for(var x = 0; x < Size; x++){
-                for(var y = 0; y < Size; y++){
-                    var tileToUse = this.World.SeededRand.NextDouble() >= 0.8 ? GameData.TileRock : GameData.TileDirt;
-                    this.Cells[x, y] = tileToUse.makeCell(this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y));
+        public void populate(Texture2D generator){
+            if(generator.Width == Size && generator.Height == Size){
+                var colors = new Color[Size * Size];
+                generator.GetData(colors);
+
+                for(var x = 0; x < Size; x++){
+                    for(var y = 0; y < Size; y++){
+                        var color = colors[x+y * Size];
+                        var tile = GameData.getTileByColor(color);
+                        if(tile != null){
+                            this.Cells[x, y] = tile.makeCell(this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y));
+                        }
+                    }
                 }
             }
         }

@@ -1,9 +1,10 @@
-﻿using Evolvinary.Main.Worlds;
+﻿using System;
+using Evolvinary.Main.Worlds;
 using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Rendering.Renderers{
-    public class WorldRenderer{
+    public class WorldRenderer : IDisposable{
         private readonly World world;
 
         public WorldRenderer(World world){
@@ -24,6 +25,10 @@ namespace Evolvinary.Rendering.Renderers{
                     }
                 }
             }
+        }
+
+        public void Dispose(){
+
         }
     }
 }

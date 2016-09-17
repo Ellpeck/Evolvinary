@@ -1,10 +1,11 @@
-﻿using Evolvinary.Launch;
+﻿using System;
+using Evolvinary.Launch;
 using Evolvinary.Main;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Evolvinary.Rendering{
-    public class RenderManager{
+    public class RenderManager : IDisposable{
         private readonly EvolvinaryMain game;
         public readonly GraphicsDeviceManager Graphics;
         public SpriteBatch Batch;
@@ -25,7 +26,7 @@ namespace Evolvinary.Rendering{
             this.Batch = new SpriteBatch(this.game.GraphicsDevice);
             this.Camera = new Camera(0F, 0F, 1F);
 
-            this.TileTexture = this.game.Content.Load<Texture2D>("Tiles");
+            this.TileTexture = this.game.Content.Load<Texture2D>("Textures/Tiles");
         }
 
         public void draw(GameTime time){
@@ -38,6 +39,11 @@ namespace Evolvinary.Rendering{
 
         public void update(GameTime time){
             this.Camera.update(this.Graphics.PreferredBackBufferWidth, this.Graphics.PreferredBackBufferHeight);
+        }
+
+        public void Dispose(){
+            this.TileTexture.Dispose();
+            this.Batch.Dispose();
         }
     }
 }
