@@ -17,7 +17,7 @@ namespace Evolvinary.Main{
             TileDirt = new Tile("dirt").setTextureCoords(0, 0).setGenColorIndex(new Color(81, 45, 31)).register();
             TileRock = new Tile("rock").setTextureCoords(1, 0).setGenColorIndex(Color.White).register();
 
-            WorldTest = new World("Test", 12, 12, 78123);
+            WorldTest = new World("Test", 78123);
         }
 
         public static Tile getTileByColor(Color color){

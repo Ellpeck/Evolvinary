@@ -45,13 +45,13 @@ namespace Evolvinary.Main.Worlds.Entities{
                 if(oldChunk != null){
                     oldChunk.Entities.Remove(this);
                 }
-
-                newChunk.Entities.Add(this);
+                if(newChunk != null){
+                    newChunk.Entities.Add(this);
+                }
             }
         }
 
         public virtual void update(GameTime time){
-
         }
     }
 }

@@ -11,28 +11,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
-        private readonly Dictionary<string, Texture2D> chunkGenerators = new Dictionary<string, Texture2D>();
         private readonly Dictionary<Vector2, Chunk> chunks = new Dictionary<Vector2, Chunk>();
 
         public readonly WorldRenderer Renderer;
         public readonly Random SeededRand;
         public readonly string Name;
 
-        public World(string name, int defaultSizeX, int defaultSizeY, int seed){
+        public World(string name, int seed){
             this.Name = name;
             this.SeededRand = new Random(seed);
             this.Renderer = new WorldRenderer(this);
 
-            this.loadChunkGenFiles();
-
-            for(var x = 0; x < defaultSizeX; x++){
-                for(var y = 0; y < defaultSizeY; y++){
-                    this.getChunkFromChunkCoords(x, y);
-                }
-            }
+            this.loadChunks();
         }
 
-        private void loadChunkGenFiles(){
+        private void loadChunks(){
             var content = EvolvinaryMain.get().Content;
 
             var folderName = "Maps/"+this.Name;
@@ -41,39 +34,40 @@ namespace Evolvinary.Main.Worlds{
                 var files = dir.GetFiles();
                 foreach(var file in files){
                     var name = Path.GetFileNameWithoutExtension(file.Name);
+                    var nums = name.Split(new[]{','}, StringSplitOptions.None);
+                    var chunkX = int.Parse(nums[0]);
+                    var chunkY = int.Parse(nums[1]);
+
+                    var chunk = new Chunk(this, chunkX, chunkY);
+
                     var texture = content.Load<Texture2D>(folderName+"/"+name);
-                    this.chunkGenerators.Add(name, texture);
+                    chunk.populate(texture);
+                    texture.Dispose();
+
+                    this.chunks.Add(new Vector2(chunkX, chunkY), chunk);
                 }
             }
         }
 
         public Cell getCell(int x, int y){
-            var chunk = this.getChunkFromWorldCoords(x, y);
-            return chunk.getCell(x / Chunk.Size, y / Chunk.Size);
+            if(this.isPosInsideWorld(x, y)){
+                var chunk = this.getChunkFromWorldCoords(x, y);
+                return chunk.getCell(x-chunk.PosX * Chunk.Size, y-chunk.PosY * Chunk.Size);
+            }
+            return null;
         }
 
         public Chunk getChunkFromWorldCoords(int x, int y){
-            return this.getChunkFromChunkCoords(x / Chunk.Size, y / Chunk.Size);
+            return this.isPosInsideWorld(x, y) ? this.getChunkFromChunkCoords(x / Chunk.Size, y / Chunk.Size) : null;
+        }
+
+        public bool isPosInsideWorld(int x, int y){
+            return x >= 0 && y >= 0 && this.chunks.ContainsKey(new Vector2(x / Chunk.Size, y / Chunk.Size));
         }
 
         public Chunk getChunkFromChunkCoords(int chunkX, int chunkY){
             var pos = new Vector2(chunkX, chunkY);
-
-            if(!this.chunks.ContainsKey(pos)){
-                var genKey = chunkX+","+chunkY;
-
-                if(this.chunkGenerators.ContainsKey(genKey)){
-                    var chunk = new Chunk(this, chunkX, chunkY);
-                    chunk.populate(this.chunkGenerators[genKey]);
-                    this.chunks.Add(pos, chunk);
-
-                    return chunk;
-                }
-
-                return null;
-            }
-
-            return this.chunks[pos];
+            return this.chunks.ContainsKey(pos) ? this.chunks[pos] : null;
         }
 
         public Dictionary<Vector2, Chunk> getChunks(){
@@ -81,10 +75,6 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public void Dispose(){
-            foreach(var generator in this.chunkGenerators.Values){
-                generator.Dispose();
-            }
-
             this.Renderer.Dispose();
         }
 
