@@ -12,5 +12,9 @@ namespace Evolvinary.Main.Worlds.Cells{
             this.Pos = pos;
             this.Tile = tile;
         }
+
+        public virtual void update(GameTime time){
+
+        }
     }
 }

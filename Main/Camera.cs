@@ -1,5 +1,6 @@
 ﻿using System;
 using Evolvinary.Launch;
+using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -56,8 +57,11 @@ namespace Evolvinary.Rendering{
         }
 
         private void reloadMatrix(){
-            Console.WriteLine("REloading");
             this.Transform = Matrix.CreateScale(this.zoom) * Matrix.CreateTranslation((int) -this.pos.X, (int) -this.pos.Y, 0F);
+        }
+
+        public Vector2 toWorldPos(Vector2 pos){
+            return (pos+this.pos)/this.zoom/Tile.Size;
         }
     }
 }

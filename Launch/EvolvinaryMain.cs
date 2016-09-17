@@ -7,6 +7,7 @@ namespace Evolvinary.Launch{
         private static EvolvinaryMain instance;
 
         public RenderManager RenderManager;
+        public Camera Camera;
 
         public EvolvinaryMain(){
             this.Content.RootDirectory = "Content";
@@ -18,6 +19,8 @@ namespace Evolvinary.Launch{
 
             GameData.doBootstrap();
             this.RenderManager.loadContent();
+
+            this.Camera = new Camera(0F, 0F, 1F);
         }
 
         protected override void Draw(GameTime time){
@@ -29,7 +32,9 @@ namespace Evolvinary.Launch{
         protected override void Update(GameTime time){
             base.Update(time);
 
-            this.RenderManager.update(time);
+            GameData.WorldTest.update(time);
+
+            this.Camera.update(this.GraphicsDevice.DisplayMode.Width, this.GraphicsDevice.DisplayMode.Height);
         }
 
         public static EvolvinaryMain get(){

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using Evolvinary.Launch;
 using Evolvinary.Main.Worlds.Cells;
+using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Rendering.Renderers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
@@ -84,6 +86,61 @@ namespace Evolvinary.Main.Worlds{
             }
 
             this.Renderer.Dispose();
+        }
+
+        public void update(GameTime time){
+            foreach(var chunk in this.chunks.Values){
+                chunk.update(time);
+            }
+
+            var state = Mouse.GetState();
+            if(state.LeftButton == ButtonState.Pressed){
+                var cursorInWorld = EvolvinaryMain.get().Camera.toWorldPos(state.Position.ToVector2());
+                var tuft = new EntityGrassTuft(this, 0);
+                tuft.setPosition(cursorInWorld);
+            }
+        }
+
+        public List<Chunk> getChunksContainedInRect(Rectangle rect){
+            var containedChunks = new List<Chunk>();
+
+            var topLeft = this.getChunkFromWorldCoords(rect.X, rect.Y);
+            var bottomRight = this.getChunkFromWorldCoords(rect.X+rect.Width, rect.Y+rect.Height);
+
+            if(topLeft != null && bottomRight != null){
+                var diffX = bottomRight.PosX-topLeft.PosX;
+                var diffY = bottomRight.PosY-topLeft.PosY;
+
+                for(var x = 0; x <= diffX; x++){
+                    for(var y = 0; y <= diffY; y++){
+                        var theX = topLeft.PosX+x;
+                        var theY = topLeft.PosY+y;
+
+                        var chunk = this.getChunkFromChunkCoords(theX, theY);
+                        if(chunk != null){
+                            containedChunks.Add(chunk);
+                        }
+                    }
+                }
+            }
+
+            return containedChunks;
+        }
+
+        public List<Entity> getEntitiesWithinRect(Rectangle rect, Type type){
+            var entities = new List<Entity>();
+
+            var containedChunks = this.getChunksContainedInRect(rect);
+            foreach(var chunk in containedChunks){
+                var switchedRect = new Rectangle(rect.X-chunk.PosX * Chunk.Size, rect.Y-chunk.PosY * Chunk.Size, rect.Width, rect.Height);
+                foreach(var entity in chunk.Entities){
+                    if((type == null || entity.GetType() == type) && switchedRect.Contains(entity.Pos)){
+                        entities.Add(entity);
+                    }
+                }
+            }
+
+            return entities;
         }
     }
 }

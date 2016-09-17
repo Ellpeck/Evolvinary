@@ -3,7 +3,7 @@ using Evolvinary.Main.Worlds.Cells;
 using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 
-namespace Evolvinary.Rendering.Renderers{
+namespace Evolvinary.Rendering.Renderers.Tiles{
     public class TileRenderer : IDisposable{
 
         private readonly Rectangle textureRect;

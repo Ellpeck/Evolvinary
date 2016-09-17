@@ -1,4 +1,7 @@
-﻿using Evolvinary.Main.Worlds.Cells;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Evolvinary.Main.Worlds.Cells;
+using Evolvinary.Main.Worlds.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,7 +13,8 @@ namespace Evolvinary.Main.Worlds{
         public int PosX;
         public int PosY;
 
-        public Cell[,] Cells = new Cell[Size, Size];
+        public readonly List<Entity> Entities = new List<Entity>();
+        private readonly Cell[,] cells = new Cell[Size, Size];
 
         public Chunk(World world, int posX, int posY){
             this.World = world;
@@ -28,7 +32,7 @@ namespace Evolvinary.Main.Worlds{
                         var color = colors[x+y * Size];
                         var tile = GameData.getTileByColor(color);
                         if(tile != null){
-                            this.Cells[x, y] = tile.makeCell(this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y));
+                            this.setCell(tile.makeCell(this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y)), x, y);
                         }
                     }
                 }
@@ -36,11 +40,26 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public Cell getCell(int x, int y){
-            return this.Cells[x, y];
+            return this.cells[x, y];
         }
 
         public void setCell(Cell cell, int x, int y){
-            this.Cells[x, y] = cell;
+            this.cells[x, y] = cell;
+        }
+
+        public void update(GameTime time){
+            for(var x = 0; x < Size; x++){
+                for(var y = 0; y < Size; y++){
+                    var cell = this.getCell(x, y);
+                    if(cell != null){
+                        cell.update(time);
+                    }
+                }
+            }
+
+            foreach(var entity in this.Entities.ToList()){
+                entity.update(time);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using Evolvinary.Main.Worlds.Cells;
-using Evolvinary.Rendering.Renderers;
+using Evolvinary.Rendering.Renderers.Tiles;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Tiles{
