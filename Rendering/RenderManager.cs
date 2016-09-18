@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Evolvinary.Launch;
 using Evolvinary.Main;
 using Evolvinary.Rendering.Renderers.Entities;
+using Evolvinary.Rendering.Renderers.Guis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,6 +16,8 @@ namespace Evolvinary.Rendering{
         public Texture2D TileTexture;
         public Texture2D StaticEntityTexture;
         public List<EntityRenderer> EntityRenderers = new List<EntityRenderer>();
+
+        public GuiRenderer CurrentGuiRenderer;
 
         public RenderManager(EvolvinaryMain game){
             this.Graphics = new GraphicsDeviceManager(game);
@@ -36,7 +39,12 @@ namespace Evolvinary.Rendering{
             this.game.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, this.game.Camera.Transform);
+
             GameData.WorldTest.Renderer.draw(this, time);
+            if(this.CurrentGuiRenderer != null){
+                this.CurrentGuiRenderer.draw(time);
+            }
+
             this.Batch.End();
         }
 
@@ -47,6 +55,18 @@ namespace Evolvinary.Rendering{
 
             this.TileTexture.Dispose();
             this.Batch.Dispose();
+        }
+
+        public void openGui(GuiRenderer gui){
+            if(this.CurrentGuiRenderer != null){
+                this.CurrentGuiRenderer.onClosed();
+            }
+
+            this.CurrentGuiRenderer = gui;
+
+            if(this.CurrentGuiRenderer != null){
+                this.CurrentGuiRenderer.onOpened();
+            }
         }
     }
 }

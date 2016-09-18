@@ -4,7 +4,7 @@ using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Evolvinary.Rendering{
+namespace Evolvinary.Main{
     public class Camera{
         public Matrix Transform;
         private Vector2 pos;

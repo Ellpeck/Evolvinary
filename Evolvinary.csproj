@@ -37,6 +37,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Launch\EvolvinaryMain.cs" />
     <Compile Include="Launch\Launcher.cs" />
     <Compile Include="Main\Camera.cs" />
@@ -50,12 +51,15 @@
     <Compile Include="Rendering\Renderers\Entities\EntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Entities\SingleTextureEntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Entities\StaticEntityRenderer.cs" />
+    <Compile Include="Rendering\Renderers\Guis\GuiRenderer.cs" />
     <Compile Include="Rendering\Renderers\Tiles\TileRenderer.cs" />
     <Compile Include="Rendering\Renderers\WorldRenderer.cs" />
     <Compile Include="Rendering\RenderManager.cs" />
+    <Compile Include="Guis\Gui.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content" />
+    <Folder Include="Helper" />
     <Folder Include="Main" />
     <Folder Include="Main\Worlds" />
     <Folder Include="Main\Worlds\Cells" />
@@ -65,6 +69,7 @@
     <Folder Include="Rendering\Renderers" />
     <Folder Include="Rendering\Renderers\Entities" />
     <Folder Include="Rendering\Renderers\Tiles" />
+    <Folder Include="Guis" />
     <Folder Include="Utils" />
   </ItemGroup>
   <ItemGroup>

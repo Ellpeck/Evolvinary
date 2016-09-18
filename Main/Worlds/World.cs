@@ -8,6 +8,7 @@ using Evolvinary.Rendering.Renderers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MathHelper = Evolvinary.Helper.MathHelper;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
@@ -34,7 +35,7 @@ namespace Evolvinary.Main.Worlds{
                 var files = dir.GetFiles();
                 foreach(var file in files){
                     var name = Path.GetFileNameWithoutExtension(file.Name);
-                    var nums = name.Split(new[]{','}, StringSplitOptions.None);
+                    var nums = name.Split(new[]{','}, StringSplitOptions.RemoveEmptyEntries);
                     var chunkX = int.Parse(nums[0]);
                     var chunkY = int.Parse(nums[1]);
 
@@ -50,19 +51,20 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public Cell getCell(int x, int y){
-            if(this.isPosInsideWorld(x, y)){
-                var chunk = this.getChunkFromWorldCoords(x, y);
-                return chunk.getCell(x-chunk.PosX * Chunk.Size, y-chunk.PosY * Chunk.Size);
-            }
-            return null;
+            var chunk = this.getChunkFromWorldCoords(x, y);
+            return chunk != null ? chunk.getCell(x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY)) : null;
         }
 
         public Chunk getChunkFromWorldCoords(int x, int y){
-            return this.isPosInsideWorld(x, y) ? this.getChunkFromChunkCoords(x / Chunk.Size, y / Chunk.Size) : null;
+            return this.getChunkFromChunkCoords(toChunkCoord(x), toChunkCoord(y));
         }
 
-        public bool isPosInsideWorld(int x, int y){
-            return x >= 0 && y >= 0 && this.chunks.ContainsKey(new Vector2(x / Chunk.Size, y / Chunk.Size));
+        public static int toChunkCoord(int worldCoord){
+            return MathHelper.floor((double) worldCoord / Chunk.Size);
+        }
+
+        public static int toWorldCoord(int chunkCoord){
+            return chunkCoord * Chunk.Size;
         }
 
         public Chunk getChunkFromChunkCoords(int chunkX, int chunkY){
@@ -122,7 +124,7 @@ namespace Evolvinary.Main.Worlds{
 
             var containedChunks = this.getChunksContainedInRect(rect);
             foreach(var chunk in containedChunks){
-                var switchedRect = new Rectangle(rect.X-chunk.PosX * Chunk.Size, rect.Y-chunk.PosY * Chunk.Size, rect.Width, rect.Height);
+                var switchedRect = new Rectangle(rect.X-toWorldCoord(chunk.PosX), rect.Y-toWorldCoord(chunk.PosY), rect.Width, rect.Height);
                 foreach(var entity in chunk.Entities){
                     if((type == null || entity.GetType() == type) && switchedRect.Contains(entity.Pos)){
                         entities.Add(entity);

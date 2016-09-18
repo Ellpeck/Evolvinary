@@ -32,7 +32,7 @@ namespace Evolvinary.Main.Worlds{
                         var color = colors[x+y * Size];
                         var tile = GameData.getTileByColor(color);
                         if(tile != null){
-                            this.setCell(tile.makeCell(this.World, new Vector2(this.PosX * Size+x, this.PosY * Size+y)), x, y);
+                            this.setCell(tile.makeCell(this.World, new Vector2(World.toWorldCoord(this.PosX)+x, World.toWorldCoord(this.PosY)+y)), x, y);
                         }
                     }
                 }

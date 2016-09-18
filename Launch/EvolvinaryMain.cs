@@ -1,4 +1,5 @@
-﻿using Evolvinary.Main;
+﻿using Evolvinary.Guis;
+using Evolvinary.Main;
 using Evolvinary.Rendering;
 using Microsoft.Xna.Framework;
 
@@ -8,6 +9,8 @@ namespace Evolvinary.Launch{
 
         public RenderManager RenderManager;
         public Camera Camera;
+
+        public Gui CurrentGui;
 
         public EvolvinaryMain(){
             this.Content.RootDirectory = "Content";
@@ -31,14 +34,13 @@ namespace Evolvinary.Launch{
 
         protected override void Update(GameTime time){
             base.Update(time);
+            var mode = this.GraphicsDevice.DisplayMode;
+            this.Camera.update(mode.Width, mode.Height);
 
             GameData.WorldTest.update(time);
-
-            this.Camera.update(this.GraphicsDevice.DisplayMode.Width, this.GraphicsDevice.DisplayMode.Height);
-        }
-
-        public static EvolvinaryMain get(){
-            return instance ?? (instance = new EvolvinaryMain());
+            if(this.CurrentGui != null){
+                this.CurrentGui.update(time);
+            }
         }
 
         protected override void UnloadContent(){
@@ -49,6 +51,23 @@ namespace Evolvinary.Launch{
 
             this.Content.Dispose();
             this.GraphicsDevice.Dispose();
+        }
+
+        public static EvolvinaryMain get(){
+            return instance ?? (instance = new EvolvinaryMain());
+        }
+
+        public void openGui(Gui gui){
+            if(this.CurrentGui != null){
+                this.CurrentGui.onClosed();
+            }
+
+            this.RenderManager.openGui(gui != null ? gui.getRenderer() : null);
+            this.CurrentGui = gui;
+
+            if(this.CurrentGui != null){
+                this.CurrentGui.onOpened();
+            }
         }
     }
 }

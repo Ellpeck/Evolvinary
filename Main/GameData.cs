@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Evolvinary.Main.Worlds;
-using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 
