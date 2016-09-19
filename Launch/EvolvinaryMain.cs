@@ -1,5 +1,6 @@
-﻿using Evolvinary.Guis;
-using Evolvinary.Main;
+﻿using Evolvinary.Main;
+using Evolvinary.Main.Guis;
+using Evolvinary.Main.Input;
 using Evolvinary.Rendering;
 using Microsoft.Xna.Framework;
 
@@ -9,6 +10,7 @@ namespace Evolvinary.Launch{
 
         public RenderManager RenderManager;
         public Camera Camera;
+        public InputProcessor Inputs;
 
         public Gui CurrentGui;
 
@@ -24,6 +26,9 @@ namespace Evolvinary.Launch{
             this.RenderManager.loadContent();
 
             this.Camera = new Camera(0F, 0F, 1F);
+            this.Inputs = new InputProcessor(this);
+
+            this.openGui(null);
         }
 
         protected override void Draw(GameTime time){
@@ -34,8 +39,8 @@ namespace Evolvinary.Launch{
 
         protected override void Update(GameTime time){
             base.Update(time);
-            var mode = this.GraphicsDevice.DisplayMode;
-            this.Camera.update(mode.Width, mode.Height);
+
+            this.Inputs.update(time);
 
             GameData.WorldTest.update(time);
             if(this.CurrentGui != null){
@@ -57,17 +62,23 @@ namespace Evolvinary.Launch{
             return instance ?? (instance = new EvolvinaryMain());
         }
 
+        public static t loadContent<t>(string path){
+            return get().Content.Load<t>(path);
+        }
+
         public void openGui(Gui gui){
+            if(gui == null){
+                gui = new GuiIngame();
+            }
+
             if(this.CurrentGui != null){
                 this.CurrentGui.onClosed();
             }
 
-            this.RenderManager.openGui(gui != null ? gui.getRenderer() : null);
-            this.CurrentGui = gui;
+            this.RenderManager.openGui(gui.getRenderer());
 
-            if(this.CurrentGui != null){
-                this.CurrentGui.onOpened();
-            }
+            this.CurrentGui = gui;
+            this.CurrentGui.onOpened(this.Inputs);
         }
     }
 }

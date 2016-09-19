@@ -2,9 +2,8 @@
 using Evolvinary.Launch;
 using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace Evolvinary.Main{
+namespace Evolvinary.Main.Input{
     public class Camera{
         public Matrix Transform;
         private Vector2 pos;
@@ -21,33 +20,38 @@ namespace Evolvinary.Main{
             this.reloadMatrix();
         }
 
-        public void update(int screenWidth, int screenHeight){
-            var state = Mouse.GetState();
-            if(EvolvinaryMain.get().IsActive){
+        public void checkInputs(){
+            var game = EvolvinaryMain.get();
+            if(game.IsActive && (game.CurrentGui == null || game.CurrentGui.allowCameraMovement())){
                 var shouldReloadMatrix = false;
 
-                if(this.lastX != state.X || this.lastY != state.Y){
-                    if(state.RightButton == ButtonState.Pressed){
-                        this.pos.X -= state.X-this.lastX;
-                        this.pos.Y -= state.Y-this.lastY;
+                var input = EvolvinaryMain.get().Inputs;
+                var mouseX = input.getMouseX();
+                var mouseY = input.getMouseY();
+                var mouseWheel = input.getMouseWheel();
+
+                if(this.lastX != mouseX || this.lastY != mouseY){
+                    if(input.RightMouse.IsDown){
+                        this.pos.X -= mouseX-this.lastX;
+                        this.pos.Y -= mouseY-this.lastY;
                         shouldReloadMatrix = true;
                     }
-                    this.lastX = state.X;
-                    this.lastY = state.Y;
+                    this.lastX = mouseX;
+                    this.lastY = mouseY;
                 }
 
-                if(this.lastScroll != state.ScrollWheelValue){
-                    var zoomDiff = (state.ScrollWheelValue-this.lastScroll) / 1000F;
+                if(this.lastScroll != mouseWheel){
+                    var zoomDiff = (mouseWheel-this.lastScroll) / 1000F;
                     var newZoom = Math.Max(0.5F, Math.Min(10F, this.zoom+zoomDiff * this.zoom));
                     if(newZoom != this.zoom){
                         var zoomChange = 1-newZoom / this.zoom;
-                        this.pos.X -= (this.pos.X+state.X) * zoomChange;
-                        this.pos.Y -= (this.pos.Y+state.Y) * zoomChange;
+                        this.pos.X -= (this.pos.X+mouseX) * zoomChange;
+                        this.pos.Y -= (this.pos.Y+mouseY) * zoomChange;
 
                         this.zoom = newZoom;
                         shouldReloadMatrix = true;
                     }
-                    this.lastScroll = state.ScrollWheelValue;
+                    this.lastScroll = mouseWheel;
                 }
 
                 if(shouldReloadMatrix){

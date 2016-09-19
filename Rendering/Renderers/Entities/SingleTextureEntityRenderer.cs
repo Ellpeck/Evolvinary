@@ -8,7 +8,7 @@ namespace Evolvinary.Rendering.Renderers.Entities{
         private readonly Texture2D texture;
 
         public SingleTextureEntityRenderer(string texturePath){
-            this.texture = EvolvinaryMain.get().Content.Load<Texture2D>("Textures/Entities/"+texturePath);
+            this.texture = EvolvinaryMain.loadContent<Texture2D>("Textures/Entities/"+texturePath);
         }
 
         public override void draw(Entity entity, Vector2 pos, RenderManager manager, GameTime time){

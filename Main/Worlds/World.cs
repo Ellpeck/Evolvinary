@@ -27,10 +27,8 @@ namespace Evolvinary.Main.Worlds{
         }
 
         private void loadChunks(){
-            var content = EvolvinaryMain.get().Content;
-
             var folderName = "Maps/"+this.Name;
-            var dir = new DirectoryInfo(content.RootDirectory+"/"+folderName);
+            var dir = new DirectoryInfo(EvolvinaryMain.get().Content.RootDirectory+"/"+folderName);
             if(dir.Exists){
                 var files = dir.GetFiles();
                 foreach(var file in files){
@@ -41,7 +39,7 @@ namespace Evolvinary.Main.Worlds{
 
                     var chunk = new Chunk(this, chunkX, chunkY);
 
-                    var texture = content.Load<Texture2D>(folderName+"/"+name);
+                    var texture = EvolvinaryMain.loadContent<Texture2D>(folderName+"/"+name);
                     chunk.populate(texture);
                     texture.Dispose();
 
@@ -83,13 +81,6 @@ namespace Evolvinary.Main.Worlds{
         public void update(GameTime time){
             foreach(var chunk in this.chunks.Values){
                 chunk.update(time);
-            }
-
-            var state = Mouse.GetState();
-            if(state.LeftButton == ButtonState.Pressed){
-                var cursorInWorld = EvolvinaryMain.get().Camera.toWorldPos(state.Position.ToVector2());
-                var tuft = new EntityGrassTuft(this, 0);
-                tuft.setPosition(cursorInWorld);
             }
         }
 
