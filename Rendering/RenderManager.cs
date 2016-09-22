@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main;
+using Evolvinary.Main.Guis;
 using Evolvinary.Rendering.Renderers.Entities;
 using Evolvinary.Rendering.Renderers.Guis;
 using Microsoft.Xna.Framework;
@@ -16,6 +18,8 @@ namespace Evolvinary.Rendering{
         public Texture2D TileTexture;
         public Texture2D StaticEntityTexture;
         public List<EntityRenderer> EntityRenderers = new List<EntityRenderer>();
+
+        public SpriteFont NormalFont;
 
         public GuiRenderer CurrentGuiRenderer;
 
@@ -33,6 +37,10 @@ namespace Evolvinary.Rendering{
 
             this.TileTexture = EvolvinaryMain.loadContent<Texture2D>("Textures/Tiles");
             this.StaticEntityTexture = EvolvinaryMain.loadContent<Texture2D>("Textures/Entities/Static");
+
+            this.NormalFont = EvolvinaryMain.loadContent<SpriteFont>("Fonts/Normal");
+
+            GraphicsHelper.init();
         }
 
         public void draw(GameTime time){
@@ -42,7 +50,7 @@ namespace Evolvinary.Rendering{
             GameData.WorldTest.Renderer.draw(this, time);
             this.Batch.End();
 
-            this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+            this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Matrix.CreateScale(Gui.Scale));
             if(this.CurrentGuiRenderer != null){
                 this.CurrentGuiRenderer.draw(this, time);
             }

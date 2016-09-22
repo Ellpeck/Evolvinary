@@ -12,6 +12,10 @@ namespace Evolvinary.Rendering.Renderers.Guis{
 
         public override void draw(RenderManager manager, GameTime time){
             base.draw(manager, time);
+
+            //if(this.Gui.ButtonList[0].isMouseOver()){
+                drawHoveringOverlayAtMouse(manager.Batch, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam n", Color.White, 200);
+            //}
         }
     }
 }

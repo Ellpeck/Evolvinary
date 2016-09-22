@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Evolvinary.Helper;
+using Evolvinary.Launch;
+using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Input;
 using Evolvinary.Rendering.Renderers.Guis;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Guis{
     public abstract class Gui{
+        public static readonly float Scale = 2F;
         public Vector2 Pos;
         public int SizeX;
         public int SizeY;
@@ -30,7 +33,6 @@ namespace Evolvinary.Main.Guis{
         }
 
         public virtual void onActionPerformed(Button button){
-
         }
 
         public abstract GuiRenderer getRenderer();
@@ -42,11 +44,18 @@ namespace Evolvinary.Main.Guis{
         }
 
         public virtual void onClosed(){
-
         }
 
         public virtual bool allowCameraMovement(){
             return false;
+        }
+
+        public static int getUnscaledWidth(){
+            return MathHelp.floor(EvolvinaryMain.get().RenderManager.getScreenWidth() / Scale);
+        }
+
+        public static int getUnscaledHeight(){
+            return MathHelp.floor(EvolvinaryMain.get().RenderManager.getScreenHeight() / Scale);
         }
     }
 }

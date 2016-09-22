@@ -37,11 +37,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\MathHelper.cs" />
+    <Compile Include="Helper\GraphicsHelper.cs" />
+    <Compile Include="Helper\MathHelp.cs" />
     <Compile Include="Launch\EvolvinaryMain.cs" />
     <Compile Include="Launch\Launcher.cs" />
     <Compile Include="Main\GameData.cs" />
-    <Compile Include="Main\Guis\Button.cs" />
+    <Compile Include="Main\Guis\Buttons\Button.cs" />
+    <Compile Include="Main\Guis\Buttons\ButtonRenderedRect.cs" />
+    <Compile Include="Main\Guis\Buttons\ButtonTextOnly.cs" />
     <Compile Include="Main\Guis\Gui.cs" />
     <Compile Include="Main\Guis\GuiIngame.cs" />
     <Compile Include="Main\Guis\GuiIngameMenu.cs" />
@@ -58,7 +61,8 @@
     <Compile Include="Rendering\Renderers\Entities\EntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Entities\SingleTextureEntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Entities\StaticEntityRenderer.cs" />
-    <Compile Include="Rendering\Renderers\Guis\ButtonRenderer.cs" />
+    <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRenderer.cs" />
+    <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRendererStatic.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngame.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngameMenu.cs" />
@@ -70,6 +74,7 @@
     <Folder Include="Content" />
     <Folder Include="Helper" />
     <Folder Include="Main" />
+    <Folder Include="Main\Guis\Buttons" />
     <Folder Include="Main\Input" />
     <Folder Include="Main\Worlds" />
     <Folder Include="Main\Worlds\Cells" />
@@ -78,6 +83,7 @@
     <Folder Include="Rendering" />
     <Folder Include="Rendering\Renderers" />
     <Folder Include="Rendering\Renderers\Entities" />
+    <Folder Include="Rendering\Renderers\Guis\Buttons" />
     <Folder Include="Rendering\Renderers\Tiles" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Evolvinary.Launch;
+using Evolvinary.Main.Worlds.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -27,6 +28,12 @@ namespace Evolvinary.Main.Input{
             this.MiddleMouse.update(state.MiddleButton);
 
             this.game.Camera.checkInputs();
+
+            if(this.LeftMouse.PressedOnce && this.game.CurrentGui.allowCameraMovement()){
+                var tuft = new EntityGrassTuft(GameData.WorldTest, 0);
+                var pos = this.game.Camera.toWorldPos(this.getMousePos().ToVector2());
+                tuft.setPosition(pos);
+            }
         }
 
         public int getMouseWheel(){

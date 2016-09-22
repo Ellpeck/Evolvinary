@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Worlds.Cells;
 using Evolvinary.Main.Worlds.Entities;
@@ -8,7 +9,6 @@ using Evolvinary.Rendering.Renderers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MathHelper = Evolvinary.Helper.MathHelper;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
@@ -58,7 +58,7 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public static int toChunkCoord(int worldCoord){
-            return MathHelper.floor((double) worldCoord / Chunk.Size);
+            return MathHelp.floor((double) worldCoord / Chunk.Size);
         }
 
         public static int toWorldCoord(int chunkCoord){
@@ -90,7 +90,14 @@ namespace Evolvinary.Main.Worlds{
             var topLeft = this.getChunkFromWorldCoords(rect.X, rect.Y);
             var bottomRight = this.getChunkFromWorldCoords(rect.X+rect.Width, rect.Y+rect.Height);
 
-            if(topLeft != null && bottomRight != null){
+            if(topLeft != null || bottomRight != null){
+                if(topLeft == null){
+                    topLeft = bottomRight;
+                }
+                else if(bottomRight == null){
+                    bottomRight = topLeft;
+                }
+
                 var diffX = bottomRight.PosX-topLeft.PosX;
                 var diffY = bottomRight.PosY-topLeft.PosY;
 
@@ -115,9 +122,8 @@ namespace Evolvinary.Main.Worlds{
 
             var containedChunks = this.getChunksContainedInRect(rect);
             foreach(var chunk in containedChunks){
-                var switchedRect = new Rectangle(rect.X-toWorldCoord(chunk.PosX), rect.Y-toWorldCoord(chunk.PosY), rect.Width, rect.Height);
                 foreach(var entity in chunk.Entities){
-                    if((type == null || entity.GetType() == type) && switchedRect.Contains(entity.Pos)){
+                    if((type == null || entity.GetType() == type) && rect.Contains(entity.Pos)){
                         entities.Add(entity);
                     }
                 }

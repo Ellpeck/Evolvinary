@@ -1,7 +1,7 @@
 ﻿using System;
+using Evolvinary.Helper;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
-using MathHelper = Evolvinary.Helper.MathHelper;
 
 namespace Evolvinary.Main.Worlds.Entities{
     public class Entity{
@@ -39,8 +39,8 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         private void switchChunk(Vector2 newPos, bool force){
-            var oldChunk = this.World.getChunkFromWorldCoords(MathHelper.floor(this.Pos.X), MathHelper.floor(this.Pos.Y));
-            var newChunk = this.World.getChunkFromWorldCoords(MathHelper.floor(newPos.X), MathHelper.floor(newPos.Y));
+            var oldChunk = this.World.getChunkFromWorldCoords(MathHelp.floor(this.Pos.X), MathHelp.floor(this.Pos.Y));
+            var newChunk = this.World.getChunkFromWorldCoords(MathHelp.floor(newPos.X), MathHelp.floor(newPos.Y));
 
             if(force || oldChunk != newChunk){
                 if(oldChunk != null){
