@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Input;
+using Evolvinary.Main.Input.Setting;
 using Evolvinary.Rendering.Renderers.Guis;
 using Microsoft.Xna.Framework;
 
@@ -12,7 +15,6 @@ namespace Evolvinary.Main.Guis{
         public Vector2 Pos;
         public int SizeX;
         public int SizeY;
-        public InputProcessor Input;
 
         public List<Button> ButtonList = new List<Button>();
 
@@ -23,11 +25,32 @@ namespace Evolvinary.Main.Guis{
         }
 
         public virtual void update(GameTime time){
-            foreach(var button in this.ButtonList){
+            foreach(var button in this.ButtonList.ToList()){
                 button.update(time);
+            }
 
-                if(button.isMouseOver() && this.Input.LeftMouse.PressedOnce){
-                    this.onActionPerformed(button);
+            foreach(var bind in InputProcessor.KeyBindings){
+                if(bind.PressedOnce){
+                    var key = bind as KeySetting;
+                    if(key != null){
+                        this.onKeyPress(key);
+                    }
+                    else{
+                        this.onMousePress((MouseSetting) bind);
+                    }
+                }
+            }
+        }
+
+        public virtual void onKeyPress(KeySetting key){
+        }
+
+        public virtual void onMousePress(MouseSetting mouse){
+            if(mouse == InputProcessor.LeftMouse){
+                foreach(var button in this.ButtonList.ToList()){
+                    if(button.isMouseOver()){
+                        this.onActionPerformed(button);
+                    }
                 }
             }
         }
@@ -37,9 +60,7 @@ namespace Evolvinary.Main.Guis{
 
         public abstract GuiRenderer getRenderer();
 
-        public virtual void onOpened(InputProcessor input){
-            this.Input = input;
-
+        public virtual void onOpened(){
             this.ButtonList.Clear();
         }
 

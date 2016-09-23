@@ -10,7 +10,6 @@ namespace Evolvinary.Launch{
 
         public RenderManager RenderManager;
         public Camera Camera;
-        public InputProcessor Inputs;
 
         public Gui CurrentGui;
 
@@ -26,7 +25,6 @@ namespace Evolvinary.Launch{
             this.RenderManager.loadContent();
 
             this.Camera = new Camera(0F, 0F, 1F);
-            this.Inputs = new InputProcessor(this);
 
             this.openGui(null);
         }
@@ -40,7 +38,7 @@ namespace Evolvinary.Launch{
         protected override void Update(GameTime time){
             base.Update(time);
 
-            this.Inputs.update(time);
+            InputProcessor.update(time, this);
 
             GameData.WorldTest.update(time);
             if(this.CurrentGui != null){
@@ -78,7 +76,7 @@ namespace Evolvinary.Launch{
             this.RenderManager.openGui(gui.getRenderer());
 
             this.CurrentGui = gui;
-            this.CurrentGui.onOpened(this.Inputs);
+            this.CurrentGui.onOpened();
         }
     }
 }

@@ -25,13 +25,12 @@ namespace Evolvinary.Main.Input{
             if(game.IsActive && (game.CurrentGui == null || game.CurrentGui.allowCameraMovement())){
                 var shouldReloadMatrix = false;
 
-                var input = EvolvinaryMain.get().Inputs;
-                var mouseX = input.getMouseX();
-                var mouseY = input.getMouseY();
-                var mouseWheel = input.getMouseWheel();
+                var mouseX = InputProcessor.getMouseX();
+                var mouseY = InputProcessor.getMouseY();
+                var mouseWheel = InputProcessor.getMouseWheel();
 
                 if(this.lastX != mouseX || this.lastY != mouseY){
-                    if(input.RightMouse.IsDown){
+                    if(InputProcessor.RightMouse.IsDown){
                         this.pos.X -= mouseX-this.lastX;
                         this.pos.Y -= mouseY-this.lastY;
                         shouldReloadMatrix = true;

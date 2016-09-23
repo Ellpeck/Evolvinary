@@ -1,56 +1,48 @@
-﻿using Evolvinary.Launch;
-using Evolvinary.Main.Guis;
+﻿using System.Collections.Generic;
+using Evolvinary.Launch;
+using Evolvinary.Main.Input.Setting;
 using Evolvinary.Main.Worlds.Entities;
-using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Evolvinary.Main.Input{
     public class InputProcessor{
-        private readonly EvolvinaryMain game;
+        public static readonly List<InputSetting> KeyBindings = new List<InputSetting>();
 
-        public KeySetting Enter = new KeySetting(Keys.Enter);
-        public KeySetting Escape = new KeySetting(Keys.Escape);
+        public static readonly InputSetting Enter = new KeySetting(Keys.Enter).register();
+        public static readonly InputSetting Escape = new KeySetting(Keys.Escape).register();
 
-        public MouseSetting LeftMouse = new MouseSetting();
-        public MouseSetting RightMouse = new MouseSetting();
-        public MouseSetting MiddleMouse = new MouseSetting();
+        public static readonly InputSetting LeftMouse = new MouseSetting(0).register();
+        public static readonly InputSetting RightMouse = new MouseSetting(1).register();
+        public static readonly InputSetting MiddleMouse = new MouseSetting(2).register();
 
-        public InputProcessor(EvolvinaryMain game){
-            this.game = game;
-        }
+        public static void update(GameTime time, EvolvinaryMain game){
+            foreach(var bind in KeyBindings){
+                bind.update();
+            }
 
-        public void update(GameTime time){
-            this.Enter.update();
-            this.Escape.update();
+            game.Camera.checkInputs();
 
-            var state = Mouse.GetState();
-            this.LeftMouse.update(state.LeftButton);
-            this.RightMouse.update(state.RightButton);
-            this.MiddleMouse.update(state.MiddleButton);
-
-            this.game.Camera.checkInputs();
-
-            if(this.MiddleMouse.PressedOnce && this.game.CurrentGui.allowCameraMovement()){
+            if(MiddleMouse.PressedOnce && game.CurrentGui.allowCameraMovement()){
                 var tuft = new EntityGrassTuft(GameData.WorldTest, 0);
-                var pos = this.game.Camera.toWorldPos(this.getMousePos().ToVector2());
+                var pos = game.Camera.toWorldPos(getMousePos().ToVector2());
                 tuft.setPosition(pos);
             }
         }
 
-        public int getMouseWheel(){
+        public static int getMouseWheel(){
             return Mouse.GetState().ScrollWheelValue;
         }
 
-        public int getMouseX(){
+        public static int getMouseX(){
             return Mouse.GetState().X;
         }
 
-        public int getMouseY(){
+        public static int getMouseY(){
             return Mouse.GetState().Y;
         }
 
-        public Point getMousePos(){
+        public static Point getMousePos(){
             return Mouse.GetState().Position;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Evolvinary.Rendering.Renderers.Guis.Buttons;
+﻿using Evolvinary.Main.Input;
+using Evolvinary.Rendering.Renderers.Guis.Buttons;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Guis.Buttons{
@@ -27,7 +28,7 @@ namespace Evolvinary.Main.Guis.Buttons{
         }
 
         public bool isMouseOver(){
-            return this.Area.Contains(this.gui.Input.getMousePos().ToVector2()/Gui.Scale);
+            return this.Area.Contains(InputProcessor.getMousePos().ToVector2()/Gui.Scale);
         }
     }
 }

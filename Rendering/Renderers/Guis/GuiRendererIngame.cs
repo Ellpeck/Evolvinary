@@ -1,5 +1,6 @@
 ﻿using Evolvinary.Launch;
 using Evolvinary.Main.Guis;
+using Evolvinary.Main.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -21,7 +22,7 @@ namespace Evolvinary.Rendering.Renderers.Guis{
 
                 var entity = gui.SelectedEntity;
                 if(entity?.Renderer != null){
-                    entity.Renderer.drawOverlay(entity, EvolvinaryMain.get().Camera.toCameraPos(entity.Pos)/Gui.Scale, this.Gui.Input.getMousePos().ToVector2(), manager, time);
+                    entity.Renderer.drawOverlay(entity, EvolvinaryMain.get().Camera.toCameraPos(entity.Pos)/Gui.Scale, InputProcessor.getMousePos().ToVector2(), manager, time);
                 }
             }
         }

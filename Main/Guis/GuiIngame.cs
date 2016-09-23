@@ -2,6 +2,7 @@
 using Evolvinary.Launch;
 using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Input;
+using Evolvinary.Main.Input.Setting;
 using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Main.Worlds.Tiles;
 using Evolvinary.Rendering.Renderers.Guis;
@@ -14,11 +15,11 @@ namespace Evolvinary.Main.Guis{
         public GuiIngame() : base(0, 0, getUnscaledWidth(), getUnscaledHeight()){
         }
 
-        public override void onOpened(InputProcessor input){
-            base.onOpened(input);
+        public override void onOpened(){
+            base.onOpened();
 
             var width = getUnscaledWidth();
-            this.ButtonList.Add(new ButtonRenderedRect(0, this, width-32, 2, 30, 30, new Rectangle(256, 0, 30, 30)));
+            this.ButtonList.Add(new ButtonRenderedRect(0, this, width-40, 10, 30, 30, new Rectangle(256, 0, 30, 30)));
         }
 
         public override GuiRenderer getRenderer(){
@@ -31,6 +32,14 @@ namespace Evolvinary.Main.Guis{
             }
         }
 
+        public override void onKeyPress(KeySetting key){
+            base.onKeyPress(key);
+
+            if(key == InputProcessor.Escape){
+                EvolvinaryMain.get().openGui(new GuiIngameMenu());
+            }
+        }
+
         public override bool allowCameraMovement(){
             return true;
         }
@@ -38,8 +47,8 @@ namespace Evolvinary.Main.Guis{
         public override void update(GameTime time){
             base.update(time);
 
-            if(this.Input.LeftMouse.PressedOnce){
-                var mousePos = EvolvinaryMain.get().Camera.toWorldPos(this.Input.getMousePos().ToVector2());
+            if(InputProcessor.LeftMouse.PressedOnce){
+                var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
                 var mouseRect = new BoundBox(mousePos.X-0.5F, mousePos.Y-0.5F, 1F, 1F);
                 var entities = GameData.WorldTest.getEntitiesInBound(mouseRect, null);
 

@@ -51,8 +51,9 @@
     <Compile Include="Main\Guis\GuiIngameMenu.cs" />
     <Compile Include="Main\Input\Camera.cs" />
     <Compile Include="Main\Input\InputProcessor.cs" />
-    <Compile Include="Main\Input\KeySetting.cs" />
-    <Compile Include="Main\Input\MouseSetting.cs" />
+    <Compile Include="Main\Input\Setting\InputSetting.cs" />
+    <Compile Include="Main\Input\Setting\KeySetting.cs" />
+    <Compile Include="Main\Input\Setting\MouseSetting.cs" />
     <Compile Include="Main\Worlds\Cells\Cell.cs" />
     <Compile Include="Main\Worlds\Chunk.cs" />
     <Compile Include="Main\Worlds\Entities\Entity.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Rendering\Renderers\Entities\StaticEntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRendererStatic.cs" />
+    <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRendererText.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngame.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngameMenu.cs" />
@@ -77,6 +79,7 @@
     <Folder Include="Main" />
     <Folder Include="Main\Guis\Buttons" />
     <Folder Include="Main\Input" />
+    <Folder Include="Main\Input\Setting" />
     <Folder Include="Main\Worlds" />
     <Folder Include="Main\Worlds\Cells" />
     <Folder Include="Main\Worlds\Entities" />

@@ -4,6 +4,7 @@ using System.Linq;
 using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Guis;
+using Evolvinary.Main.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -35,14 +36,13 @@ namespace Evolvinary.Rendering.Renderers.Guis{
         }
 
         public static void drawHoveringOverlayAtMouse(SpriteBatch batch, string text, Color color, int length){
-            var input = EvolvinaryMain.get().Inputs;
-            drawHoveringOverlay(batch, text, input.getMouseX() / Gui.Scale+5, input.getMouseY() / Gui.Scale+5, color, length);
+            drawHoveringOverlay(batch, text, InputProcessor.getMouseX() / Gui.Scale+5, InputProcessor.getMouseY() / Gui.Scale+5, color, length);
         }
 
         public static void drawHoveringOverlay(SpriteBatch batch, string text, float x, float y, Color color, int length){
-            const int lineHeight = 14;
-
             var font = EvolvinaryMain.get().RenderManager.NormalFont;
+            var lineHeight = font.LineSpacing;
+
             var split = splitTextToLength(text, font, length);
 
             var longestLength = 0F;
