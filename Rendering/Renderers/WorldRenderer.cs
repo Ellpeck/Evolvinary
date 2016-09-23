@@ -27,7 +27,9 @@ namespace Evolvinary.Rendering.Renderers{
                         }
                     }
                 }
+            }
 
+            foreach(var chunk in chunks){
                 var entities = chunk.Entities.ToList();
                 entities.Sort(EntityComparer.Instance);
 

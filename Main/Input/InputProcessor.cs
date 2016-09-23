@@ -1,5 +1,7 @@
 ﻿using Evolvinary.Launch;
+using Evolvinary.Main.Guis;
 using Evolvinary.Main.Worlds.Entities;
+using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -29,7 +31,7 @@ namespace Evolvinary.Main.Input{
 
             this.game.Camera.checkInputs();
 
-            if(this.LeftMouse.PressedOnce && this.game.CurrentGui.allowCameraMovement()){
+            if(this.MiddleMouse.PressedOnce && this.game.CurrentGui.allowCameraMovement()){
                 var tuft = new EntityGrassTuft(GameData.WorldTest, 0);
                 var pos = this.game.Camera.toWorldPos(this.getMousePos().ToVector2());
                 tuft.setPosition(pos);

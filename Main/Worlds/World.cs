@@ -33,7 +33,7 @@ namespace Evolvinary.Main.Worlds{
                 var files = dir.GetFiles();
                 foreach(var file in files){
                     var name = Path.GetFileNameWithoutExtension(file.Name);
-                    var nums = name.Split(new[]{','}, StringSplitOptions.RemoveEmptyEntries);
+                    var nums = name.Split(',');
                     var chunkX = int.Parse(nums[0]);
                     var chunkY = int.Parse(nums[1]);
 
@@ -84,11 +84,11 @@ namespace Evolvinary.Main.Worlds{
             }
         }
 
-        public List<Chunk> getChunksContainedInRect(Rectangle rect){
+        public List<Chunk> getChunksInBound(BoundBox rect){
             var containedChunks = new List<Chunk>();
 
-            var topLeft = this.getChunkFromWorldCoords(rect.X, rect.Y);
-            var bottomRight = this.getChunkFromWorldCoords(rect.X+rect.Width, rect.Y+rect.Height);
+            var topLeft = this.getChunkFromWorldCoords(MathHelp.floor(rect.X), MathHelp.floor(rect.Y));
+            var bottomRight = this.getChunkFromWorldCoords(MathHelp.floor(rect.X+rect.Width), MathHelp.floor(rect.Y+rect.Height));
 
             if(topLeft != null || bottomRight != null){
                 if(topLeft == null){
@@ -117,13 +117,13 @@ namespace Evolvinary.Main.Worlds{
             return containedChunks;
         }
 
-        public List<Entity> getEntitiesWithinRect(Rectangle rect, Type type){
+        public List<Entity> getEntitiesInBound(BoundBox rect, Type type){
             var entities = new List<Entity>();
 
-            var containedChunks = this.getChunksContainedInRect(rect);
+            var containedChunks = this.getChunksInBound(rect);
             foreach(var chunk in containedChunks){
                 foreach(var entity in chunk.Entities){
-                    if((type == null || entity.GetType() == type) && rect.Contains(entity.Pos)){
+                    if((type == null || entity.GetType() == type) && rect.contains(entity.Pos)){
                         entities.Add(entity);
                     }
                 }

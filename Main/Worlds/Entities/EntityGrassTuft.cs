@@ -1,4 +1,5 @@
-﻿using Evolvinary.Rendering.Renderers.Entities;
+﻿using Evolvinary.Helper;
+using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities{
@@ -35,7 +36,7 @@ namespace Evolvinary.Main.Worlds.Entities{
                                 for(var i = 0; i < amount; i++){
                                     var pos = new Vector2(this.Pos.X+((float) this.Rand.NextDouble() * 5-2.5F), this.Pos.Y+((float) this.Rand.NextDouble() * 5-2.5F));
 
-                                    var entities = this.World.getEntitiesWithinRect(new Rectangle((int) (pos.X-1), (int) (pos.Y-1), 2, 2), typeof(EntityGrassTuft));
+                                    var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft));
                                     if(entities.Count <= 0){
                                         var newTuft = new EntityGrassTuft(this.World, 0);
                                         newTuft.setPosition(pos);

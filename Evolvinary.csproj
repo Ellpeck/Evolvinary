@@ -37,6 +37,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\BoundBox.cs" />
     <Compile Include="Helper\GraphicsHelper.cs" />
     <Compile Include="Helper\MathHelp.cs" />
     <Compile Include="Launch\EvolvinaryMain.cs" />

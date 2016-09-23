@@ -54,5 +54,9 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public virtual void update(GameTime time){
         }
+
+        public virtual bool canBeSelected(){
+            return true;
+        }
     }
 }

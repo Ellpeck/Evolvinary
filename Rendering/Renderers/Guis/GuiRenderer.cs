@@ -30,25 +30,37 @@ namespace Evolvinary.Rendering.Renderers.Guis{
         public virtual void onClosed(){
         }
 
-        public static void drawHoveringOverlayAtMouse(SpriteBatch batch, string text, Color color, int length){
-            var input = EvolvinaryMain.get().Inputs;
-            drawHoveringOverlay(batch, text, (int) (input.getMouseX() / Gui.Scale)+5, (int) (input.getMouseY() / Gui.Scale)+5, color, length);
+        public static void drawHoveringOverlayAtMouse(SpriteBatch batch, string text, Color color){
+            drawHoveringOverlayAtMouse(batch, text, color, 0);
         }
 
-        public static void drawHoveringOverlay(SpriteBatch batch, string text, int x, int y, Color color, int length){
-            var font = EvolvinaryMain.get().RenderManager.NormalFont;
-            const int lineHeight = 12;
+        public static void drawHoveringOverlayAtMouse(SpriteBatch batch, string text, Color color, int length){
+            var input = EvolvinaryMain.get().Inputs;
+            drawHoveringOverlay(batch, text, input.getMouseX() / Gui.Scale+5, input.getMouseY() / Gui.Scale+5, color, length);
+        }
 
+        public static void drawHoveringOverlay(SpriteBatch batch, string text, float x, float y, Color color, int length){
+            const int lineHeight = 14;
+
+            var font = EvolvinaryMain.get().RenderManager.NormalFont;
             var split = splitTextToLength(text, font, length);
 
-            var diffX = x+length / Gui.Scale-Gui.getUnscaledWidth()+2;
+            var longestLength = 0F;
+            foreach(var s in split){
+                var l = font.MeasureString(s).X;
+                if(longestLength < l){
+                    longestLength = l;
+                }
+            }
+
+            var diffX = x+longestLength-Gui.getUnscaledWidth();
             if(diffX > 0){
                 x -= (int) diffX;
             }
             x = Math.Max(2, x);
-            y = Math.Max(Math.Min(y, Gui.getUnscaledHeight()-split.Length * lineHeight-6), 2);
+            y = Math.Max(Math.Min(y, Gui.getUnscaledHeight()-split.Length * lineHeight-4), 2);
 
-            batch.Draw(GraphicsHelper.TranslucentGray, new Vector2(x-4, y-2), new Rectangle(0, 0, (int) (length/Gui.Scale+6), split.Length * lineHeight+8), Color.White);
+            batch.Draw(GraphicsHelper.TranslucentGray, new Vector2(x-4, y-2), new Rectangle(0, 0, (int) (longestLength+4), split.Length * lineHeight+6), Color.White);
 
             var height = 0;
             foreach(var s in split){
@@ -58,23 +70,27 @@ namespace Evolvinary.Rendering.Renderers.Guis{
         }
 
         public static string[] splitTextToLength(string text, SpriteFont font, int length){
-            var result = new List<string>();
-            var words = text.Split(' ');
-            var accumulated = "";
+            if(length > 0){
+                var result = new List<string>();
+                var words = text.Split(' ');
+                var accumulated = "";
 
-            foreach(var word in words){
-                if(font.MeasureString(accumulated+word).X >= length / Gui.Scale){
-                    result.Add(accumulated);
-                    accumulated = word+" ";
+                foreach(var word in words){
+                    if(font.MeasureString(accumulated+word).X >= length / Gui.Scale){
+                        result.Add(accumulated);
+                        accumulated = word+" ";
+                    }
+                    else{
+                        accumulated += word+" ";
+                    }
                 }
-                else{
-                    accumulated += word+" ";
-                }
+
+                result.Add(accumulated);
+
+                return result.ToArray();
             }
 
-            result.Add(accumulated);
-
-            return result.ToArray();
+            return new[]{text+" "};
         }
     }
 }

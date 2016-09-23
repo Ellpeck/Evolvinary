@@ -17,6 +17,10 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 var source = new Rectangle(0, 0, amount, 128);
                 manager.Batch.Draw(GraphicsHelper.Graydient, new Rectangle(this.Gui.Pos.ToPoint(), size), source, Color.White);
             }
+
+            if(this.Gui.ButtonList[0].isMouseOver()){
+                drawHoveringOverlayAtMouse(manager.Batch, "Close Menu", Color.White);
+            }
         }
     }
 }

@@ -13,9 +13,17 @@ namespace Evolvinary.Rendering.Renderers.Guis{
         public override void draw(RenderManager manager, GameTime time){
             base.draw(manager, time);
 
-            //if(this.Gui.ButtonList[0].isMouseOver()){
-                drawHoveringOverlayAtMouse(manager.Batch, "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam n", Color.White, 200);
-            //}
+            var gui = this.Gui as GuiIngame;
+            if(gui != null){
+                if(gui.ButtonList[0].isMouseOver()){
+                    drawHoveringOverlayAtMouse(manager.Batch, "View Menu", Color.White);
+                }
+
+                var entity = gui.SelectedEntity;
+                if(entity?.Renderer != null){
+                    entity.Renderer.drawOverlay(entity, EvolvinaryMain.get().Camera.toCameraPos(entity.Pos)/Gui.Scale, this.Gui.Input.getMousePos().ToVector2(), manager, time);
+                }
+            }
         }
     }
 }

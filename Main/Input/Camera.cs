@@ -65,7 +65,11 @@ namespace Evolvinary.Main.Input{
         }
 
         public Vector2 toWorldPos(Vector2 pos){
-            return (pos+this.pos)/this.zoom/Tile.Size;
+            return Vector2.Transform(pos, Matrix.Invert(this.Transform)) / Tile.Size;
+        }
+
+        public Vector2 toCameraPos(Vector2 pos){
+            return Vector2.Transform(pos * Tile.Size, this.Transform);
         }
     }
 }
