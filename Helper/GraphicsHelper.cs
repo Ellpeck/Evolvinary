@@ -28,5 +28,9 @@ namespace Evolvinary.Helper{
             TranslucentGray.SetData(translucentData);
         }
 
+        public static void dispose(){
+            Graydient.Dispose();
+            TranslucentGray.Dispose();
+        }
     }
 }

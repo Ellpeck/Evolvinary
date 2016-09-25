@@ -49,15 +49,22 @@
     <Compile Include="Main\Guis\Gui.cs" />
     <Compile Include="Main\Guis\GuiIngame.cs" />
     <Compile Include="Main\Guis\GuiIngameMenu.cs" />
+    <Compile Include="Main\Guis\GuiTitleScreen.cs" />
     <Compile Include="Main\Input\Camera.cs" />
     <Compile Include="Main\Input\InputProcessor.cs" />
     <Compile Include="Main\Input\Setting\InputSetting.cs" />
     <Compile Include="Main\Input\Setting\KeySetting.cs" />
     <Compile Include="Main\Input\Setting\MouseSetting.cs" />
+    <Compile Include="Main\PlayerData.cs" />
     <Compile Include="Main\Worlds\Cells\Cell.cs" />
     <Compile Include="Main\Worlds\Chunk.cs" />
     <Compile Include="Main\Worlds\Entities\Entity.cs" />
     <Compile Include="Main\Worlds\Entities\EntityGrassTuft.cs" />
+    <Compile Include="Main\Worlds\Entities\EntityPlaceable.cs" />
+    <Compile Include="Main\Worlds\Entities\EntitySilo.cs" />
+    <Compile Include="Main\Worlds\Entities\Paths\EntityPathable.cs" />
+    <Compile Include="Main\Worlds\Entities\Paths\Path.cs" />
+    <Compile Include="Main\Worlds\Entities\Paths\PathWaypoint.cs" />
     <Compile Include="Main\Worlds\Tiles\Tile.cs" />
     <Compile Include="Main\Worlds\World.cs" />
     <Compile Include="Rendering\Renderers\Entities\EntityRenderer.cs" />
@@ -69,6 +76,7 @@
     <Compile Include="Rendering\Renderers\Guis\GuiRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngame.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngameMenu.cs" />
+    <Compile Include="Rendering\Renderers\Guis\GuiRendererTitleScreen.cs" />
     <Compile Include="Rendering\Renderers\Tiles\TileRenderer.cs" />
     <Compile Include="Rendering\Renderers\WorldRenderer.cs" />
     <Compile Include="Rendering\RenderManager.cs" />
@@ -76,7 +84,6 @@
   <ItemGroup>
     <Folder Include="Content" />
     <Folder Include="Helper" />
-    <Folder Include="Main" />
     <Folder Include="Main\Guis\Buttons" />
     <Folder Include="Main\Input" />
     <Folder Include="Main\Input\Setting" />

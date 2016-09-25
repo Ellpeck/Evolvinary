@@ -66,7 +66,7 @@ namespace Evolvinary.Launch{
 
         public void openGui(Gui gui){
             if(gui == null){
-                gui = new GuiIngame();
+                gui = new GuiIngame(GameData.MainPlayer);
             }
 
             if(this.CurrentGui != null){

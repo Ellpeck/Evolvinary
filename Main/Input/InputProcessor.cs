@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Evolvinary.Launch;
+using Evolvinary.Main.Guis;
 using Evolvinary.Main.Input.Setting;
 using Evolvinary.Main.Worlds.Entities;
 using Microsoft.Xna.Framework;
@@ -9,6 +10,7 @@ namespace Evolvinary.Main.Input{
     public class InputProcessor{
         public static readonly List<InputSetting> KeyBindings = new List<InputSetting>();
 
+        public static readonly InputSetting Shift = new KeySetting(Keys.LeftShift).register();
         public static readonly InputSetting Enter = new KeySetting(Keys.Enter).register();
         public static readonly InputSetting Escape = new KeySetting(Keys.Escape).register();
 
@@ -24,9 +26,10 @@ namespace Evolvinary.Main.Input{
             game.Camera.checkInputs();
 
             if(MiddleMouse.PressedOnce && game.CurrentGui.allowCameraMovement()){
-                var tuft = new EntityGrassTuft(GameData.WorldTest, 0);
                 var pos = game.Camera.toWorldPos(getMousePos().ToVector2());
-                tuft.setPosition(pos);
+
+                var silo = new EntitySilo();
+                silo.place(GameData.MainPlayer, 1000, GameData.WorldTest, pos);
             }
         }
 
@@ -44,6 +47,11 @@ namespace Evolvinary.Main.Input{
 
         public static Point getMousePos(){
             return Mouse.GetState().Position;
+        }
+
+        public static Entity getSelectedEntity(){
+            var gui = EvolvinaryMain.get().CurrentGui as GuiIngame;
+            return gui != null ? gui.SelectedEntity : null;
         }
     }
 }

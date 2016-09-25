@@ -12,6 +12,8 @@ namespace Evolvinary.Rendering.Renderers.Entities{
         }
 
         public override void draw(Entity entity, Vector2 pos, RenderManager manager, GameTime time){
+            base.draw(entity, pos, manager, time);
+
             manager.Batch.Draw(this.texture, pos, Color.White);
         }
 

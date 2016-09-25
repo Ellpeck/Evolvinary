@@ -64,6 +64,8 @@ namespace Evolvinary.Rendering{
 
             this.TileTexture.Dispose();
             this.Batch.Dispose();
+
+            GraphicsHelper.dispose();
         }
 
         public void openGui(GuiRenderer gui){

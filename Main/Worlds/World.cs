@@ -87,8 +87,8 @@ namespace Evolvinary.Main.Worlds{
         public List<Chunk> getChunksInBound(BoundBox rect){
             var containedChunks = new List<Chunk>();
 
-            var topLeft = this.getChunkFromWorldCoords(MathHelp.floor(rect.X), MathHelp.floor(rect.Y));
-            var bottomRight = this.getChunkFromWorldCoords(MathHelp.floor(rect.X+rect.Width), MathHelp.floor(rect.Y+rect.Height));
+            var topLeft = this.getChunkFromWorldCoords(MathHelp.ceil(rect.X), MathHelp.ceil(rect.Y));
+            var bottomRight = this.getChunkFromWorldCoords(MathHelp.ceil(rect.X+rect.Width), MathHelp.ceil(rect.Y+rect.Height));
 
             if(topLeft != null || bottomRight != null){
                 if(topLeft == null){
@@ -123,7 +123,7 @@ namespace Evolvinary.Main.Worlds{
             var containedChunks = this.getChunksInBound(rect);
             foreach(var chunk in containedChunks){
                 foreach(var entity in chunk.Entities){
-                    if((type == null || entity.GetType() == type) && rect.contains(entity.Pos)){
+                    if((type == null || entity.GetType() == type) && entity.BoundingBox.offset(entity.Pos).intersects(rect)){
                         entities.Add(entity);
                     }
                 }

@@ -18,7 +18,7 @@ namespace Evolvinary.Rendering.Renderers.Entities{
         }
 
         public virtual void drawOverlay(Entity entity, Vector2 posOnScreen, Vector2 mousePos, RenderManager manager, GameTime time){
-            GuiRenderer.drawHoveringOverlay(manager.Batch, "My coordinates in the world are " +entity.Pos+"!", posOnScreen.X, posOnScreen.Y, Color.White, 450);
+            GuiRenderer.drawHoveringOverlay(manager.Batch, "My coordinates in the world are "+entity.Pos+"!", (int) posOnScreen.X, (int) posOnScreen.Y, Color.White, 450, true);
         }
     }
 }

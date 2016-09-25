@@ -70,7 +70,7 @@ namespace Evolvinary.Main.Guis{
                 this.FadeTime = 0;
 
                 if(this.hasButtons){
-                    for(var i = 1; i <= 6; i++){
+                    for(var i = 0; i < 6; i++){
                         this.ButtonList.RemoveAt(1);
                     }
                     this.hasButtons = false;

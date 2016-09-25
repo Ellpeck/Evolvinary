@@ -1,9 +1,10 @@
 ﻿using Evolvinary.Helper;
+using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities{
-    public class EntityGrassTuft : Entity{
+    public class EntityGrassTuft : EntityPathable{
         private static readonly EntityRenderer[] Renderers ={
             new StaticEntityRenderer(new Rectangle(0, 0, 16, 16)).register(),
             new StaticEntityRenderer(new Rectangle(16, 0, 16, 16)).register(),
@@ -13,9 +14,13 @@ namespace Evolvinary.Main.Worlds.Entities{
         private int currentStage;
         private int growthTime;
 
-        public EntityGrassTuft(World world, int initialStage) : base(world){
+        public EntityGrassTuft(int initialStage){
             this.currentStage = initialStage;
             this.attachRenderer(Renderers[0]);
+        }
+
+        public override BoundBox getBoundBox(){
+            return new BoundBox(-0.3F, -0.3F, 0.6F, 0.6F);
         }
 
         public override void update(GameTime time){
@@ -38,8 +43,8 @@ namespace Evolvinary.Main.Worlds.Entities{
 
                                     var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft));
                                     if(entities.Count <= 0){
-                                        var newTuft = new EntityGrassTuft(this.World, 0);
-                                        newTuft.setPosition(pos);
+                                        var newTuft = new EntityGrassTuft(0);
+                                        newTuft.set(this.World, pos);
                                     }
                                 }
                             }

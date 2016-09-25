@@ -10,14 +10,19 @@ namespace Evolvinary.Main.Worlds.Entities{
         public World World;
         public Vector2 Pos;
         public EntityRenderer Renderer;
+        public BoundBox BoundingBox;
 
-        public Entity(World world){
-            this.setWorld(world);
+        public Entity(){
+            this.BoundingBox = this.getBoundBox();
         }
 
         public Entity attachRenderer(EntityRenderer renderer){
             this.Renderer = renderer;
             return this;
+        }
+
+        public virtual BoundBox getBoundBox(){
+            return BoundBox.Empty;
         }
 
         public void move(Vector2 move){
@@ -36,6 +41,11 @@ namespace Evolvinary.Main.Worlds.Entities{
         public void setWorld(World world){
             this.World = world;
             this.switchChunk(this.Pos, true);
+        }
+
+        public void set(World world, Vector2 pos){
+            this.setWorld(world);
+            this.setPosition(pos);
         }
 
         private void switchChunk(Vector2 newPos, bool force){
