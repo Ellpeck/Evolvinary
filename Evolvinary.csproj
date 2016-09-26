@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>468CFC29-37C2-4F77-8C76-6ABA0D30394D</ProjectGuid>
+    <ProjectGuid>{468CFC29-37C2-4F77-8C76-6ABA0D30394D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Evolvinary</RootNamespace>
     <AssemblyName>Evolvinary</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+    <StartupObject>Evolvinary.Launch.Launcher</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -82,27 +84,27 @@
     <Compile Include="Rendering\RenderManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content" />
-    <Folder Include="Helper" />
-    <Folder Include="Main\Guis\Buttons" />
-    <Folder Include="Main\Input" />
-    <Folder Include="Main\Input\Setting" />
-    <Folder Include="Main\Worlds" />
-    <Folder Include="Main\Worlds\Cells" />
-    <Folder Include="Main\Worlds\Entities" />
-    <Folder Include="Main\Worlds\Tiles" />
-    <Folder Include="Rendering" />
-    <Folder Include="Rendering\Renderers" />
-    <Folder Include="Rendering\Renderers\Entities" />
-    <Folder Include="Rendering\Renderers\Guis\Buttons" />
-    <Folder Include="Rendering\Renderers\Tiles" />
+    <Folder Include="Main\Guis\" />
+    <Folder Include="Main\" />
+    <Folder Include="Main\Input\" />
+    <Folder Include="Main\Worlds\" />
+    <Folder Include="Rendering\" />
+    <Folder Include="Rendering\Renderers\" />
+    <Folder Include="Rendering\Renderers\Guis\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\MonoGame.Framework.WindowsDX.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+      <HintPath>packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+      <HintPath>packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
