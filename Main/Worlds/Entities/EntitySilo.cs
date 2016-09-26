@@ -12,5 +12,9 @@ namespace Evolvinary.Main.Worlds.Entities{
         public override BoundBox getBoundBox(){
             return new BoundBox(-40 / (float) Tile.Size, -72 / (float) Tile.Size, 80 / (float) Tile.Size, 144 / (float) Tile.Size);
         }
+
+        public override string getDisplayName(){
+            return "Silo";
+        }
     }
 }

@@ -48,10 +48,5 @@ namespace Evolvinary.Main.Input{
         public static Point getMousePos(){
             return Mouse.GetState().Position;
         }
-
-        public static Entity getSelectedEntity(){
-            var gui = EvolvinaryMain.get().CurrentGui as GuiIngame;
-            return gui != null ? gui.SelectedEntity : null;
-        }
     }
 }

@@ -68,5 +68,9 @@ namespace Evolvinary.Main.Worlds.Entities{
         public virtual bool canBeSelected(){
             return true;
         }
+
+        public virtual string getDisplayName(){
+            return "missingno";
+        }
     }
 }

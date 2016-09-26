@@ -34,12 +34,12 @@ namespace Evolvinary.Main.Guis{
                         EvolvinaryMain.get().openGui(null);
                     }
                     else{
-                        this.ButtonList.Add(new ButtonTextOnly(1, this, 60, 30, 150, 20, "Save Game"));
-                        this.ButtonList.Add(new ButtonTextOnly(2, this, 60, 80, 150, 20, "Load Game"));
-                        this.ButtonList.Add(new ButtonTextOnly(3, this, 60, 130, 150, 20, "Start New Game"));
-                        this.ButtonList.Add(new ButtonTextOnly(4, this, 60, 180, 150, 20, "Options"));
-                        this.ButtonList.Add(new ButtonTextOnly(5, this, 60, 230, 150, 20, "To Title Screen"));
-                        this.ButtonList.Add(new ButtonTextOnly(6, this, 60, 280, 150, 20, "Quit Game"));
+                        this.ButtonList.Add(new ButtonTextOnly(1, this, 60, 30, 150, 20, "Save Game", 2F));
+                        this.ButtonList.Add(new ButtonTextOnly(2, this, 60, 80, 150, 20, "Load Game", 2F));
+                        this.ButtonList.Add(new ButtonTextOnly(3, this, 60, 130, 150, 20, "Start New Game", 2F));
+                        this.ButtonList.Add(new ButtonTextOnly(4, this, 60, 180, 150, 20, "Options", 2F));
+                        this.ButtonList.Add(new ButtonTextOnly(5, this, 60, 230, 150, 20, "To Title Screen", 2F));
+                        this.ButtonList.Add(new ButtonTextOnly(6, this, 60, 280, 150, 20, "Quit Game", 2F));
                         this.hasButtons = true;
                     }
                 }

@@ -56,5 +56,9 @@ namespace Evolvinary.Main.Worlds.Entities{
                 this.growthTime = 200+this.Rand.Next(400);
             }
         }
+
+        public override string getDisplayName(){
+            return "Grass";
+        }
     }
 }

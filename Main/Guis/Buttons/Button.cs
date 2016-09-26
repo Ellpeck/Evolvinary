@@ -7,7 +7,7 @@ namespace Evolvinary.Main.Guis.Buttons{
         private ButtonRenderer renderer;
 
         private readonly Gui gui;
-        public readonly Rectangle Area;
+        public Rectangle Area;
         public readonly int Id;
 
         public Button(int id, Gui gui, int posX, int posY, int sizeX, int sizeY){

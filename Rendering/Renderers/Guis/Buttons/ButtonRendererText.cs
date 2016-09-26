@@ -4,7 +4,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Evolvinary.Rendering.Renderers.Guis.Buttons{
     public class ButtonRendererText : ButtonRenderer{
-        public ButtonRendererText(Button button) : base(button){
+        private readonly float scale;
+
+        public ButtonRendererText(Button button, float scale) : base(button){
+            this.scale = scale;
         }
 
         public override void draw(RenderManager manager, GameTime time){
@@ -14,7 +17,7 @@ namespace Evolvinary.Rendering.Renderers.Guis.Buttons{
             if(button != null){
                 var font = manager.NormalFont;
                 var text = button.DisplayText;
-                var scaleFactor = button.isMouseOver() ? 2.5F : 2F;
+                var scaleFactor = button.isMouseOver() ? this.scale+0.5F : this.scale;
 
                 var pos = button.Area.Location;
                 var x = pos.X+button.Area.Width / 2-font.MeasureString(text).X * scaleFactor / 2;
