@@ -84,32 +84,18 @@ namespace Evolvinary.Main.Worlds{
             }
         }
 
-        public List<Chunk> getChunksInBound(BoundBox rect){
+        public List<Chunk> getChunksInWorldArea(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY){
+            return this.getChunksInChunkArea(toChunkCoord(topLeftX), toChunkCoord(topLeftY), toChunkCoord(bottomRightX), toChunkCoord(bottomRightY));
+        }
+
+        public List<Chunk> getChunksInChunkArea(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY){
             var containedChunks = new List<Chunk>();
 
-            var topLeft = this.getChunkFromWorldCoords(MathHelp.ceil(rect.X), MathHelp.ceil(rect.Y));
-            var bottomRight = this.getChunkFromWorldCoords(MathHelp.ceil(rect.X+rect.Width), MathHelp.ceil(rect.Y+rect.Height));
-
-            if(topLeft != null || bottomRight != null){
-                if(topLeft == null){
-                    topLeft = bottomRight;
-                }
-                else if(bottomRight == null){
-                    bottomRight = topLeft;
-                }
-
-                var diffX = bottomRight.PosX-topLeft.PosX;
-                var diffY = bottomRight.PosY-topLeft.PosY;
-
-                for(var x = 0; x <= diffX; x++){
-                    for(var y = 0; y <= diffY; y++){
-                        var theX = topLeft.PosX+x;
-                        var theY = topLeft.PosY+y;
-
-                        var chunk = this.getChunkFromChunkCoords(theX, theY);
-                        if(chunk != null){
-                            containedChunks.Add(chunk);
-                        }
+            for(var x = topLeftX; x <= bottomRightX; x++){
+                for(var y = topLeftY; y <= bottomRightY; y++){
+                    var chunk = this.getChunkFromChunkCoords(x, y);
+                    if(chunk != null){
+                        containedChunks.Add(chunk);
                     }
                 }
             }
@@ -120,7 +106,7 @@ namespace Evolvinary.Main.Worlds{
         public List<Entity> getEntitiesInBound(BoundBox rect, Type type){
             var entities = new List<Entity>();
 
-            var containedChunks = this.getChunksInBound(rect);
+            var containedChunks = this.getChunksInChunkArea(toChunkCoord(MathHelp.ceil(rect.X))-1, toChunkCoord(MathHelp.ceil(rect.Y))-1, toChunkCoord(MathHelp.ceil(rect.X+rect.Width))+1, toChunkCoord(MathHelp.ceil(rect.Y+rect.Height))+1);
             foreach(var chunk in containedChunks){
                 foreach(var entity in chunk.Entities){
                     if((type == null || entity.GetType() == type) && entity.BoundingBox.offset(entity.Pos).intersects(rect)){
