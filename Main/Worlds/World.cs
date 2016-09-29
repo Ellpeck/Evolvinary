@@ -117,5 +117,33 @@ namespace Evolvinary.Main.Worlds{
 
             return entities;
         }
+
+        public int getChunkSizeX(){
+            var highest = 0;
+            foreach(var chunk in this.chunks.Values){
+                if(chunk.PosX > highest){
+                    highest = chunk.PosX;
+                }
+            }
+            return highest+1;
+        }
+
+        public int getChunkSizeY(){
+            var highest = 0;
+            foreach(var chunk in this.chunks.Values){
+                if(chunk.PosY > highest){
+                    highest = chunk.PosY;
+                }
+            }
+            return highest+1;
+        }
+
+        public int getWorldSizeX(){
+            return this.getChunkSizeX() * Chunk.Size;
+        }
+
+        public int getWorldSizeY(){
+            return this.getChunkSizeY() * Chunk.Size;
+        }
     }
 }

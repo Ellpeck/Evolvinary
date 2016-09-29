@@ -7,6 +7,7 @@ namespace Evolvinary.Helper{
 
         public static Texture2D Graydient; //Yes this is a pun
         public static Texture2D TranslucentGray;
+        public static Texture2D SolidWhite;
 
         public static void init(){
             var game = EvolvinaryMain.get();
@@ -26,11 +27,19 @@ namespace Evolvinary.Helper{
                 translucentData[i] = new Color(0F, 0F, 0F, 0.5F);
             }
             TranslucentGray.SetData(translucentData);
+
+            SolidWhite = new Texture2D(game.GraphicsDevice, game.RenderManager.getScreenWidth(), game.RenderManager.getScreenHeight());
+            var whiteData = new Color[SolidWhite.Width*SolidWhite.Height];
+            for(var i = 0; i < whiteData.Length; i++){
+                whiteData[i] = new Color(1F, 1F, 1F, 1F);
+            }
+            SolidWhite.SetData(whiteData);
         }
 
         public static void dispose(){
             Graydient.Dispose();
             TranslucentGray.Dispose();
+            SolidWhite.Dispose();
         }
     }
 }

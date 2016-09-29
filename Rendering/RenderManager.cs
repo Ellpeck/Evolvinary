@@ -46,14 +46,14 @@ namespace Evolvinary.Rendering{
         public void draw(GameTime time){
             this.game.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, this.game.Camera.Transform);
-            GameData.WorldTest.Renderer.draw(this, time);
-            this.Batch.End();
+            if(this.CurrentGuiRenderer.shouldRenderWorld()){
+                this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, this.game.Camera.Transform);
+                GameData.WorldTest.Renderer.draw(this, time);
+                this.Batch.End();
+            }
 
             this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Matrix.CreateScale(Gui.Scale));
-            if(this.CurrentGuiRenderer != null){
-                this.CurrentGuiRenderer.draw(this, time);
-            }
+            this.CurrentGuiRenderer.draw(this, time);
             this.Batch.End();
         }
 
@@ -74,10 +74,7 @@ namespace Evolvinary.Rendering{
             }
 
             this.CurrentGuiRenderer = gui;
-
-            if(this.CurrentGuiRenderer != null){
-                this.CurrentGuiRenderer.onOpened();
-            }
+            this.CurrentGuiRenderer.onOpened();
         }
 
         public int getScreenWidth(){

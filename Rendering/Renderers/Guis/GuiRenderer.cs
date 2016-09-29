@@ -31,6 +31,10 @@ namespace Evolvinary.Rendering.Renderers.Guis{
         public virtual void onClosed(){
         }
 
+        public virtual bool shouldRenderWorld(){
+            return true;
+        }
+
         public static void drawHoveringOverlayAtMouse(SpriteBatch batch, string text, Color color){
             drawHoveringOverlayAtMouse(batch, text, color, 0);
         }
@@ -62,7 +66,7 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 y = Math.Max(Math.Min(y, Gui.getUnscaledHeight()-split.Length * lineHeight-4), 2);
             }
 
-            batch.Draw(GraphicsHelper.TranslucentGray, new Vector2(x-4, y-2), new Rectangle(0, 0, (int) (longestLength+4), split.Length * lineHeight+6), Color.White);
+            batch.Draw(GraphicsHelper.TranslucentGray, new Vector2(x-4, y-2), new Rectangle(0, 0, longestLength+4, split.Length * lineHeight+6), Color.White);
 
             var height = 0;
             foreach(var s in split){

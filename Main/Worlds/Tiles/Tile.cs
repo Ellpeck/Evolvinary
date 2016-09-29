@@ -9,14 +9,14 @@ namespace Evolvinary.Main.Worlds.Tiles{
 
         public string Name;
         public TileRenderer Renderer;
-        public Color GenColor;
+        public Color UniqueColor;
 
         public Tile(string name){
             this.Name = name;
         }
 
-        public Tile setGenColorIndex(Color color){
-            this.GenColor = color;
+        public Tile setUniqueColor(Color color){
+            this.UniqueColor = color;
             return this;
         }
 

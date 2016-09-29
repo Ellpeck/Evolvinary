@@ -17,10 +17,6 @@ namespace Evolvinary.Rendering.Renderers.Guis{
             }
 
             base.draw(manager, time);
-
-            if(this.Gui.ButtonList[0].isMouseOver()){
-                drawHoveringOverlayAtMouse(manager.Batch, "Close Menu", Color.White);
-            }
         }
     }
 }

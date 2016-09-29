@@ -17,8 +17,8 @@ namespace Evolvinary.Main{
         public static PlayerData MainPlayer;
 
         public static void doBootstrap(){
-            TileDirt = new Tile("dirt").setTextureCoords(0, 0).setGenColorIndex(new Color(81, 45, 31)).register();
-            TileRock = new Tile("rock").setTextureCoords(1, 0).setGenColorIndex(Color.White).register();
+            TileDirt = new Tile("dirt").setTextureCoords(0, 0).setUniqueColor(new Color(81, 45, 31)).register();
+            TileRock = new Tile("rock").setTextureCoords(1, 0).setUniqueColor(Color.White).register();
 
             WorldTest = new World("Test", 78123);
             var tuft = new EntityGrassTuft(0);
@@ -29,7 +29,7 @@ namespace Evolvinary.Main{
 
         public static Tile getTileByColor(Color color){
             foreach(var tile in TileRegistry){
-                if(tile.GenColor == color){
+                if(tile.UniqueColor == color){
                     return tile;
                 }
             }

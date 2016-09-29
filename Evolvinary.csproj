@@ -50,7 +50,9 @@
     <Compile Include="Main\Guis\Buttons\ButtonTextOnly.cs" />
     <Compile Include="Main\Guis\Gui.cs" />
     <Compile Include="Main\Guis\GuiIngame.cs" />
+    <Compile Include="Main\Guis\GuiIngameInventory.cs" />
     <Compile Include="Main\Guis\GuiIngameMenu.cs" />
+    <Compile Include="Main\Guis\GuiMap.cs" />
     <Compile Include="Main\Guis\GuiTitleScreen.cs" />
     <Compile Include="Main\Input\Camera.cs" />
     <Compile Include="Main\Input\InputProcessor.cs" />
@@ -77,7 +79,9 @@
     <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRendererText.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngame.cs" />
+    <Compile Include="Rendering\Renderers\Guis\GuiRendererIngameInventory.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererIngameMenu.cs" />
+    <Compile Include="Rendering\Renderers\Guis\GuiRendererMap.cs" />
     <Compile Include="Rendering\Renderers\Guis\GuiRendererTitleScreen.cs" />
     <Compile Include="Rendering\Renderers\Tiles\TileRenderer.cs" />
     <Compile Include="Rendering\Renderers\WorldRenderer.cs" />

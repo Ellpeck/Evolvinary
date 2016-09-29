@@ -13,7 +13,7 @@ namespace Evolvinary.Main.Guis{
         public bool ShouldClose;
         private bool hasButtons;
 
-        public GuiIngameMenu() : base(0, 0, getUnscaledWidth(), getUnscaledHeight()){
+        public GuiIngameMenu(PlayerData currentPlayer) : base(currentPlayer, 0, 0, getUnscaledWidth(), getUnscaledHeight()){
         }
 
         public override void onOpened(){

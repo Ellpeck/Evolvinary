@@ -11,14 +11,16 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Guis{
     public abstract class Gui{
-        public static readonly float Scale = 2F;
+        public static readonly float Scale = 1.6F;
         public Vector2 Pos;
         public int SizeX;
         public int SizeY;
+        public PlayerData CurrentPlayer;
 
         public List<Button> ButtonList = new List<Button>();
 
-        public Gui(int posX, int posY, int sizeX, int sizeY){
+        public Gui(PlayerData currentPlayer, int posX, int posY, int sizeX, int sizeY){
+            this.CurrentPlayer = currentPlayer;
             this.Pos = new Vector2(posX, posY);
             this.SizeX = sizeX;
             this.SizeY = sizeY;

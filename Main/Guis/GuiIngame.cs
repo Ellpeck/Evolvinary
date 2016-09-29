@@ -12,19 +12,22 @@ using Microsoft.Xna.Framework;
 namespace Evolvinary.Main.Guis{
     public class GuiIngame : Gui{
         public Entity SelectedEntity;
-        public PlayerData CurrentPlayer;
 
         private readonly Dictionary<Button, Entity> selectableEntities = new Dictionary<Button, Entity>();
 
-        public GuiIngame(PlayerData currentPlayer) : base(0, 0, getUnscaledWidth(), getUnscaledHeight()){
-            this.CurrentPlayer = currentPlayer;
+        public GuiIngame(PlayerData currentPlayer) : base(currentPlayer, 0, 0, getUnscaledWidth(), getUnscaledHeight()){
         }
 
         public override void onOpened(){
             base.onOpened();
-
             var width = getUnscaledWidth();
+            var height = getUnscaledHeight();
+
             this.ButtonList.Add(new ButtonRenderedRect(0, this, width-40, 10, 30, 30, new Rectangle(256, 0, 30, 30)));
+
+            this.ButtonList.Add(new ButtonRenderedRect(1, this, 10, height-40, 30, 30, new Rectangle(376, 0, 30, 30)));
+            this.ButtonList.Add(new ButtonRenderedRect(2, this, 10, height-80, 30, 30, new Rectangle(346, 0, 30, 30)));
+            this.ButtonList.Add(new ButtonRenderedRect(3, this, 10, height-120, 30, 30, new Rectangle(316, 0, 30, 30)));
         }
 
         public override GuiRenderer getRenderer(){
@@ -32,19 +35,27 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override void onActionPerformed(Button button){
-            if(button.Id == 0){
-                EvolvinaryMain.get().openGui(new GuiIngameMenu());
-            }
-            else{
-                if(this.selectableEntities.ContainsKey(button)){
-                    var entity = this.selectableEntities[button];
-                    this.SelectedEntity = entity;
+            switch(button.Id){
+                case 0:
+                    EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
+                    break;
+                case 1:
+                    EvolvinaryMain.get().openGui(new GuiIngameInventory(this.CurrentPlayer));
+                    break;
+                case 3:
+                    EvolvinaryMain.get().openGui(new GuiMap(this.CurrentPlayer));
+                    break;
+                default:
+                    if(this.selectableEntities.ContainsKey(button)){
+                        var entity = this.selectableEntities[button];
+                        this.SelectedEntity = entity;
 
-                    foreach(var key in this.selectableEntities.Keys){
-                        this.ButtonList.Remove(key);
+                        foreach(var key in this.selectableEntities.Keys){
+                            this.ButtonList.Remove(key);
+                        }
+                        this.selectableEntities.Clear();
                     }
-                    this.selectableEntities.Clear();
-                }
+                    break;
             }
         }
 
@@ -52,7 +63,7 @@ namespace Evolvinary.Main.Guis{
             base.onKeyPress(key);
 
             if(key == InputProcessor.Escape){
-                EvolvinaryMain.get().openGui(new GuiIngameMenu());
+                EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
             }
         }
 
