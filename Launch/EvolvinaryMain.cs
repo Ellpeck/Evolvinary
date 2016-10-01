@@ -40,10 +40,11 @@ namespace Evolvinary.Launch{
 
             InputProcessor.update(time, this);
 
-            GameData.WorldTest.update(time);
-            if(this.CurrentGui != null){
-                this.CurrentGui.update(time);
+            if(this.CurrentGui.doesGameGoOn()){
+                GameData.WorldTest.update(time);
             }
+
+            this.CurrentGui.update(time);
         }
 
         protected override void UnloadContent(){

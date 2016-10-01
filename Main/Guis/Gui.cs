@@ -69,7 +69,11 @@ namespace Evolvinary.Main.Guis{
         public virtual void onClosed(){
         }
 
-        public virtual bool allowCameraMovement(){
+        public virtual bool doesGameGoOn(){
+            return false;
+        }
+
+        public virtual bool canMoveCamera(){
             return false;
         }
 

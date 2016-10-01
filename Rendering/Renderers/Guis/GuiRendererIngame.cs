@@ -1,5 +1,6 @@
 ﻿using Evolvinary.Launch;
 using Evolvinary.Main.Guis;
+using Evolvinary.Main.Guis.Lists;
 using Evolvinary.Main.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,13 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 }
 
                 drawHoveringOverlay(manager.Batch, gui.CurrentPlayer.MoneyCounter+" Moneys", 0, 0, Color.White, 0, false);
+            }
+        }
+
+        protected void drawList(ScrollList list, RenderManager manager, GameTime time){
+            var renderer = list.getRenderer();
+            if(renderer != null){
+                renderer.draw(manager, time);
             }
         }
     }

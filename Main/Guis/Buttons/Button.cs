@@ -5,14 +5,13 @@ using Microsoft.Xna.Framework;
 namespace Evolvinary.Main.Guis.Buttons{
     public class Button{
         private ButtonRenderer renderer;
-
-        private readonly Gui gui;
+        protected readonly Gui Gui;
         public Rectangle Area;
         public readonly int Id;
 
         public Button(int id, Gui gui, int posX, int posY, int sizeX, int sizeY){
             this.Id = id;
-            this.gui = gui;
+            this.Gui = gui;
             this.Area = new Rectangle(posX, posY, sizeX, sizeY);
         }
 

@@ -18,6 +18,9 @@ namespace Evolvinary.Main.Input{
         public static readonly InputSetting RightMouse = new MouseSetting(1).register();
         public static readonly InputSetting MiddleMouse = new MouseSetting(2).register();
 
+        private static int lastScroll;
+        private static int currentScrollDelta;
+
         public static void update(GameTime time, EvolvinaryMain game){
             foreach(var bind in KeyBindings){
                 bind.update();
@@ -25,16 +28,24 @@ namespace Evolvinary.Main.Input{
 
             game.Camera.checkInputs();
 
-            if(MiddleMouse.PressedOnce && game.CurrentGui.allowCameraMovement()){
+            if(MiddleMouse.PressedOnce && game.CurrentGui.doesGameGoOn() && game.CurrentGui.canMoveCamera()){
                 var pos = game.Camera.toWorldPos(getMousePos().ToVector2());
 
                 var silo = new EntitySilo();
                 silo.place(GameData.MainPlayer, 1000, GameData.WorldTest, pos);
             }
+
+            var scroll = getMouseWheel();
+            currentScrollDelta = scroll-lastScroll;
+            lastScroll = scroll;
         }
 
         public static int getMouseWheel(){
             return Mouse.GetState().ScrollWheelValue;
+        }
+
+        public static int getScrollDelta(){
+            return currentScrollDelta;
         }
 
         public static int getMouseX(){

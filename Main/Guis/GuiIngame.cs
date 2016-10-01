@@ -67,7 +67,11 @@ namespace Evolvinary.Main.Guis{
             }
         }
 
-        public override bool allowCameraMovement(){
+        public override bool doesGameGoOn(){
+            return true;
+        }
+
+        public override bool canMoveCamera(){
             return true;
         }
 
