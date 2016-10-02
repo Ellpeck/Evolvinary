@@ -82,7 +82,7 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 var accumulated = "";
 
                 foreach(var word in words){
-                    if(font.MeasureString(accumulated+word).X >= length / Gui.Scale){
+                    if(font.MeasureString(accumulated+word).X >= length){
                         result.Add(accumulated);
                         accumulated = word+" ";
                     }
@@ -97,6 +97,25 @@ namespace Evolvinary.Rendering.Renderers.Guis{
             }
 
             return new[]{text+" "};
+        }
+
+        public static void drawCenteredText(RenderManager manager, string text, float scale, Rectangle area, bool centerY){
+            var font = manager.NormalFont;
+
+            var pos = area.Location;
+            var x = pos.X+area.Width / 2-font.MeasureString(text).X * scale / 2;
+            var y = centerY ? pos.Y+area.Height / 2-font.LineSpacing * scale / 2 : pos.Y;
+
+            manager.Batch.DrawString(font, text, new Vector2(x, y), Color.White, 0F, Vector2.Zero, scale, SpriteEffects.None, 0F);
+        }
+
+        public static void drawRectWithScale(RenderManager manager, Texture2D texture, Rectangle area, Rectangle source, float scale){
+            var location = area.Location.ToVector2();
+            var halfSize = area.Size.ToVector2() / 2;
+
+            var render = location-halfSize * scale+halfSize;
+
+            manager.Batch.Draw(texture, render, source, Color.White, 0F, Vector2.Zero, scale, SpriteEffects.None, 0F);
         }
     }
 }

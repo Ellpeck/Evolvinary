@@ -27,6 +27,10 @@ namespace Evolvinary.Main.Guis.Lists{
             this.renderer = renderer;
         }
 
+        public virtual void redefineArea(Rectangle area){
+            this.CurrentArea = area;
+        }
+
         public ListComponentRenderer getRenderer(){
             return this.renderer;
         }

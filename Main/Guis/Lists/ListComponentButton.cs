@@ -14,8 +14,12 @@ namespace Evolvinary.Main.Guis.Lists{
 
         public override void update(GameTime time){
             base.update(time);
-            this.Button.Area = this.CurrentArea;
             this.Button.update(time);
+        }
+
+        public override void redefineArea(Rectangle area){
+            base.redefineArea(area);
+            this.Button.Area = area;
         }
 
         public override void onClicked(){

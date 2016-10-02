@@ -101,7 +101,7 @@ namespace Evolvinary.Main.Guis{
                             foreach(var entity in entities){
                                 if(entity.canBeSelected()){
                                     var pos = EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Scale;
-                                    this.selectableEntities.Add(new ButtonTextOnly(this.selectableEntities.Count+1, this, (int) pos.X, (int) pos.Y, 30, 10, entity.getDisplayName(), 1F), entity);
+                                    this.selectableEntities.Add(new ButtonTextOnly(this.selectableEntities.Count-102834, this, (int) pos.X, (int) pos.Y, 30, 10, entity.getDisplayName(), 1F), entity);
                                 }
                             }
 

@@ -11,5 +11,8 @@ namespace Evolvinary.Rendering.Renderers.Guis.Lists{
 
         public virtual void draw(RenderManager manager, GameTime time){
         }
+
+        public virtual void drawUpper(RenderManager manager, GameTime time){
+        }
     }
 }

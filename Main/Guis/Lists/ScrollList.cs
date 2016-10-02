@@ -38,10 +38,10 @@ namespace Evolvinary.Main.Guis.Lists{
             var totalHeight = this.scrollOffset;
 
             foreach(var component in this.Components){
-                component.CurrentArea = new Rectangle(this.Area.X, this.Area.Y+totalHeight, this.Area.Width, component.Height);
-                component.IsVisible = totalHeight >= 0 && totalHeight < this.Area.Height-component.Height;
+                component.redefineArea(new Rectangle(this.Area.X, this.Area.Y+totalHeight, this.Area.Width, component.Height));
+                component.IsVisible = totalHeight >= 0 && totalHeight < this.Area.Height;
 
-                totalHeight += component.Height+2;
+                totalHeight += component.Height+4;
             }
         }
 
@@ -55,19 +55,25 @@ namespace Evolvinary.Main.Guis.Lists{
             foreach(var component in this.Components.ToList()){
                 component.update(time);
 
-                if(moused && component.isMouseOver() && InputProcessor.LeftMouse.PressedOnce){
+                if(moused && component.IsVisible && component.isMouseOver() && InputProcessor.LeftMouse.PressedOnce){
                     component.onClicked();
                 }
             }
 
             if(moused){
                 var delta = InputProcessor.getScrollDelta();
-                var oldOffset = this.scrollOffset;
+                if(delta != 0){
+                    var oldOffset = this.scrollOffset;
 
-                this.scrollOffset += delta / 10;
+                    var totalHeight = -this.Area.Height;
+                    foreach(var component in this.Components){
+                        totalHeight += component.Height+4;
+                    }
+                    this.scrollOffset = Math.Max(-totalHeight, Math.Min(0, this.scrollOffset+delta / 10));
 
-                if(this.scrollOffset != oldOffset){
-                    this.redefineAreas();
+                    if(this.scrollOffset != oldOffset){
+                        this.redefineAreas();
+                    }
                 }
             }
         }

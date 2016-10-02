@@ -55,6 +55,7 @@
     <Compile Include="Main\Guis\GuiMap.cs" />
     <Compile Include="Main\Guis\GuiTitleScreen.cs" />
     <Compile Include="Main\Guis\Lists\ListComponentButton.cs" />
+    <Compile Include="Main\Guis\Lists\ListComponentObjectPanel.cs" />
     <Compile Include="Main\Guis\Lists\ScrollList.cs" />
     <Compile Include="Main\Guis\Lists\ListComponent.cs" />
     <Compile Include="Main\Input\Camera.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Rendering\Renderers\Guis\GuiRendererTitleScreen.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererButton.cs" />
+    <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererObjectPanel.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListRenderer.cs" />
     <Compile Include="Rendering\Renderers\Tiles\TileRenderer.cs" />
     <Compile Include="Rendering\Renderers\WorldRenderer.cs" />
@@ -97,7 +99,6 @@
     <Folder Include="Helper" />
     <Folder Include="Main\Guis\" />
     <Folder Include="Main\" />
-    <Folder Include="Main\Guis\Lists" />
     <Folder Include="Main\Input\" />
     <Folder Include="Main\Worlds\" />
     <Folder Include="Main\Worlds\Entities" />

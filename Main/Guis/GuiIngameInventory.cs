@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Evolvinary.Launch;
 using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Guis.Lists;
 using Evolvinary.Rendering.Renderers.Guis;
-using Evolvinary.Rendering.Renderers.Guis.Lists;
+using Evolvinary.Rendering.Renderers.Guis.Buttons;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Guis{
     public class GuiIngameInventory : GuiIngame{
-
         public ScrollList List;
 
         public GuiIngameInventory(PlayerData currentPlayer) : base(currentPlayer){
@@ -16,13 +15,21 @@ namespace Evolvinary.Main.Guis{
         public override void onOpened(){
             base.onOpened();
 
-            this.List = new ScrollList(0, this, 10, 10, 50, 80);
-            this.List.addComponent(new ListComponentButton(this, 20, new ButtonTextOnly(-1, this, "Blah", 1F)));
-            this.List.addComponent(new ListComponentButton(this, 20, new ButtonTextOnly(-2, this, "Test", 1.5F)));
-            this.List.addComponent(new ListComponentButton(this, 20, new ButtonTextOnly(-3, this, "My face", 1F)));
-            this.List.addComponent(new ListComponentButton(this, 20, new ButtonTextOnly(-4, this, "Dickbutt", 0.75F)));
-            this.List.addComponent(new ListComponentButton(this, 20, new ButtonTextOnly(-5, this, "Hello", 1F)));
-            this.List.addComponent(new ListComponentButton(this, 20, new ButtonTextOnly(-6, this, "Money", 1F)));
+            var height = getUnscaledHeight();
+            this.List = new ScrollList(0, this, 65, height-200, 350, 200);
+            this.List.addComponent(new ListComponentObjectPanel(-1, this, "This test", "This is a description hi hows it goin blah blah this needs to be longer than it currently is so that this actually works so yea"));
+            this.List.addComponent(new ListComponentObjectPanel(-2, this, "Baguette", "Blah bla bla bla bla bla blah"));
+            this.List.addComponent(new ListComponentObjectPanel(-3, this, "Fromage", "This is also a test"));
+            this.List.addComponent(new ListComponentObjectPanel(-4, this, "Oui Oui", "I need a really long text to be able to fill this gap"));
+            this.List.addComponent(new ListComponentObjectPanel(-5, this, "Out of ideas", "Yes really"));
+            this.List.addComponent(new ListComponentObjectPanel(-6, this, "Silo", "This is a silo, it does siloy stuff"));
+            this.List.addComponent(new ListComponentObjectPanel(-7, this, "Grass", "This is grass. It grows."));
+            this.List.addComponent(new ListComponentObjectPanel(-8, this, "Indeed", "Yes, indeed!"));
+            this.List.addComponent(new ListComponentObjectPanel(-9, this, "Forward", "Yo, this is actually going backwards but whatever"));
+            this.List.addComponent(new ListComponentObjectPanel(-10, this, "Backwhat?", "I don't know either"));
+
+            var invButton = this.ButtonList[1];
+            invButton.setRenderer(new ButtonRendererStatic(invButton, new Rectangle(286, 0, 30, 30)));
         }
 
         public override void update(GameTime time){
@@ -45,7 +52,9 @@ namespace Evolvinary.Main.Guis{
         public override void onActionPerformed(Button button){
             base.onActionPerformed(button);
 
-            Console.WriteLine(button.Id);
+            if(button.Id == 1){
+                EvolvinaryMain.get().openGui(null);
+            }
         }
     }
 }
