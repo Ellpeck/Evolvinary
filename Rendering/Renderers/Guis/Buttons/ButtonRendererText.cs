@@ -14,7 +14,7 @@ namespace Evolvinary.Rendering.Renderers.Guis.Buttons{
 
             var button = this.Button as ButtonTextOnly;
             if(button != null){
-                GuiRenderer.drawCenteredText(manager, button.DisplayText, button.isMouseOver() ? this.scale+0.5F : this.scale, button.Area, true);
+                GuiRenderer.drawCenteredText(manager, button.DisplayText, button.isMouseOver() ? this.scale+0.5F : this.scale, button.Area, true, Color.White);
             }
         }
     }

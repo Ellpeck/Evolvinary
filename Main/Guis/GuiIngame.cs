@@ -76,7 +76,7 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override void onMousePress(MouseSetting mouse){
-            if(mouse == InputProcessor.LeftMouse){
+            if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
                 if(this.selectableEntities.Count <= 0){
                     var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
 

@@ -12,25 +12,39 @@ namespace Evolvinary.Rendering.Renderers.Guis.Lists{
             this.description = description;
         }
 
+        public virtual string getTitle(){
+            return this.title;
+        }
+
+        public virtual string getDescription(){
+            return this.description;
+        }
+
         public override void draw(RenderManager manager, GameTime time){
             base.draw(manager, time);
             var font = manager.NormalFont;
-            var moused = this.Component.isMouseOver();
             var area = this.Component.CurrentArea;
-            var scale = moused ? 1.1F : 1F;
+            var scale = this.Component.isMouseOver() ? 1.1F : 1F;
+            var textColor = this.Component.IsSelected ? Color.Black : Color.White;
+            var heightThird = area.Height / 3;
 
             var srcRect = new Rectangle(0, 0, area.Width, area.Height);
-            GuiRenderer.drawRectWithScale(manager, GraphicsHelper.TranslucentGray, area, srcRect, scale);
+            GuiRenderer.drawRectWithScale(manager, GraphicsHelper.TranslucentWhite, area, srcRect, scale, this.Component.IsSelected ? Color.CornflowerBlue : Color.Black);
 
-            var heightThird = area.Height / 3;
-            var upperRect = new Rectangle(area.X, area.Y, area.Width, heightThird);
-            GuiRenderer.drawCenteredText(manager, this.title, scale*1.5F, upperRect, true);
+            var theTitle = this.getTitle();
+            if(theTitle != null){
+                var upperRect = new Rectangle(area.X, area.Y, area.Width, heightThird);
+                GuiRenderer.drawCenteredText(manager, theTitle, scale * 1.5F, upperRect, true, textColor);
+            }
 
-            var lowerRect = new Rectangle(area.X, area.Y+heightThird+2, area.Width, heightThird*2);
-            var descToLength = GuiRenderer.splitTextToLength(this.description, font, lowerRect.Width);
-            foreach(var s in descToLength){
-                GuiRenderer.drawCenteredText(manager, s, scale, lowerRect, false);
-                lowerRect.Offset(0, font.LineSpacing);
+            var theDesc = this.getDescription();
+            if(theDesc != null){
+                var lowerRect = new Rectangle(area.X, area.Y+heightThird+2, area.Width, heightThird * 2);
+                var descToLength = GuiRenderer.splitTextToLength(theDesc, font, lowerRect.Width);
+                foreach(var s in descToLength){
+                    GuiRenderer.drawCenteredText(manager, s, scale, lowerRect, false, textColor);
+                    lowerRect.Offset(0, font.LineSpacing);
+                }
             }
         }
     }

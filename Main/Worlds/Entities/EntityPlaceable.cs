@@ -13,5 +13,9 @@ namespace Evolvinary.Main.Worlds.Entities{
             }
             return false;
         }
+
+        public virtual int getPlacePrice(){
+            return 1000;
+        }
     }
 }

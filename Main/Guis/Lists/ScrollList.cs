@@ -12,12 +12,10 @@ namespace Evolvinary.Main.Guis.Lists{
         private ListRenderer renderer;
         protected readonly Gui Gui;
         public Rectangle Area;
-        public readonly int Id;
 
         private int scrollOffset;
 
-        public ScrollList(int id, Gui gui, int posX, int posY, int sizeX, int sizeY){
-            this.Id = id;
+        public ScrollList(Gui gui, int posX, int posY, int sizeX, int sizeY){
             this.Gui = gui;
             this.Area = new Rectangle(posX, posY, sizeX, sizeY);
 
@@ -49,6 +47,15 @@ namespace Evolvinary.Main.Guis.Lists{
             return this.Area.Contains(InputProcessor.getMousePos().ToVector2() / Gui.Scale);
         }
 
+        public ListComponent getSelectedComponent(){
+            foreach(var component in this.Components){
+                if(component.IsSelected){
+                    return component;
+                }
+            }
+            return null;
+        }
+
         public void update(GameTime time){
             var moused = this.isMouseOver();
 
@@ -56,6 +63,7 @@ namespace Evolvinary.Main.Guis.Lists{
                 component.update(time);
 
                 if(moused && component.IsVisible && component.isMouseOver() && InputProcessor.LeftMouse.PressedOnce){
+                    this.unselectAllExcept(component);
                     component.onClicked();
                 }
             }
@@ -78,23 +86,20 @@ namespace Evolvinary.Main.Guis.Lists{
             }
         }
 
-        public ListComponent getHoveredComponent(){
-            if(this.isMouseOver()){
-                foreach(var component in this.Components){
-                    if(component.IsVisible && component.isMouseOver()){
-                        return component;
-                    }
-                }
-            }
-            return null;
-        }
-
         public void setRenderer(ListRenderer renderer){
             this.renderer = renderer;
         }
 
         public ListRenderer getRenderer(){
             return this.renderer;
+        }
+
+        public void unselectAllExcept(ListComponent component){
+            foreach(var comp in this.Components){
+                if(component != comp){
+                    comp.IsSelected = false;
+                }
+            }
         }
     }
 }

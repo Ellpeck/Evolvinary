@@ -28,13 +28,6 @@ namespace Evolvinary.Main.Input{
 
             game.Camera.checkInputs();
 
-            if(MiddleMouse.PressedOnce && game.CurrentGui.doesGameGoOn() && game.CurrentGui.canMoveCamera()){
-                var pos = game.Camera.toWorldPos(getMousePos().ToVector2());
-
-                var silo = new EntitySilo();
-                silo.place(GameData.MainPlayer, 1000, GameData.WorldTest, pos);
-            }
-
             var scroll = getMouseWheel();
             currentScrollDelta = scroll-lastScroll;
             lastScroll = scroll;

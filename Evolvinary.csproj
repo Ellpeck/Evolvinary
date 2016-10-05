@@ -54,7 +54,9 @@
     <Compile Include="Main\Guis\GuiIngameMenu.cs" />
     <Compile Include="Main\Guis\GuiMap.cs" />
     <Compile Include="Main\Guis\GuiTitleScreen.cs" />
+    <Compile Include="Main\Guis\Lists\ItemList.cs" />
     <Compile Include="Main\Guis\Lists\ListComponentButton.cs" />
+    <Compile Include="Main\Guis\Lists\ListComponentItem.cs" />
     <Compile Include="Main\Guis\Lists\ListComponentObjectPanel.cs" />
     <Compile Include="Main\Guis\Lists\ScrollList.cs" />
     <Compile Include="Main\Guis\Lists\ListComponent.cs" />
@@ -63,6 +65,10 @@
     <Compile Include="Main\Input\Setting\InputSetting.cs" />
     <Compile Include="Main\Input\Setting\KeySetting.cs" />
     <Compile Include="Main\Input\Setting\MouseSetting.cs" />
+    <Compile Include="Main\Items\Inventory.cs" />
+    <Compile Include="Main\Items\Item.cs" />
+    <Compile Include="Main\Items\ItemEntityHolder.cs" />
+    <Compile Include="Main\Items\Stack.cs" />
     <Compile Include="Main\PlayerData.cs" />
     <Compile Include="Main\Worlds\Cells\Cell.cs" />
     <Compile Include="Main\Worlds\Chunk.cs" />
@@ -89,6 +95,7 @@
     <Compile Include="Rendering\Renderers\Guis\GuiRendererTitleScreen.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererButton.cs" />
+    <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererItem.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererObjectPanel.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListRenderer.cs" />
     <Compile Include="Rendering\Renderers\Tiles\TileRenderer.cs" />
@@ -97,11 +104,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper" />
+    <Folder Include="Main" />
     <Folder Include="Main\Guis\" />
     <Folder Include="Main\" />
     <Folder Include="Main\Input\" />
     <Folder Include="Main\Worlds\" />
     <Folder Include="Main\Worlds\Entities" />
+    <Folder Include="Rendering" />
     <Folder Include="Rendering\" />
     <Folder Include="Rendering\Renderers" />
     <Folder Include="Rendering\Renderers\" />

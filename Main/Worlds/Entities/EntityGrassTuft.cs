@@ -14,8 +14,7 @@ namespace Evolvinary.Main.Worlds.Entities{
         private int currentStage;
         private int growthTime;
 
-        public EntityGrassTuft(int initialStage){
-            this.currentStage = initialStage;
+        public EntityGrassTuft(){
             this.attachRenderer(Renderers[0]);
         }
 
@@ -43,7 +42,7 @@ namespace Evolvinary.Main.Worlds.Entities{
 
                                     var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft));
                                     if(entities.Count <= 0){
-                                        var newTuft = new EntityGrassTuft(0);
+                                        var newTuft = new EntityGrassTuft();
                                         newTuft.set(this.World, pos);
                                     }
                                 }

@@ -10,6 +10,7 @@ namespace Evolvinary.Main.Guis.Lists{
         public Rectangle CurrentArea;
         public readonly int Height;
         public bool IsVisible;
+        public bool IsSelected;
 
         public ListComponent(Gui gui, int height){
             this.Gui = gui;
@@ -36,7 +37,7 @@ namespace Evolvinary.Main.Guis.Lists{
         }
 
         public virtual void onClicked(){
-
+            this.IsSelected = !this.IsSelected;
         }
     }
 }

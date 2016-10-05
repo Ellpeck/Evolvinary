@@ -10,7 +10,7 @@ namespace Evolvinary.Rendering.Renderers.Guis.Buttons{
         }
 
         public override void draw(RenderManager manager, GameTime time){
-            GuiRenderer.drawRectWithScale(manager, GuiRendererIngame.MenuTextures, this.Button.Area, this.RenderRect, this.Button.isMouseOver() ? 1.25F : 1F);
+            GuiRenderer.drawRectWithScale(manager, GuiRendererIngame.MenuTextures, this.Button.Area, this.RenderRect, this.Button.isMouseOver() ? 1.25F : 1F, Color.White);
         }
     }
 }

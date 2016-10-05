@@ -22,7 +22,7 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                     entity.Renderer.drawOverlay(entity, EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Gui.Scale, InputProcessor.getMousePos().ToVector2(), manager, time);
                 }
 
-                drawHoveringOverlay(manager.Batch, gui.CurrentPlayer.MoneyCounter+" Moneys", 0, 0, Color.White, 0, false);
+                drawHoveringOverlay(manager.Batch, gui.CurrentPlayer.Money+" Moneys", 0, 0, Color.White, 0, false);
             }
         }
 

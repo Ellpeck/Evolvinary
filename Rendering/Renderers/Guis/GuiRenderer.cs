@@ -66,7 +66,7 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 y = Math.Max(Math.Min(y, Gui.getUnscaledHeight()-split.Length * lineHeight-4), 2);
             }
 
-            batch.Draw(GraphicsHelper.TranslucentGray, new Vector2(x-4, y-2), new Rectangle(0, 0, longestLength+4, split.Length * lineHeight+6), Color.White);
+            batch.Draw(GraphicsHelper.TranslucentWhite, new Vector2(x-4, y-2), new Rectangle(0, 0, longestLength+4, split.Length * lineHeight+6), Color.Black);
 
             var height = 0;
             foreach(var s in split){
@@ -99,23 +99,23 @@ namespace Evolvinary.Rendering.Renderers.Guis{
             return new[]{text+" "};
         }
 
-        public static void drawCenteredText(RenderManager manager, string text, float scale, Rectangle area, bool centerY){
+        public static void drawCenteredText(RenderManager manager, string text, float scale, Rectangle area, bool centerY, Color color){
             var font = manager.NormalFont;
 
             var pos = area.Location;
             var x = pos.X+area.Width / 2-font.MeasureString(text).X * scale / 2;
             var y = centerY ? pos.Y+area.Height / 2-font.LineSpacing * scale / 2 : pos.Y;
 
-            manager.Batch.DrawString(font, text, new Vector2(x, y), Color.White, 0F, Vector2.Zero, scale, SpriteEffects.None, 0F);
+            manager.Batch.DrawString(font, text, new Vector2(x, y), color, 0F, Vector2.Zero, scale, SpriteEffects.None, 0F);
         }
 
-        public static void drawRectWithScale(RenderManager manager, Texture2D texture, Rectangle area, Rectangle source, float scale){
+        public static void drawRectWithScale(RenderManager manager, Texture2D texture, Rectangle area, Rectangle source, float scale, Color color){
             var location = area.Location.ToVector2();
             var halfSize = area.Size.ToVector2() / 2;
 
             var render = location-halfSize * scale+halfSize;
 
-            manager.Batch.Draw(texture, render, source, Color.White, 0F, Vector2.Zero, scale, SpriteEffects.None, 0F);
+            manager.Batch.Draw(texture, render, source, color, 0F, Vector2.Zero, scale, SpriteEffects.None, 0F);
         }
     }
 }

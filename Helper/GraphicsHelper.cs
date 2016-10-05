@@ -6,7 +6,7 @@ namespace Evolvinary.Helper{
     public class GraphicsHelper{
 
         public static Texture2D Graydient; //Yes this is a pun
-        public static Texture2D TranslucentGray;
+        public static Texture2D TranslucentWhite;
         public static Texture2D SolidWhite;
 
         public static void init(){
@@ -21,12 +21,12 @@ namespace Evolvinary.Helper{
             }
             Graydient.SetData(gradientData);
 
-            TranslucentGray = new Texture2D(game.GraphicsDevice, game.RenderManager.getScreenWidth(), game.RenderManager.getScreenHeight());
-            var translucentData = new Color[TranslucentGray.Width*TranslucentGray.Height];
+            TranslucentWhite = new Texture2D(game.GraphicsDevice, game.RenderManager.getScreenWidth(), game.RenderManager.getScreenHeight());
+            var translucentData = new Color[TranslucentWhite.Width*TranslucentWhite.Height];
             for(var i = 0; i < translucentData.Length; i++){
-                translucentData[i] = new Color(0F, 0F, 0F, 0.5F);
+                translucentData[i] = new Color(1F, 1F, 1F, 0.5F);
             }
-            TranslucentGray.SetData(translucentData);
+            TranslucentWhite.SetData(translucentData);
 
             SolidWhite = new Texture2D(game.GraphicsDevice, game.RenderManager.getScreenWidth(), game.RenderManager.getScreenHeight());
             var whiteData = new Color[SolidWhite.Width*SolidWhite.Height];
@@ -38,7 +38,7 @@ namespace Evolvinary.Helper{
 
         public static void dispose(){
             Graydient.Dispose();
-            TranslucentGray.Dispose();
+            TranslucentWhite.Dispose();
             SolidWhite.Dispose();
         }
     }
