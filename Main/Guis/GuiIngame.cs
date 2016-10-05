@@ -35,6 +35,8 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override void onActionPerformed(Button button){
+            this.SelectedEntity = null;
+
             switch(button.Id){
                 case 0:
                     EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
@@ -49,14 +51,14 @@ namespace Evolvinary.Main.Guis{
                     if(this.selectableEntities.ContainsKey(button)){
                         var entity = this.selectableEntities[button];
                         this.SelectedEntity = entity;
-
-                        foreach(var key in this.selectableEntities.Keys){
-                            this.ButtonList.Remove(key);
-                        }
-                        this.selectableEntities.Clear();
                     }
                     break;
             }
+
+            foreach(var key in this.selectableEntities.Keys){
+                this.ButtonList.Remove(key);
+            }
+            this.selectableEntities.Clear();
         }
 
         public override void onKeyPress(KeySetting key){
@@ -76,6 +78,8 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override void onMousePress(MouseSetting mouse){
+            base.onMousePress(mouse);
+
             if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
                 if(this.selectableEntities.Count <= 0){
                     var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
@@ -108,29 +112,21 @@ namespace Evolvinary.Main.Guis{
                             if(this.selectableEntities.Count > 0){
                                 this.SelectedEntity = null;
                                 this.ButtonList.AddRange(this.selectableEntities.Keys);
-                                return;
                             }
                         }
                         else{
                             var entity = entities[0];
                             this.SelectedEntity = entity;
-                            return;
                         }
                     }
                 }
                 else{
-                    base.onMousePress(mouse);
-
                     foreach(var key in this.selectableEntities.Keys){
                         this.ButtonList.Remove(key);
                     }
                     this.selectableEntities.Clear();
-
-                    return;
                 }
             }
-
-            base.onMousePress(mouse);
         }
 
         public override void update(GameTime time){

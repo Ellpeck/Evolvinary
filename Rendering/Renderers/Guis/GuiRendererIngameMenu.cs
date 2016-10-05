@@ -13,7 +13,7 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 var amount = gui.ShouldClose ? 256-gui.FadeTime : gui.FadeTime;
                 var size = new Point(amount, this.Gui.SizeY);
                 var source = new Rectangle(0, 0, amount, 128);
-                manager.Batch.Draw(GraphicsHelper.Graydient, new Rectangle(this.Gui.Pos.ToPoint(), size), source, Color.White);
+                manager.Batch.Draw(GraphicsHelper.WhiteGradient, new Rectangle(this.Gui.Pos.ToPoint(), size), source, Color.Black);
             }
 
             base.draw(manager, time);

@@ -17,8 +17,8 @@ namespace Evolvinary.Main.Guis.Lists{
             return this.inventory.get(this.index);
         }
 
-        public void setStack(Stack stack){
-            this.inventory.set(stack, this.index);
+        public void removeStack(){
+            this.inventory.remove(this.getStack());
         }
     }
 }

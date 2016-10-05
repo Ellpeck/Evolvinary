@@ -5,21 +5,21 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Evolvinary.Helper{
     public class GraphicsHelper{
 
-        public static Texture2D Graydient; //Yes this is a pun
+        public static Texture2D WhiteGradient;
         public static Texture2D TranslucentWhite;
         public static Texture2D SolidWhite;
 
         public static void init(){
             var game = EvolvinaryMain.get();
 
-            Graydient = new Texture2D(game.GraphicsDevice, 256, 128);
-            var gradientData = new Color[Graydient.Width * Graydient.Height];
-            for(var x = 0; x < Graydient.Width; x++){
-                for(var y = 0; y < Graydient.Height; y++){
-                    gradientData[x+y * Graydient.Width] = new Color(0F, 0F, 0F, 1F-x / ((float) Graydient.Width+50));
+            WhiteGradient = new Texture2D(game.GraphicsDevice, 256, 128);
+            var gradientData = new Color[WhiteGradient.Width * WhiteGradient.Height];
+            for(var x = 0; x < WhiteGradient.Width; x++){
+                for(var y = 0; y < WhiteGradient.Height; y++){
+                    gradientData[x+y * WhiteGradient.Width] = new Color(1F, 1F, 1F, 1F-x / ((float) WhiteGradient.Width+50));
                 }
             }
-            Graydient.SetData(gradientData);
+            WhiteGradient.SetData(gradientData);
 
             TranslucentWhite = new Texture2D(game.GraphicsDevice, game.RenderManager.getScreenWidth(), game.RenderManager.getScreenHeight());
             var translucentData = new Color[TranslucentWhite.Width*TranslucentWhite.Height];
@@ -37,7 +37,7 @@ namespace Evolvinary.Helper{
         }
 
         public static void dispose(){
-            Graydient.Dispose();
+            WhiteGradient.Dispose();
             TranslucentWhite.Dispose();
             SolidWhite.Dispose();
         }

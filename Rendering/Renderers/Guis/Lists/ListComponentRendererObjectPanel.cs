@@ -24,17 +24,20 @@ namespace Evolvinary.Rendering.Renderers.Guis.Lists{
             base.draw(manager, time);
             var font = manager.NormalFont;
             var area = this.Component.CurrentArea;
-            var scale = this.Component.isMouseOver() ? 1.1F : 1F;
-            var textColor = this.Component.IsSelected ? Color.Black : Color.White;
             var heightThird = area.Height / 3;
 
             var srcRect = new Rectangle(0, 0, area.Width, area.Height);
-            GuiRenderer.drawRectWithScale(manager, GraphicsHelper.TranslucentWhite, area, srcRect, scale, this.Component.IsSelected ? Color.CornflowerBlue : Color.Black);
+            manager.Batch.Draw(GraphicsHelper.TranslucentWhite, area, srcRect, this.Component.isMouseOver() ? Color.DarkSlateGray : Color.Black);
+
+            if(this.Component.IsSelected){
+                var selectRect = new Rectangle(area.X, area.Y, 15, area.Height);
+                manager.Batch.Draw(GraphicsHelper.TranslucentWhite, selectRect, srcRect, Color.DarkGreen);
+            }
 
             var theTitle = this.getTitle();
             if(theTitle != null){
                 var upperRect = new Rectangle(area.X, area.Y, area.Width, heightThird);
-                GuiRenderer.drawCenteredText(manager, theTitle, scale * 1.5F, upperRect, true, textColor);
+                GuiRenderer.drawCenteredText(manager, theTitle, 1.5F, upperRect, true, Color.White);
             }
 
             var theDesc = this.getDescription();
@@ -42,7 +45,7 @@ namespace Evolvinary.Rendering.Renderers.Guis.Lists{
                 var lowerRect = new Rectangle(area.X, area.Y+heightThird+2, area.Width, heightThird * 2);
                 var descToLength = GuiRenderer.splitTextToLength(theDesc, font, lowerRect.Width);
                 foreach(var s in descToLength){
-                    GuiRenderer.drawCenteredText(manager, s, scale, lowerRect, false, textColor);
+                    GuiRenderer.drawCenteredText(manager, s, 1F, lowerRect, false, Color.White);
                     lowerRect.Offset(0, font.LineSpacing);
                 }
             }

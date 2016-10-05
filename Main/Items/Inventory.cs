@@ -1,9 +1,12 @@
-﻿namespace Evolvinary.Main.Items{
+﻿using System.Collections.Generic;
+
+namespace Evolvinary.Main.Items{
     public class Inventory{
-        private readonly Stack[] inv;
+        private readonly List<Stack> inv = new List<Stack>();
+        private readonly int maxSize;
 
         public Inventory(int maxSize){
-            this.inv = new Stack[maxSize];
+            this.maxSize = maxSize;
         }
 
         public bool addExisting(Stack stack){
@@ -16,17 +19,15 @@
         }
 
         public bool addNew(Stack stack){
-            for(var i = 0; i < this.inv.Length; i++){
-                if(this.inv[i] == null){
-                    this.inv[i] = stack;
-                    return true;
-                }
+            if(this.size() < this.maxSize){
+                this.inv.Add(stack);
+                return true;
             }
             return false;
         }
 
         public Stack get(int place){
-            if(place >= 0 && place < this.inv.Length){
+            if(place >= 0 && place < this.inv.Count){
                 return this.inv[place];
             }
             return null;
@@ -41,14 +42,14 @@
             return null;
         }
 
-        public void set(Stack stack, int place){
-            if(place >= 0 && place < this.inv.Length){
-                this.inv[place] = stack;
+        public void remove(Stack stack){
+            if(this.inv.Contains(stack)){
+                this.inv.Remove(stack);
             }
         }
 
         public int size(){
-            return this.inv.Length;
+            return this.inv.Count;
         }
     }
 }

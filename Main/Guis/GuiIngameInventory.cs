@@ -43,15 +43,16 @@ namespace Evolvinary.Main.Guis{
                             if(entity.place(GameData.MainPlayer, entity.getPlacePrice(), GameData.WorldTest, pos)){
                                 stack.Amount--;
                                 if(stack.Amount <= 0){
-                                    selected.setStack(null);
+                                    selected.removeStack();
+                                    this.List.removeComponent(selected);
                                 }
-
-                                if(!InputProcessor.Shift.IsDown){
-                                    this.List.unselectAllExcept(null);
-                                }
-
-                                return;
                             }
+
+                            if(!InputProcessor.Shift.IsDown){
+                                this.List.unselectAllExcept(null);
+                            }
+
+                            return;
                         }
                     }
                 }
@@ -62,10 +63,6 @@ namespace Evolvinary.Main.Guis{
 
         public override GuiRenderer getRenderer(){
             return new GuiRendererIngameInventory(this);
-        }
-
-        public override bool doesGameGoOn(){
-            return false;
         }
 
         public override bool canMoveCamera(){

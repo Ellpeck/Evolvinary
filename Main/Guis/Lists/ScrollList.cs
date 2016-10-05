@@ -77,7 +77,10 @@ namespace Evolvinary.Main.Guis.Lists{
                     foreach(var component in this.Components){
                         totalHeight += component.Height+4;
                     }
-                    this.scrollOffset = Math.Max(-totalHeight, Math.Min(0, this.scrollOffset+delta / 10));
+
+                    if(totalHeight >= this.Area.Height){
+                        this.scrollOffset = Math.Max(-totalHeight, Math.Min(0, this.scrollOffset+delta / 10));
+                    }
 
                     if(this.scrollOffset != oldOffset){
                         this.redefineAreas();
