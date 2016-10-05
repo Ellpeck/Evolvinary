@@ -42,7 +42,7 @@ namespace Evolvinary.Rendering.Renderers.Guis.Lists{
 
             var theDesc = this.getDescription();
             if(theDesc != null){
-                var lowerRect = new Rectangle(area.X, area.Y+heightThird+2, area.Width, heightThird * 2);
+                var lowerRect = new Rectangle(area.X+20, area.Y+heightThird+2, area.Width-40, heightThird * 2);
                 var descToLength = GuiRenderer.splitTextToLength(theDesc, font, lowerRect.Width);
                 foreach(var s in descToLength){
                     GuiRenderer.drawCenteredText(manager, s, 1F, lowerRect, false, Color.White);

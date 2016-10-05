@@ -47,14 +47,16 @@ namespace Evolvinary.Main.Guis{
         public virtual void onKeyPress(KeySetting key){
         }
 
-        public virtual void onMousePress(MouseSetting mouse){
+        public virtual bool onMousePress(MouseSetting mouse){
             if(mouse == InputProcessor.LeftMouse){
                 foreach(var button in this.ButtonList.ToList()){
                     if(button.isMouseOver()){
                         this.onActionPerformed(button);
+                        return true;
                     }
                 }
             }
+            return false;
         }
 
         public virtual void onActionPerformed(Button button){

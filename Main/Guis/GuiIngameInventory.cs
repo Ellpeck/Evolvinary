@@ -30,35 +30,37 @@ namespace Evolvinary.Main.Guis{
             this.List.update(time);
         }
 
-        public override void onMousePress(MouseSetting mouse){
-            if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
-                var selected = this.List.getSelectedComponent() as ListComponentItem;
-                if(selected != null){
-                    var stack = selected.getStack();
-                    if(stack != null){
-                        var entity = stack.getHeldEntity();
-                        if(entity != null){
-                            var pos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
+        public override bool onMousePress(MouseSetting mouse){
+            if(!base.onMousePress(mouse)){
+                if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
+                    var selected = this.List.getSelectedComponent() as ListComponentItem;
+                    if(selected != null){
+                        var stack = selected.getStack();
+                        if(stack != null){
+                            var entity = stack.getHeldEntity();
+                            if(entity != null){
+                                var pos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
 
-                            if(entity.place(GameData.MainPlayer, entity.getPlacePrice(), GameData.WorldTest, pos)){
-                                stack.Amount--;
-                                if(stack.Amount <= 0){
-                                    selected.removeStack();
-                                    this.List.removeComponent(selected);
+                                if(entity.place(GameData.MainPlayer, entity.getPlacePrice(), GameData.WorldTest, pos)){
+                                    stack.Amount--;
+                                    if(stack.Amount <= 0){
+                                        selected.removeStack();
+                                        this.List.removeComponent(selected);
+                                    }
                                 }
-                            }
 
-                            if(!InputProcessor.Shift.IsDown){
-                                this.List.unselectAllExcept(null);
-                            }
+                                if(!InputProcessor.Shift.IsDown){
+                                    this.List.unselectAllExcept(null);
+                                }
 
-                            return;
+                                return true;
+                            }
                         }
                     }
                 }
+                return false;
             }
-
-            base.onMousePress(mouse);
+            return true;
         }
 
         public override GuiRenderer getRenderer(){
