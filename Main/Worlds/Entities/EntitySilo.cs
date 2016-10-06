@@ -9,8 +9,12 @@ namespace Evolvinary.Main.Worlds.Entities{
             this.attachRenderer(new StaticEntityRenderer(new Rectangle(432, 0, 80, 144)).register());
         }
 
-        public override BoundBox getBoundBox(){
+        public override BoundBox getMouseSelectBox(){
             return new BoundBox(-40 / (float) Tile.Size, -72 / (float) Tile.Size, 80 / (float) Tile.Size, 144 / (float) Tile.Size);
+        }
+
+        public override BoundBox getBoundBox(){
+            return new BoundBox(-40 / (float) Tile.Size, 0, 80 / (float) Tile.Size, 72 / (float) Tile.Size);
         }
 
         public override string getDisplayName(){

@@ -45,6 +45,9 @@ namespace Evolvinary.Main.Guis{
         }
 
         public virtual void onKeyPress(KeySetting key){
+            if(key == InputProcessor.Escape){
+                this.onTryClose();
+            }
         }
 
         public virtual bool onMousePress(MouseSetting mouse){
@@ -80,11 +83,15 @@ namespace Evolvinary.Main.Guis{
         }
 
         public static int getUnscaledWidth(){
-            return MathHelp.floor(EvolvinaryMain.get().RenderManager.getScreenWidth() / Scale);
+            return MathHelp.ceil(EvolvinaryMain.get().RenderManager.getScreenWidth() / Scale);
         }
 
         public static int getUnscaledHeight(){
-            return MathHelp.floor(EvolvinaryMain.get().RenderManager.getScreenHeight() / Scale);
+            return MathHelp.ceil(EvolvinaryMain.get().RenderManager.getScreenHeight() / Scale);
+        }
+
+        public virtual void onTryClose(){
+            EvolvinaryMain.get().openGui(null);
         }
     }
 }

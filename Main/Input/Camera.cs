@@ -7,14 +7,14 @@ namespace Evolvinary.Main.Input{
     public class Camera{
         public Matrix Transform;
         private Vector2 pos;
-        private float zoom;
+        public float Zoom;
 
         private int lastX;
         private int lastY;
 
         public Camera(float defaultX, float defaultY, float defaultZoom){
             this.pos = new Vector2(defaultX, defaultY);
-            this.zoom = defaultZoom;
+            this.Zoom = defaultZoom;
 
             this.reloadMatrix();
         }
@@ -39,13 +39,13 @@ namespace Evolvinary.Main.Input{
 
                 var delta = InputProcessor.getScrollDelta();
                 var zoomDiff = delta / 1000F;
-                var newZoom = Math.Max(0.5F, Math.Min(10F, this.zoom+zoomDiff * this.zoom));
-                if(newZoom != this.zoom){
-                    var zoomChange = 1-newZoom / this.zoom;
+                var newZoom = Math.Max(0.5F, Math.Min(10F, this.Zoom+zoomDiff * this.Zoom));
+                if(newZoom != this.Zoom){
+                    var zoomChange = 1-newZoom / this.Zoom;
                     this.pos.X -= (this.pos.X+mouseX) * zoomChange;
                     this.pos.Y -= (this.pos.Y+mouseY) * zoomChange;
 
-                    this.zoom = newZoom;
+                    this.Zoom = newZoom;
                     shouldReloadMatrix = true;
                 }
 
@@ -56,7 +56,7 @@ namespace Evolvinary.Main.Input{
         }
 
         private void reloadMatrix(){
-            this.Transform = Matrix.CreateScale(this.zoom) * Matrix.CreateTranslation((int) -this.pos.X, (int) -this.pos.Y, 0F);
+            this.Transform = Matrix.CreateScale(this.Zoom) * Matrix.CreateTranslation((int) -this.pos.X, (int) -this.pos.Y, 0F);
         }
 
         public Vector2 toWorldPos(Vector2 pos){

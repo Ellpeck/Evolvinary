@@ -61,20 +61,16 @@ namespace Evolvinary.Main.Guis{
             this.selectableEntities.Clear();
         }
 
-        public override void onKeyPress(KeySetting key){
-            base.onKeyPress(key);
-
-            if(key == InputProcessor.Escape){
-                EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
-            }
-        }
-
         public override bool doesGameGoOn(){
             return true;
         }
 
         public override bool canMoveCamera(){
             return true;
+        }
+
+        public override void onTryClose(){
+                EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
         }
 
         public override bool onMousePress(MouseSetting mouse){
@@ -93,16 +89,17 @@ namespace Evolvinary.Main.Guis{
                             }
                             else{
                                 this.SelectedEntity = null;
+                                return true;
                             }
                         }
 
                         var mouseRect = new BoundBox(mousePos.X-0.1F, mousePos.Y-0.1F, 0.2F, 0.2F);
-                        var entities = GameData.WorldTest.getEntitiesInBound(mouseRect, null);
+                        var entities = GameData.WorldTest.getEntitiesInBound(mouseRect, null, true);
 
                         if(entities.Count > 0){
                             if(entities.Count > 1){
                                 foreach(var entity in entities){
-                                    if(entity.canBeSelected()){
+                                    if(entity.MouseSelectBox != BoundBox.Empty){
                                         var pos = EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Scale;
                                         this.selectableEntities.Add(new ButtonTextOnly(this.selectableEntities.Count-102834, this, (int) pos.X, (int) pos.Y, 30, 10, entity.getDisplayName(), 1F), entity);
                                     }
@@ -111,11 +108,15 @@ namespace Evolvinary.Main.Guis{
                                 if(this.selectableEntities.Count > 0){
                                     this.SelectedEntity = null;
                                     this.ButtonList.AddRange(this.selectableEntities.Keys);
+
+                                    return true;
                                 }
                             }
                             else{
                                 var entity = entities[0];
                                 this.SelectedEntity = entity;
+
+                                return true;
                             }
                         }
                     }
@@ -124,6 +125,8 @@ namespace Evolvinary.Main.Guis{
                             this.ButtonList.Remove(key);
                         }
                         this.selectableEntities.Clear();
+
+                        return true;
                     }
                 }
                 return false;

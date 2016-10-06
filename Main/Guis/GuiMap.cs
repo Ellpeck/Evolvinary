@@ -42,11 +42,5 @@ namespace Evolvinary.Main.Guis{
                 EvolvinaryMain.get().openGui(new GuiIngame(this.CurrentPlayer));
             }
         }
-
-        public override void onKeyPress(KeySetting key){
-            if(key == InputProcessor.Escape){
-                EvolvinaryMain.get().openGui(null);
-            }
-        }
     }
 }

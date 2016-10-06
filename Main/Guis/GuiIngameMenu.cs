@@ -49,7 +49,7 @@ namespace Evolvinary.Main.Guis{
         public override void onActionPerformed(Button button){
             switch(button.Id){
                 case 0:
-                    this.close();
+                    this.onTryClose();
                     break;
                 case 6:
                     EvolvinaryMain.get().Exit();
@@ -57,14 +57,7 @@ namespace Evolvinary.Main.Guis{
             }
         }
 
-        public override void onKeyPress(KeySetting key){
-            base.onKeyPress(key);
-            if(key == InputProcessor.Escape){
-                this.close();
-            }
-        }
-
-        private void close(){
+        public override void onTryClose(){
             if(!this.ShouldClose){
                 this.ShouldClose = true;
                 this.FadeTime = 0;

@@ -19,6 +19,10 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public override BoundBox getBoundBox(){
+            return new BoundBox(-0.3F, 0F, 0.6F, 0.3F);
+        }
+
+        public override BoundBox getMouseSelectBox(){
             return new BoundBox(-0.3F, -0.3F, 0.6F, 0.6F);
         }
 
@@ -40,7 +44,7 @@ namespace Evolvinary.Main.Worlds.Entities{
                                 for(var i = 0; i < amount; i++){
                                     var pos = new Vector2(this.Pos.X+((float) this.Rand.NextDouble() * 5-2.5F), this.Pos.Y+((float) this.Rand.NextDouble() * 5-2.5F));
 
-                                    var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft));
+                                    var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft), false);
                                     if(entities.Count <= 0){
                                         var newTuft = new EntityGrassTuft();
                                         newTuft.set(this.World, pos);

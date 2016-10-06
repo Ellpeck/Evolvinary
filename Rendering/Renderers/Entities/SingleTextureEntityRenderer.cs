@@ -14,7 +14,7 @@ namespace Evolvinary.Rendering.Renderers.Entities{
         public override void draw(Entity entity, Vector2 pos, RenderManager manager, GameTime time){
             base.draw(entity, pos, manager, time);
 
-            manager.Batch.Draw(this.texture, pos, Color.White);
+            manager.Batch.Draw(this.texture, pos, null, entity.RenderColor, 0F, Vector2.Zero, entity.RenderScale, SpriteEffects.None, 0F);
         }
 
         public override void Dispose(){

@@ -1,5 +1,6 @@
 ﻿using Evolvinary.Main.Worlds.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Evolvinary.Rendering.Renderers.Entities{
     public class StaticEntityRenderer : EntityRenderer{
@@ -13,7 +14,7 @@ namespace Evolvinary.Rendering.Renderers.Entities{
             base.draw(entity, pos, manager, time);
 
             var renderPos = new Vector2(pos.X-this.textureRect.Width / 2, pos.Y-this.textureRect.Height / 2);
-            manager.Batch.Draw(manager.StaticEntityTexture, renderPos, this.textureRect, Color.White);
+            manager.Batch.Draw(manager.StaticEntityTexture, renderPos, this.textureRect, entity.RenderColor, 0F, Vector2.Zero, entity.RenderScale, SpriteEffects.None, 0F);
         }
     }
 }

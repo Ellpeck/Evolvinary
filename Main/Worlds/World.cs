@@ -103,13 +103,13 @@ namespace Evolvinary.Main.Worlds{
             return containedChunks;
         }
 
-        public List<Entity> getEntitiesInBound(BoundBox rect, Type type){
+        public List<Entity> getEntitiesInBound(BoundBox rect, Type type, bool select){
             var entities = new List<Entity>();
 
             var containedChunks = this.getChunksInChunkArea(toChunkCoord(MathHelp.ceil(rect.X))-1, toChunkCoord(MathHelp.ceil(rect.Y))-1, toChunkCoord(MathHelp.ceil(rect.X+rect.Width))+1, toChunkCoord(MathHelp.ceil(rect.Y+rect.Height))+1);
             foreach(var chunk in containedChunks){
                 foreach(var entity in chunk.Entities){
-                    if((type == null || entity.GetType() == type) && entity.BoundingBox.offset(entity.Pos).intersects(rect)){
+                    if((type == null || entity.GetType() == type) && (select ? entity.MouseSelectBox : entity.BoundingBox).offset(entity.Pos).intersects(rect)){
                         entities.Add(entity);
                     }
                 }

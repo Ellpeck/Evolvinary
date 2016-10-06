@@ -3,7 +3,6 @@ using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Guis.Lists;
 using Evolvinary.Main.Input;
 using Evolvinary.Main.Input.Setting;
-using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Rendering.Renderers.Guis;
 using Evolvinary.Rendering.Renderers.Guis.Buttons;
 using Microsoft.Xna.Framework;
@@ -30,6 +29,15 @@ namespace Evolvinary.Main.Guis{
             this.List.update(time);
         }
 
+        public override void onTryClose(){
+            if(this.List.getSelectedComponent() == null){
+                EvolvinaryMain.get().openGui(null);
+            }
+            else{
+                this.List.unselectAllExcept(null);
+            }
+        }
+
         public override bool onMousePress(MouseSetting mouse){
             if(!base.onMousePress(mouse)){
                 if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
@@ -41,7 +49,9 @@ namespace Evolvinary.Main.Guis{
                             if(entity != null){
                                 var pos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
 
-                                if(entity.place(GameData.MainPlayer, entity.getPlacePrice(), GameData.WorldTest, pos)){
+                                if(entity.canPlace(GameData.MainPlayer, GameData.WorldTest, pos)){
+                                    entity.place(GameData.MainPlayer, GameData.WorldTest, pos);
+
                                     stack.Amount--;
                                     if(stack.Amount <= 0){
                                         selected.removeStack();
@@ -60,6 +70,8 @@ namespace Evolvinary.Main.Guis{
                 }
                 return false;
             }
+
+            this.List.unselectAllExcept(null);
             return true;
         }
 

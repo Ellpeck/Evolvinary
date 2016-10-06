@@ -9,11 +9,17 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public World World;
         public Vector2 Pos;
-        public EntityRenderer Renderer;
+
         public BoundBox BoundingBox;
+        public BoundBox MouseSelectBox;
+
+        public EntityRenderer Renderer;
+        public Color RenderColor = Color.White;
+        public float RenderScale = 1F;
 
         public Entity(){
             this.BoundingBox = this.getBoundBox();
+            this.MouseSelectBox = this.getMouseSelectBox();
         }
 
         public Entity attachRenderer(EntityRenderer renderer){
@@ -23,6 +29,10 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public virtual BoundBox getBoundBox(){
             return BoundBox.Empty;
+        }
+
+        public virtual BoundBox getMouseSelectBox(){
+            return this.getBoundBox();
         }
 
         public void move(Vector2 move){
@@ -63,10 +73,6 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public virtual void update(GameTime time){
-        }
-
-        public virtual bool canBeSelected(){
-            return true;
         }
 
         public virtual string getDisplayName(){

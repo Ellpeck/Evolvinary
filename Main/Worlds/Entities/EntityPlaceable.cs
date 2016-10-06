@@ -4,12 +4,16 @@ namespace Evolvinary.Main.Worlds.Entities{
     public class EntityPlaceable : Entity{
         public PlayerData PlacerPlayer;
 
-        public virtual bool place(PlayerData placerPlayer, int cost, World world, Vector2 pos){
-            if(placerPlayer.requestMoney(cost, true)){
+        public virtual void place(PlayerData placerPlayer, World world, Vector2 pos){
+            if(placerPlayer.requestMoney(this.getPlacePrice(), true)){
                 this.PlacerPlayer = placerPlayer;
                 this.set(world, pos);
+            }
+        }
 
-                return true;
+        public virtual bool canPlace(PlayerData placerPlayer, World world, Vector2 pos){
+            if(placerPlayer.requestMoney(this.getPlacePrice(), false)){
+                return world.getEntitiesInBound(this.BoundingBox.offset(pos), null, false).Count <= 0;
             }
             return false;
         }
