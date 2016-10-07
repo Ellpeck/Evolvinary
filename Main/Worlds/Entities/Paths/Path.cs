@@ -5,34 +5,49 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities.Paths{
     public class Path{
+        private readonly Action<PathWaypoint> callback;
         private readonly bool doesLoop;
         private readonly EntityPathable entity;
 
-        public int CurrentTarget;
-        public List<PathWaypoint> Waypoints = new List<PathWaypoint>();
+        private int currentTarget;
+        private readonly List<PathWaypoint> waypoints = new List<PathWaypoint>();
 
-        public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop){
+        public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop) : this(entity, waypoints, doesLoop, null){
+        }
+
+        public Path(EntityPathable entity, PathWaypoint goal, bool doesLoop) : this(entity, new[]{goal}, doesLoop){
+        }
+
+        public Path(EntityPathable entity, PathWaypoint goal, bool doesLoop, Action<PathWaypoint> callback) : this(entity, new[]{goal}, doesLoop, callback){
+        }
+
+        public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop, Action<PathWaypoint> callback){
             this.entity = entity;
             this.doesLoop = doesLoop;
+            this.callback = callback;
 
-            this.Waypoints.AddRange(waypoints);
+            this.waypoints.AddRange(waypoints);
         }
 
         public virtual bool update(GameTime time){
-            if(this.CurrentTarget >= 0){
-                var target = this.Waypoints[this.CurrentTarget];
+            if(this.currentTarget >= 0){
+                var target = this.getCurrentWaypoint();
 
                 var speed = this.entity.getSpeed();
                 var distance = this.entity.Pos-target.Pos;
 
                 if(MathHelp.isCloseTo(this.entity.Pos, target.Pos, speed)){
-                    this.CurrentTarget++;
-                    if(this.CurrentTarget >= this.Waypoints.Count){
+                    this.currentTarget++;
+                    if(this.currentTarget >= this.waypoints.Count){
                         if(this.shouldLoopNextTime()){
-                            this.CurrentTarget = 0;
+                            this.currentTarget = 0;
                         }
                         else{
-                            this.CurrentTarget = -1;
+                            if(this.callback != null){
+                                this.callback.Invoke(target);
+                            }
+
+                            this.currentTarget = -1;
                             return false;
                         }
                     }
@@ -57,6 +72,10 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
         public virtual bool shouldLoopNextTime(){
             return this.doesLoop;
+        }
+
+        public PathWaypoint getCurrentWaypoint(){
+            return this.waypoints[this.currentTarget];
         }
     }
 }

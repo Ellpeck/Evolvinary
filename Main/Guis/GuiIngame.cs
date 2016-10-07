@@ -84,22 +84,22 @@ namespace Evolvinary.Main.Guis{
                         if(this.selectableEntities.Count <= 0){
                             var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
 
+                            var toReturn = false;
                             if(this.SelectedEntity != null){
                                 if(InputProcessor.Shift.IsDown){
                                     var pathable = this.SelectedEntity as EntityPathable;
                                     if(pathable != null){
                                         pathable.Path = new Path(pathable, new[]{new PathWaypoint(mousePos)}, false);
-                                        return true;
+                                        toReturn = true;
                                     }
                                 }
                                 else{
                                     this.SelectedEntity = null;
-                                    return true;
+                                    toReturn = true;
                                 }
                             }
 
-                            var mouseRect = new BoundBox(mousePos.X-0.1F, mousePos.Y-0.1F, 0.2F, 0.2F);
-                            var entities = GameData.WorldTest.getEntitiesInBound(mouseRect, null, true);
+                            var entities = GameData.WorldTest.getEntitiesOnPoint(mousePos, null, true);
 
                             if(entities.Count > 0){
                                 if(entities.Count > 1){
@@ -114,25 +114,26 @@ namespace Evolvinary.Main.Guis{
                                         this.SelectedEntity = null;
                                         this.ButtonList.AddRange(this.selectableEntities.Keys);
 
-                                        return true;
+                                        toReturn = true;
                                     }
                                 }
                                 else{
                                     var entity = entities[0];
                                     this.SelectedEntity = entity;
 
-                                    return true;
+                                    toReturn = true;
                                 }
                             }
-                        }
-                        else{
-                            foreach(var key in this.selectableEntities.Keys){
-                                this.ButtonList.Remove(key);
-                            }
-                            this.selectableEntities.Clear();
 
-                            return true;
+                            return toReturn;
                         }
+
+                        foreach(var key in this.selectableEntities.Keys){
+                            this.ButtonList.Remove(key);
+                        }
+                        this.selectableEntities.Clear();
+
+                        return true;
                     }
                 }
                 return false;

@@ -1,10 +1,9 @@
 ﻿using Evolvinary.Helper;
-using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities{
-    public class EntityGrassTuft : EntityPathable{
+    public class EntityGrassTuft : EntityPlaceable{
         private static readonly EntityRenderer[] Renderers ={
             new StaticEntityRenderer(new Rectangle(0, 0, 16, 16)).register(),
             new StaticEntityRenderer(new Rectangle(16, 0, 16, 16)).register(),

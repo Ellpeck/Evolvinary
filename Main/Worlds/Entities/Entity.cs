@@ -17,6 +17,8 @@ namespace Evolvinary.Main.Worlds.Entities{
         public Color RenderColor = Color.White;
         public float RenderScale = 1F;
 
+        public bool Dead;
+
         public Entity(){
             this.BoundingBox = this.getBoundBox();
             this.MouseSelectBox = this.getMouseSelectBox();
@@ -77,6 +79,10 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public virtual string getDisplayName(){
             return "missingno";
+        }
+
+        public virtual bool onDied(){
+            return true;
         }
     }
 }

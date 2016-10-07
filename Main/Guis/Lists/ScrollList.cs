@@ -32,7 +32,7 @@ namespace Evolvinary.Main.Guis.Lists{
             this.redefineAreas();
         }
 
-        private void redefineAreas(){
+        public virtual void redefineAreas(){
             var totalHeight = this.scrollOffset;
 
             foreach(var component in this.Components){

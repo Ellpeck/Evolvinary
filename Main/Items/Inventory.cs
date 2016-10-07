@@ -9,7 +9,7 @@ namespace Evolvinary.Main.Items{
             this.maxSize = maxSize;
         }
 
-        public bool addExisting(Stack stack){
+        public bool add(Stack stack){
             var there = this.get(stack.Item);
             if(there != null){
                 there.Amount += stack.Amount;

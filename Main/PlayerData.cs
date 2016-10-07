@@ -3,12 +3,12 @@
 namespace Evolvinary.Main{
     public class PlayerData{
         public Inventory Inventory = new Inventory(15);
-        public int Money = 20000;
+        public int Money = 2000000;
 
         public PlayerData(){
-            this.Inventory.addNew(new Stack(GameData.ItemGrass, 10));
-            this.Inventory.addExisting(new Stack(GameData.ItemGrass, 15));
-            this.Inventory.addExisting(new Stack(GameData.ItemSilo, 15));
+            this.Inventory.add(new Stack(GameData.ItemGrass, 60));
+            this.Inventory.add(new Stack(GameData.ItemSilo, 15));
+            this.Inventory.add(new Stack(GameData.ItemCow, 10));
         }
 
         public bool requestMoney(int amount, bool extract){

@@ -73,6 +73,7 @@
     <Compile Include="Main\Worlds\Cells\Cell.cs" />
     <Compile Include="Main\Worlds\Chunk.cs" />
     <Compile Include="Main\Worlds\Entities\Entity.cs" />
+    <Compile Include="Main\Worlds\Entities\EntityCow.cs" />
     <Compile Include="Main\Worlds\Entities\EntityGrassTuft.cs" />
     <Compile Include="Main\Worlds\Entities\EntityPlaceable.cs" />
     <Compile Include="Main\Worlds\Entities\EntitySilo.cs" />
@@ -109,7 +110,6 @@
     <Folder Include="Main\" />
     <Folder Include="Main\Input\" />
     <Folder Include="Main\Worlds\" />
-    <Folder Include="Main\Worlds\Entities" />
     <Folder Include="Rendering" />
     <Folder Include="Rendering\" />
     <Folder Include="Rendering\Renderers" />

@@ -8,6 +8,9 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             this.Pos = pos;
         }
 
+        public PathWaypoint(Entity entity) : this(entity.Pos){
+        }
+
         public PathWaypoint(float x, float y) : this(new Vector2(x, y)){
         }
     }

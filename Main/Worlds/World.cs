@@ -103,6 +103,32 @@ namespace Evolvinary.Main.Worlds{
             return containedChunks;
         }
 
+        public Entity getClosestEntityToPointInBound(Vector2 point, BoundBox bound, Type type, bool select){
+            var entities = this.getEntitiesInBound(bound, type, select);
+
+            var minDistance = double.MaxValue;
+            Entity picked = null;
+
+            foreach(var entity in entities){
+                var currDistance = Vector2.DistanceSquared(entity.Pos, point);
+                if(currDistance <= minDistance){
+                    minDistance = currDistance;
+                    picked = entity;
+                }
+            }
+
+            return picked;
+        }
+
+        public Entity getFirstEntityOnPoint(Vector2 point, Type type, bool select){
+            var entities = this.getEntitiesOnPoint(point, type, select);
+            return entities.Count > 0 ? entities[0] : null;
+        }
+
+        public List<Entity> getEntitiesOnPoint(Vector2 point, Type type, bool select){
+            return this.getEntitiesInBound(new BoundBox(point.X-0.01F, point.Y-0.01F, 0.02F, 0.02F), type, select);
+        }
+
         public List<Entity> getEntitiesInBound(BoundBox rect, Type type, bool select){
             var entities = new List<Entity>();
 

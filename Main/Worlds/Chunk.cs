@@ -59,6 +59,14 @@ namespace Evolvinary.Main.Worlds{
 
             foreach(var entity in this.Entities.ToList()){
                 entity.update(time);
+                if(entity.Dead){
+                    if(entity.onDied()){
+                        this.Entities.Remove(entity);
+                    }
+                    else{
+                        entity.Dead = false;
+                    }
+                }
             }
         }
     }

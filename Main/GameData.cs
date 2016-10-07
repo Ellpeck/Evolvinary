@@ -14,6 +14,7 @@ namespace Evolvinary.Main{
 
         public static Item ItemSilo;
         public static Item ItemGrass;
+        public static Item ItemCow;
 
         public static World WorldTest;
 
@@ -25,6 +26,7 @@ namespace Evolvinary.Main{
 
             ItemSilo = new ItemEntityHolder("Silo", "Can be placed on your farm, stores grain and other resources", typeof(EntitySilo));
             ItemGrass = new ItemEntityHolder("Grass", "Can be placed on your farm, is eaten by animals like cows and pigs.", typeof(EntityGrassTuft));
+            ItemCow = new ItemEntityHolder("Cow", "Can be placed in a grassy area. Moos and eats up all the grass.", typeof(EntityCow));
 
             WorldTest = new World("Test", 78123);
             var tuft = new EntityGrassTuft();
