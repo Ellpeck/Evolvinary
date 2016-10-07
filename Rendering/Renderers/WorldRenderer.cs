@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Evolvinary.Launch;
-using Evolvinary.Main.Input;
 using Evolvinary.Main.Worlds;
 using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Main.Worlds.Tiles;
@@ -11,7 +9,6 @@ using Microsoft.Xna.Framework;
 namespace Evolvinary.Rendering.Renderers{
     public class WorldRenderer : IDisposable{
         private readonly World world;
-        public Entity PhantomEntity;
 
         public WorldRenderer(World world){
             this.world = world;
@@ -38,10 +35,6 @@ namespace Evolvinary.Rendering.Renderers{
                 if(entity.Renderer != null){
                     entity.Renderer.draw(entity, entity.Pos * Tile.Size, manager, time);
                 }
-            }
-
-            if(this.PhantomEntity?.Renderer != null){
-                this.PhantomEntity.Renderer.draw(this.PhantomEntity, this.PhantomEntity.Pos * Tile.Size, manager, time);
             }
         }
 

@@ -69,64 +69,70 @@ namespace Evolvinary.Main.Guis{
             return true;
         }
 
+        public virtual bool canSelectEntities(){
+            return true;
+        }
+
         public override void onTryClose(){
                 EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
         }
 
         public override bool onMousePress(MouseSetting mouse){
             if(!base.onMousePress(mouse)){
-                if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
-                    if(this.selectableEntities.Count <= 0){
-                        var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
+                if(this.canSelectEntities()){
+                    if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
+                        if(this.selectableEntities.Count <= 0){
+                            var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
 
-                        if(this.SelectedEntity != null){
-                            if(InputProcessor.Shift.IsDown){
-                                var pathable = this.SelectedEntity as EntityPathable;
-                                if(pathable != null){
-                                    pathable.Path = new Path(pathable, new[]{new PathWaypoint(mousePos)}, false);
-                                    return true;
-                                }
-                            }
-                            else{
-                                this.SelectedEntity = null;
-                                return true;
-                            }
-                        }
-
-                        var mouseRect = new BoundBox(mousePos.X-0.1F, mousePos.Y-0.1F, 0.2F, 0.2F);
-                        var entities = GameData.WorldTest.getEntitiesInBound(mouseRect, null, true);
-
-                        if(entities.Count > 0){
-                            if(entities.Count > 1){
-                                foreach(var entity in entities){
-                                    if(entity.MouseSelectBox != BoundBox.Empty){
-                                        var pos = EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Scale;
-                                        this.selectableEntities.Add(new ButtonTextOnly(this.selectableEntities.Count-102834, this, (int) pos.X, (int) pos.Y, 30, 10, entity.getDisplayName(), 1F), entity);
+                            if(this.SelectedEntity != null){
+                                if(InputProcessor.Shift.IsDown){
+                                    var pathable = this.SelectedEntity as EntityPathable;
+                                    if(pathable != null){
+                                        pathable.Path = new Path(pathable, new[]{new PathWaypoint(mousePos)}, false);
+                                        return true;
                                     }
                                 }
-
-                                if(this.selectableEntities.Count > 0){
+                                else{
                                     this.SelectedEntity = null;
-                                    this.ButtonList.AddRange(this.selectableEntities.Keys);
+                                    return true;
+                                }
+                            }
+
+                            var mouseRect = new BoundBox(mousePos.X-0.1F, mousePos.Y-0.1F, 0.2F, 0.2F);
+                            var entities = GameData.WorldTest.getEntitiesInBound(mouseRect, null, true);
+
+                            if(entities.Count > 0){
+                                if(entities.Count > 1){
+                                    foreach(var entity in entities){
+                                        if(entity.MouseSelectBox != BoundBox.Empty){
+                                            var pos = EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Scale;
+                                            this.selectableEntities.Add(new ButtonTextOnly(this.selectableEntities.Count-102834, this, (int) pos.X, (int) pos.Y, 30, 10, entity.getDisplayName(), 1F), entity);
+                                        }
+                                    }
+
+                                    if(this.selectableEntities.Count > 0){
+                                        this.SelectedEntity = null;
+                                        this.ButtonList.AddRange(this.selectableEntities.Keys);
+
+                                        return true;
+                                    }
+                                }
+                                else{
+                                    var entity = entities[0];
+                                    this.SelectedEntity = entity;
 
                                     return true;
                                 }
                             }
-                            else{
-                                var entity = entities[0];
-                                this.SelectedEntity = entity;
-
-                                return true;
+                        }
+                        else{
+                            foreach(var key in this.selectableEntities.Keys){
+                                this.ButtonList.Remove(key);
                             }
-                        }
-                    }
-                    else{
-                        foreach(var key in this.selectableEntities.Keys){
-                            this.ButtonList.Remove(key);
-                        }
-                        this.selectableEntities.Clear();
+                            this.selectableEntities.Clear();
 
-                        return true;
+                            return true;
+                        }
                     }
                 }
                 return false;

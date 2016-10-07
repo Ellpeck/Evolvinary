@@ -38,6 +38,10 @@ namespace Evolvinary.Main.Guis{
             }
         }
 
+        public override bool canSelectEntities(){
+            return this.List.getSelectedComponent() == null;
+        }
+
         public override bool onMousePress(MouseSetting mouse){
             if(!base.onMousePress(mouse)){
                 if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
@@ -57,13 +61,13 @@ namespace Evolvinary.Main.Guis{
                                         selected.removeStack();
                                         this.List.removeComponent(selected);
                                     }
-                                }
 
-                                if(!InputProcessor.Shift.IsDown){
-                                    this.List.unselectAllExcept(null);
-                                }
+                                    if(!InputProcessor.Shift.IsDown){
+                                        this.List.unselectAllExcept(null);
+                                    }
 
-                                return true;
+                                    return true;
+                                }
                             }
                         }
                     }
