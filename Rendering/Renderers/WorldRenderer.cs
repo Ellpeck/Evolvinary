@@ -32,8 +32,8 @@ namespace Evolvinary.Rendering.Renderers{
 
             entities.Sort(EntityComparer.Instance);
             foreach(var entity in entities){
-                if(entity.Renderer != null){
-                    entity.Renderer.draw(entity, entity.Pos * Tile.Size, manager, time);
+                if(entity.CurrentRenderer != null){
+                    entity.CurrentRenderer.draw(entity, entity.Pos * Tile.Size, manager, time);
                 }
             }
         }

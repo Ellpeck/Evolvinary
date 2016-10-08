@@ -6,15 +6,15 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Rendering.Renderers.Entities{
     public class EntityRenderer : IDisposable{
+
+        public EntityRenderer(){
+            EvolvinaryMain.get().RenderManager.EntityRenderers.Add(this);
+        }
+
         public virtual void draw(Entity entity, Vector2 pos, RenderManager manager, GameTime time){
         }
 
         public virtual void Dispose(){
-        }
-
-        public EntityRenderer register(){
-            EvolvinaryMain.get().RenderManager.EntityRenderers.Add(this);
-            return this;
         }
 
         public virtual void drawOverlay(Entity entity, Vector2 posOnScreen, Vector2 mousePos, RenderManager manager, GameTime time){

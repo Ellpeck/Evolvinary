@@ -9,8 +9,10 @@ namespace Evolvinary.Main.Worlds.Entities{
     public class EntityCow : EntityPathable{
         private int eatCooldown;
 
+        private static readonly EntityRenderer Renderer = new StaticEntityRenderer(new Rectangle(48, 0, 48, 32));
+
         public EntityCow(){
-            this.attachRenderer(new StaticEntityRenderer(new Rectangle(48, 0, 48, 32)).register());
+            this.attachRenderer(Renderer);
         }
 
         public override BoundBox getMouseSelectBox(){
@@ -32,7 +34,7 @@ namespace Evolvinary.Main.Worlds.Entities{
                 if(this.Path == null){
                     var grass = this.World.getClosestEntityToPointInBound(this.Pos, new BoundBox(-5, -5, 10, 10).offset(this.Pos), typeof(EntityGrassTuft), false);
                     if(grass != null){
-                        this.Path = new Path(this, new[]{new PathWaypoint(grass)}, false, this.onGrassSearchReached);
+                        this.Path = new Path(this, new[]{new PathWaypoint(grass.Pos, this.onGrassSearchReached)}, false);
                     }
                 }
             }

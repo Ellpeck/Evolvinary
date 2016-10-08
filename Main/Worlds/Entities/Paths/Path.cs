@@ -5,26 +5,18 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities.Paths{
     public class Path{
-        private readonly Action<PathWaypoint> callback;
         private readonly bool doesLoop;
         private readonly EntityPathable entity;
 
         private int currentTarget;
         private readonly List<PathWaypoint> waypoints = new List<PathWaypoint>();
 
-        public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop) : this(entity, waypoints, doesLoop, null){
-        }
-
         public Path(EntityPathable entity, PathWaypoint goal, bool doesLoop) : this(entity, new[]{goal}, doesLoop){
         }
 
-        public Path(EntityPathable entity, PathWaypoint goal, bool doesLoop, Action<PathWaypoint> callback) : this(entity, new[]{goal}, doesLoop, callback){
-        }
-
-        public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop, Action<PathWaypoint> callback){
+        public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop){
             this.entity = entity;
             this.doesLoop = doesLoop;
-            this.callback = callback;
 
             this.waypoints.AddRange(waypoints);
         }
@@ -37,16 +29,14 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
                 var distance = this.entity.Pos-target.Pos;
 
                 if(MathHelp.isCloseTo(this.entity.Pos, target.Pos, speed)){
+                    target.onReached();
+
                     this.currentTarget++;
                     if(this.currentTarget >= this.waypoints.Count){
                         if(this.shouldLoopNextTime()){
                             this.currentTarget = 0;
                         }
                         else{
-                            if(this.callback != null){
-                                this.callback.Invoke(target);
-                            }
-
                             this.currentTarget = -1;
                             return false;
                         }

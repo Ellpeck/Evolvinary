@@ -5,8 +5,10 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities{
     public class EntitySilo : EntityPlaceable{
+        private static readonly EntityRenderer Renderer = new StaticEntityRenderer(new Rectangle(432, 0, 80, 144));
+
         public EntitySilo(){
-            this.attachRenderer(new StaticEntityRenderer(new Rectangle(432, 0, 80, 144)).register());
+            this.attachRenderer(Renderer);
         }
 
         public override BoundBox getMouseSelectBox(){

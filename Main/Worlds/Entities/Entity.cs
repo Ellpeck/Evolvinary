@@ -13,7 +13,7 @@ namespace Evolvinary.Main.Worlds.Entities{
         public BoundBox BoundingBox;
         public BoundBox MouseSelectBox;
 
-        public EntityRenderer Renderer;
+        public EntityRenderer CurrentRenderer;
         public Color RenderColor = Color.White;
         public float RenderScale = 1F;
 
@@ -25,7 +25,7 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public Entity attachRenderer(EntityRenderer renderer){
-            this.Renderer = renderer;
+            this.CurrentRenderer = renderer;
             return this;
         }
 

@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 namespace Evolvinary.Main.Worlds.Entities{
     public class EntityGrassTuft : EntityPlaceable{
         private static readonly EntityRenderer[] Renderers ={
-            new StaticEntityRenderer(new Rectangle(0, 0, 16, 16)).register(),
-            new StaticEntityRenderer(new Rectangle(16, 0, 16, 16)).register(),
-            new StaticEntityRenderer(new Rectangle(32, 0, 16, 16)).register()
+            new StaticEntityRenderer(new Rectangle(0, 0, 16, 16)),
+            new StaticEntityRenderer(new Rectangle(16, 0, 16, 16)),
+            new StaticEntityRenderer(new Rectangle(32, 0, 16, 16))
         };
 
         private int currentStage;
