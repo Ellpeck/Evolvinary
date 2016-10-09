@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities.Paths{
     public class EntityPathable : EntityPlaceable{
@@ -15,7 +16,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         }
 
         public float getSpeed(){
-            return 0.02F;
+            return 0.03F;
         }
     }
 }

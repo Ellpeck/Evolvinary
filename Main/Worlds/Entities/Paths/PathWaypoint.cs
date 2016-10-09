@@ -18,6 +18,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         private int currentPointAt;
 
         public bool IsCalced;
+        public bool Failed;
 
         public PathWaypoint(Vector2 goal) : this(goal, null){
         }
@@ -49,8 +50,8 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             return true;
         }
 
-        public void calculate(Vector2 startingPoint, World world){
-            if(!this.IsCalced){
+        public void calculate(Vector2 startingPoint, Entity entity){
+            if(!this.IsCalced && !this.Failed){
                 var start = new SubWaypoint(startingPoint, null, this.Goal);
                 this.openList.Add(start);
 
@@ -64,12 +65,13 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
                         if(lowestF.Pos == this.goalRounded){
                             this.savePath(lowestF);
                             this.IsCalced = true;
-                            break;
+                            return;
                         }
 
-                        this.addToOpenList(lowestF, world);
+                        this.addToOpenList(lowestF, entity);
                     }
                 }
+                this.Failed = true;
             }
         }
 
@@ -87,17 +89,16 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             this.currentPointAt = this.pointsToGoTo.Count-1;
         }
 
-        private void addToOpenList(SubWaypoint parent, World world){
-            var adjacent = World.getAdjacentCoords(MathHelp.floor(parent.Pos.X), MathHelp.floor(parent.Pos.Y), true);
+        private void addToOpenList(SubWaypoint parent, Entity entity){
+            var adjacent = World.getAdjacentCoords(MathHelp.floor(parent.Pos.X), MathHelp.floor(parent.Pos.Y), false);
 
             foreach(var coord in adjacent){
-                if(world.isWalkable(MathHelp.floor(coord.X), MathHelp.floor(coord.Y))){
+                if(entity.World.isWalkableExcept(MathHelp.floor(coord.X), MathHelp.floor(coord.Y), entity)){
                     var subWaypoint = new SubWaypoint(coord, parent, this.Goal);
 
                     if(getContainedSubWaypoint(this.closedList, subWaypoint) == null){
                         var contained = getContainedSubWaypoint(this.openList, subWaypoint);
                         if(contained == null){
-                            //GameData.WorldTest.setCell((int) subWaypoint.Pos.X, (int) subWaypoint.Pos.Y, new Cell(GameData.TileTest, GameData.WorldTest, subWaypoint.Pos));
                             this.openList.Add(subWaypoint);
                         }
                         else{

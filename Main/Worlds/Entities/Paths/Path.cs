@@ -47,7 +47,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         public void calcAll(){
             var oldEnd = this.entity.Pos;
             foreach(var waypoint in this.waypoints){
-                waypoint.calculate(oldEnd, this.entity.World);
+                waypoint.calculate(oldEnd, this.entity);
                 oldEnd = waypoint.Goal;
             }
         }
@@ -55,6 +55,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         public virtual bool update(GameTime time){
             if(this.currentTarget >= 0){
                 var target = this.getCurrentWaypoint();
+
                 if(target.IsCalced){
                     var nextGoal = target.getNextPos();
                     var speed = this.entity.getSpeed();
@@ -78,10 +79,14 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
                         this.entity.move(moveX, moveY);
                     }
-                    return true;
                 }
-                this.goOn(target, false);
-                return !this.continueTryingWhenFailed;
+
+                if(target.Failed){
+                    this.goOn(target, false);
+                    return !this.continueTryingWhenFailed;
+                }
+
+                return true;
             }
             return false;
         }

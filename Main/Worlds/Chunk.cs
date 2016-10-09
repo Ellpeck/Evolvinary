@@ -22,23 +22,6 @@ namespace Evolvinary.Main.Worlds{
             this.PosY = posY;
         }
 
-        public void populate(Texture2D generator){
-            if(generator.Width == Size && generator.Height == Size){
-                var colors = new Color[Size * Size];
-                generator.GetData(colors);
-
-                for(var x = 0; x < Size; x++){
-                    for(var y = 0; y < Size; y++){
-                        var color = colors[x+y * Size];
-                        var tile = GameData.getTileByColor(color);
-                        if(tile != null){
-                            this.setCell(tile.makeCell(this.World, new Vector2(World.toWorldCoord(this.PosX)+x, World.toWorldCoord(this.PosY)+y)), x, y);
-                        }
-                    }
-                }
-            }
-        }
-
         public Cell getCell(int x, int y){
             return this.cells[x, y];
         }

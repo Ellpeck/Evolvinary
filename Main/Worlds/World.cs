@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Worlds.Cells;
@@ -8,7 +7,6 @@ using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Rendering.Renderers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Path = System.IO.Path;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
@@ -27,23 +25,22 @@ namespace Evolvinary.Main.Worlds{
         }
 
         private void loadChunks(){
-            var folderName = "Maps/"+this.Name;
-            var dir = new DirectoryInfo(EvolvinaryMain.get().Content.RootDirectory+"/"+folderName);
-            if(dir.Exists){
-                var files = dir.GetFiles();
-                foreach(var file in files){
-                    var name = Path.GetFileNameWithoutExtension(file.Name);
-                    var nums = name.Split(',');
-                    var chunkX = int.Parse(nums[0]);
-                    var chunkY = int.Parse(nums[1]);
+            var texture = EvolvinaryMain.loadContent<Texture2D>("Maps/"+this.Name);
+            var data = new Color[texture.Width * texture.Height];
+            texture.GetData(data);
 
-                    var chunk = new Chunk(this, chunkX, chunkY);
+            for(var x = 0; x < texture.Width; x++){
+                for(var y = 0; y < texture.Height; y++){
+                    var color = data[x+y * texture.Width];
 
-                    var texture = EvolvinaryMain.loadContent<Texture2D>(folderName+"/"+name);
-                    chunk.populate(texture);
-                    texture.Dispose();
+                    var chunkX = toChunkCoord(x);
+                    var chunkY = toChunkCoord(y);
+                    if(this.getChunkFromChunkCoords(chunkX, chunkY) == null){
+                        this.chunks.Add(new Vector2(chunkX, chunkY), new Chunk(this, chunkX, chunkY));
+                    }
 
-                    this.chunks.Add(new Vector2(chunkX, chunkY), chunk);
+                    var tile = GameData.getTileByColor(color);
+                    this.setCell(x, y, tile.makeCell(this, new Vector2(x, y)));
                 }
             }
         }
@@ -136,7 +133,7 @@ namespace Evolvinary.Main.Worlds{
             return this.getEntitiesInBound(new BoundBox(point.X-0.01F, point.Y-0.01F, 0.02F, 0.02F), type, select);
         }
 
-        public bool isWalkable(int x, int y){
+        public bool isWalkableExcept(int x, int y, Entity except){
             var cell = this.getCell(x, y);
             if(cell == null || !cell.isWalkable()){
                 return false;
@@ -144,8 +141,10 @@ namespace Evolvinary.Main.Worlds{
 
             var entities = this.getEntitiesInBound(new BoundBox(x, y, 1, 1), null, false);
             foreach(var entity in entities){
-                if(!entity.isWalkable()){
-                    return false;
+                if(entity != except){
+                    if(!entity.isWalkable()){
+                        return false;
+                    }
                 }
             }
 

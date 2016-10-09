@@ -22,5 +22,9 @@ namespace Evolvinary.Main.Worlds.Entities{
         public override string getDisplayName(){
             return "Silo";
         }
+
+        public override bool isWalkable(){
+            return false;
+        }
     }
 }

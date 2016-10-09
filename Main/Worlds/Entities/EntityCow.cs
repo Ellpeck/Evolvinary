@@ -52,5 +52,9 @@ namespace Evolvinary.Main.Worlds.Entities{
             }
             this.eatCooldown = 200+this.Rand.Next(200);
         }
+
+        public override bool isWalkable(){
+            return false;
+        }
     }
 }

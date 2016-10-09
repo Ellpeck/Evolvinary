@@ -31,8 +31,6 @@ namespace Evolvinary.Main{
             ItemCow = new ItemEntityHolder("Cow", "Can be placed in a grassy area. Moos and eats up all the grass.", typeof(EntityCow));
 
             WorldTest = new World("Test", 78123);
-            var tuft = new EntityGrassTuft();
-            tuft.set(WorldTest, new Vector2(15, 15));
 
             MainPlayer = new PlayerData();
         }
