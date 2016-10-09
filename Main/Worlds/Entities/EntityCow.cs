@@ -31,10 +31,10 @@ namespace Evolvinary.Main.Worlds.Entities{
             base.update(time);
 
             if(this.eatCooldown <= 0){
-                if(this.Path == null){
+                if(this.getPath() == null){
                     var grass = this.World.getClosestEntityToPointInBound(this.Pos, new BoundBox(-5, -5, 10, 10).offset(this.Pos), typeof(EntityGrassTuft), false);
                     if(grass != null){
-                        this.Path = new Path(this, new[]{new PathWaypoint(grass.Pos, this.onGrassSearchReached)}, false, false);
+                        this.setPath(new Path(this, new[]{new PathWaypoint(grass.Pos, this.onGrassSearchReached)}, false, false));
                     }
                 }
             }

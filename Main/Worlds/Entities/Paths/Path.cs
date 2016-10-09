@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Evolvinary.Helper;
-using Evolvinary.Launch;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities.Paths{
     public class Path{
-        private static readonly Queue PathsForCalcing = new Queue();
-        private static Thread pathCalcThread;
 
         private readonly bool doesLoop;
         private readonly bool continueTryingWhenFailed;
@@ -27,32 +23,17 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             this.continueTryingWhenFailed = continueTryingWhenFailed;
 
             this.waypoints.AddRange(waypoints);
-
-            PathsForCalcing.Enqueue(this);
-            if(pathCalcThread == null || !pathCalcThread.IsAlive){
-                pathCalcThread = new Thread(calcPaths);
-                pathCalcThread.Start();
-            }
-        }
-
-        private static void calcPaths(){
-            while(PathsForCalcing.Count > 0){
-                var path = PathsForCalcing.Dequeue() as Path;
-                if(path != null){
-                    path.calcAll();
-                }
-            }
         }
 
         public void calcAll(){
             var oldEnd = this.entity.Pos;
             foreach(var waypoint in this.waypoints){
-                waypoint.calculate(oldEnd, this.entity);
+                waypoint.calculate(oldEnd, this.entity, this);
                 oldEnd = waypoint.Goal;
             }
         }
 
-        public virtual bool update(GameTime time){
+        public bool update(GameTime time){
             if(this.currentTarget >= 0){
                 var target = this.getCurrentWaypoint();
 
@@ -107,7 +88,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             return true;
         }
 
-        public virtual bool shouldLoopNextTime(){
+        public bool shouldLoopNextTime(){
             return this.doesLoop;
         }
 

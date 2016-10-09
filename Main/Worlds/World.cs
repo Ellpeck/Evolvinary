@@ -177,7 +177,7 @@ namespace Evolvinary.Main.Worlds{
                 for(var i = 0; i < chunk.Entities.Count; i++){
                     var entity = chunk.Entities[i];
                     if(entity != null){
-                        if((type == null || entity.GetType() == type) && (@select ? entity.MouseSelectBox : entity.BoundingBox).offset(entity.Pos).intersects(rect)){
+                        if((type == null || entity.GetType() == type) && (select ? entity.MouseSelectBox : entity.BoundingBox).offset(entity.Pos).intersects(rect)){
                             entities.Add(entity);
                         }
                     }

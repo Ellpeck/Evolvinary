@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Evolvinary.Helper;
-using Evolvinary.Main.Worlds.Cells;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities.Paths{
@@ -50,7 +49,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             return true;
         }
 
-        public void calculate(Vector2 startingPoint, Entity entity){
+        public void calculate(Vector2 startingPoint, Entity entity, Path path){
             if(!this.IsCalced && !this.Failed){
                 var start = new SubWaypoint(startingPoint, null, this.Goal);
                 this.openList.Add(start);
@@ -71,6 +70,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
                         this.addToOpenList(lowestF, entity);
                     }
                 }
+
                 this.Failed = true;
             }
         }

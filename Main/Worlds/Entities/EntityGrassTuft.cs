@@ -62,7 +62,7 @@ namespace Evolvinary.Main.Worlds.Entities{
                 }
             }
             else{
-                this.growthTime = 20+this.Rand.Next(10);
+                this.growthTime = 400+this.Rand.Next(400);
             }
         }
 

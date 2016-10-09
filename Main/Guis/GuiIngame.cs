@@ -74,7 +74,7 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override void onTryClose(){
-                EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
+            EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
         }
 
         public override bool onMousePress(MouseSetting mouse){
@@ -89,7 +89,7 @@ namespace Evolvinary.Main.Guis{
                                 if(InputProcessor.Shift.IsDown){
                                     var pathable = this.SelectedEntity as EntityPathable;
                                     if(pathable != null){
-                                        pathable.Path = new Path(pathable, new[]{new PathWaypoint(mousePos)}, false, false);
+                                        pathable.setPath(pathable.World.isWalkableExcept(MathHelp.floor(mousePos.X), MathHelp.floor(mousePos.Y), null) ? new Path(pathable, new[]{new PathWaypoint(mousePos)}, false, false) : null);
                                         toReturn = true;
                                     }
                                 }

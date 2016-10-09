@@ -10,6 +10,7 @@ namespace Evolvinary.Main.Worlds.Tiles{
         public string Name;
         public TileRenderer Renderer;
         public Color UniqueColor;
+        public bool IsWalkable;
 
         public Tile(string name){
             this.Name = name;
@@ -30,12 +31,21 @@ namespace Evolvinary.Main.Worlds.Tiles{
             return this;
         }
 
+        public Tile setWalkable(){
+            this.IsWalkable = true;
+            return this;
+        }
+
         public Cell makeCell(World world, Vector2 pos){
             return new Cell(this, world, pos);
         }
 
         public void Dispose(){
             this.Renderer.Dispose();
+        }
+
+        public virtual bool isWalkable(){
+            return this.IsWalkable;
         }
     }
 }

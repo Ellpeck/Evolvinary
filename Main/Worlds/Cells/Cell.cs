@@ -18,7 +18,7 @@ namespace Evolvinary.Main.Worlds.Cells{
         }
 
         public virtual bool isWalkable(){
-            return this.Tile == GameData.TileDirt || this.Tile == GameData.TileTest;
+            return this.Tile.isWalkable();
         }
     }
 }
