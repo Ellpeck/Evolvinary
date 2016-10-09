@@ -13,13 +13,9 @@ namespace Evolvinary.Launch{
 
         public Gui CurrentGui;
 
-        public bool IsRunning;
-
         public EvolvinaryMain(){
             this.Content.RootDirectory = "Content";
             this.RenderManager = new RenderManager(this);
-
-            this.IsRunning = true;
         }
 
         protected override void LoadContent(){
@@ -49,12 +45,6 @@ namespace Evolvinary.Launch{
             }
 
             this.CurrentGui.update(time);
-        }
-
-        protected override void EndRun(){
-            base.EndRun();
-
-            this.IsRunning = false;
         }
 
         protected override void UnloadContent(){
