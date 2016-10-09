@@ -16,5 +16,9 @@ namespace Evolvinary.Main.Worlds.Cells{
         public virtual void update(GameTime time){
 
         }
+
+        public virtual bool isWalkable(){
+            return this.Tile == GameData.TileRock || this.Tile == GameData.TileTest;
+        }
     }
 }

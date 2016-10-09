@@ -43,10 +43,12 @@ namespace Evolvinary.Main.Worlds.Entities{
                                 for(var i = 0; i < amount; i++){
                                     var pos = new Vector2(this.Pos.X+((float) this.Rand.NextDouble() * 5-2.5F), this.Pos.Y+((float) this.Rand.NextDouble() * 5-2.5F));
 
-                                    var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft), false);
-                                    if(entities.Count <= 0){
-                                        var newTuft = new EntityGrassTuft();
-                                        newTuft.set(this.World, pos);
+                                    if(this.World.isWalkable(MathHelp.floor(pos.X), MathHelp.floor(pos.Y))){
+                                        var entities = this.World.getEntitiesInBound(new BoundBox(pos.X-1F, pos.Y-1F, 2F, 2F), typeof(EntityGrassTuft), false);
+                                        if(entities.Count <= 0){
+                                            var newTuft = new EntityGrassTuft();
+                                            newTuft.set(this.World, pos);
+                                        }
                                     }
                                 }
                             }

@@ -59,7 +59,8 @@ namespace Evolvinary.Main.Guis.Lists{
         public void update(GameTime time){
             var moused = this.isMouseOver();
 
-            foreach(var component in this.Components.ToList()){
+            for(var i = 0; i < this.Components.Count; i++){
+                var component = this.Components[i];
                 component.update(time);
 
                 if(moused && component.IsVisible && component.isMouseOver() && InputProcessor.LeftMouse.PressedOnce){

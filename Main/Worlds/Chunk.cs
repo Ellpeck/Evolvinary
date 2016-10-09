@@ -57,7 +57,8 @@ namespace Evolvinary.Main.Worlds{
                 }
             }
 
-            foreach(var entity in this.Entities.ToList()){
+            for(var i = 0; i < this.Entities.Count; i++){
+                var entity = this.Entities[i];
                 entity.update(time);
                 if(entity.Dead){
                     if(entity.onDied()){

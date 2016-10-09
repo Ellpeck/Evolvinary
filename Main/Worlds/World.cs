@@ -8,7 +8,7 @@ using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Rendering.Renderers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Path = System.IO.Path;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
@@ -51,6 +51,13 @@ namespace Evolvinary.Main.Worlds{
         public Cell getCell(int x, int y){
             var chunk = this.getChunkFromWorldCoords(x, y);
             return chunk != null ? chunk.getCell(x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY)) : null;
+        }
+
+        public void setCell(int x, int y, Cell cell){
+            var chunk = this.getChunkFromWorldCoords(x, y);
+            if(chunk != null){
+                chunk.setCell(cell, x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY));
+            }
         }
 
         public Chunk getChunkFromWorldCoords(int x, int y){
@@ -129,14 +136,51 @@ namespace Evolvinary.Main.Worlds{
             return this.getEntitiesInBound(new BoundBox(point.X-0.01F, point.Y-0.01F, 0.02F, 0.02F), type, select);
         }
 
+        public bool isWalkable(int x, int y){
+            var cell = this.getCell(x, y);
+            if(cell == null || !cell.isWalkable()){
+                return false;
+            }
+
+            var entities = this.getEntitiesInBound(new BoundBox(x, y, 1, 1), null, false);
+            foreach(var entity in entities){
+                if(!entity.isWalkable()){
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static List<Vector2> getAdjacentCoords(int x, int y, bool diagonals){
+            var cells = new List<Vector2>();
+
+            if(diagonals){
+                cells.Add(new Vector2(x+1, y+1));
+                cells.Add(new Vector2(x-1, y+1));
+                cells.Add(new Vector2(x+1, y-1));
+                cells.Add(new Vector2(x-1, y-1));
+            }
+
+            cells.Add(new Vector2(x, y+1));
+            cells.Add(new Vector2(x+1, y));
+            cells.Add(new Vector2(x, y-1));
+            cells.Add(new Vector2(x-1, y));
+
+            return cells;
+        }
+
         public List<Entity> getEntitiesInBound(BoundBox rect, Type type, bool select){
             var entities = new List<Entity>();
 
             var containedChunks = this.getChunksInChunkArea(toChunkCoord(MathHelp.ceil(rect.X))-1, toChunkCoord(MathHelp.ceil(rect.Y))-1, toChunkCoord(MathHelp.ceil(rect.X+rect.Width))+1, toChunkCoord(MathHelp.ceil(rect.Y+rect.Height))+1);
             foreach(var chunk in containedChunks){
-                foreach(var entity in chunk.Entities){
-                    if((type == null || entity.GetType() == type) && (select ? entity.MouseSelectBox : entity.BoundingBox).offset(entity.Pos).intersects(rect)){
-                        entities.Add(entity);
+                for(var i = 0; i < chunk.Entities.Count; i++){
+                    var entity = chunk.Entities[i];
+                    if(entity != null){
+                        if((type == null || entity.GetType() == type) && (@select ? entity.MouseSelectBox : entity.BoundingBox).offset(entity.Pos).intersects(rect)){
+                            entities.Add(entity);
+                        }
                     }
                 }
             }

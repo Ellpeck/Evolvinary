@@ -89,7 +89,7 @@ namespace Evolvinary.Main.Guis{
                                 if(InputProcessor.Shift.IsDown){
                                     var pathable = this.SelectedEntity as EntityPathable;
                                     if(pathable != null){
-                                        pathable.Path = new Path(pathable, new[]{new PathWaypoint(mousePos)}, false);
+                                        pathable.Path = new Path(pathable, new[]{new PathWaypoint(mousePos)}, false, false);
                                         toReturn = true;
                                     }
                                 }

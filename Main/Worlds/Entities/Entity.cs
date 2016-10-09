@@ -1,5 +1,6 @@
 ﻿using System;
 using Evolvinary.Helper;
+using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
 
@@ -82,6 +83,10 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public virtual bool onDied(){
+            return true;
+        }
+
+        public virtual bool isWalkable(){
             return true;
         }
     }

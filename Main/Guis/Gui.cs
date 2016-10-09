@@ -27,7 +27,8 @@ namespace Evolvinary.Main.Guis{
         }
 
         public virtual void update(GameTime time){
-            foreach(var button in this.ButtonList.ToList()){
+            for(var i = 0; i < this.ButtonList.Count; i++){
+                var button = this.ButtonList[i];
                 button.update(time);
             }
 
@@ -52,7 +53,8 @@ namespace Evolvinary.Main.Guis{
 
         public virtual bool onMousePress(MouseSetting mouse){
             if(mouse == InputProcessor.LeftMouse){
-                foreach(var button in this.ButtonList.ToList()){
+                for(var i = 0; i < this.ButtonList.Count; i++){
+                    var button = this.ButtonList[i];
                     if(button.isMouseOver()){
                         this.onActionPerformed(button);
                         return true;

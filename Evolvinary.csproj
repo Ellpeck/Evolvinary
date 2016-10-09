@@ -80,6 +80,7 @@
     <Compile Include="Main\Worlds\Entities\Paths\EntityPathable.cs" />
     <Compile Include="Main\Worlds\Entities\Paths\Path.cs" />
     <Compile Include="Main\Worlds\Entities\Paths\PathWaypoint.cs" />
+    <Compile Include="Main\Worlds\Entities\Paths\SubWaypoint.cs" />
     <Compile Include="Main\Worlds\Tiles\Tile.cs" />
     <Compile Include="Main\Worlds\World.cs" />
     <Compile Include="Rendering\Renderers\Entities\EntityRenderer.cs" />
@@ -110,6 +111,7 @@
     <Folder Include="Main\" />
     <Folder Include="Main\Input\" />
     <Folder Include="Main\Worlds\" />
+    <Folder Include="Main\Worlds\Entities\Paths" />
     <Folder Include="Rendering" />
     <Folder Include="Rendering\" />
     <Folder Include="Rendering\Renderers" />

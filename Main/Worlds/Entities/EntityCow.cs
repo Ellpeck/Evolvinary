@@ -34,7 +34,7 @@ namespace Evolvinary.Main.Worlds.Entities{
                 if(this.Path == null){
                     var grass = this.World.getClosestEntityToPointInBound(this.Pos, new BoundBox(-5, -5, 10, 10).offset(this.Pos), typeof(EntityGrassTuft), false);
                     if(grass != null){
-                        this.Path = new Path(this, new[]{new PathWaypoint(grass.Pos, this.onGrassSearchReached)}, false);
+                        this.Path = new Path(this, new[]{new PathWaypoint(grass.Pos, this.onGrassSearchReached)}, false, false);
                     }
                 }
             }
@@ -43,12 +43,14 @@ namespace Evolvinary.Main.Worlds.Entities{
             }
         }
 
-        private void onGrassSearchReached(PathWaypoint lastWaypoint){
-            var grass = this.World.getFirstEntityOnPoint(lastWaypoint.Pos, typeof(EntityGrassTuft), false);
-            if(grass != null){
-                grass.Dead = true;
-                this.eatCooldown = 200+this.Rand.Next(200);
+        private void onGrassSearchReached(PathWaypoint lastWaypoint, bool reached){
+            if(reached){
+                var grass = this.World.getFirstEntityOnPoint(lastWaypoint.Goal, typeof(EntityGrassTuft), false);
+                if(grass != null){
+                    grass.Dead = true;
+                }
             }
+            this.eatCooldown = 200+this.Rand.Next(200);
         }
     }
 }
