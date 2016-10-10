@@ -16,6 +16,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         private readonly List<Vector2> pointsToGoTo = new List<Vector2>();
         private int currentPointAt;
 
+        public bool IsCurrentlyCalcing;
         public bool IsCalced;
         public bool Failed;
 
@@ -49,12 +50,16 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             return true;
         }
 
-        public void calculate(Vector2 startingPoint, Entity entity, Path path){
+        public void updateCalcing(Vector2 startingPoint, Entity entity, Path path){
             if(!this.IsCalced && !this.Failed){
-                var start = new SubWaypoint(startingPoint, null, this.Goal);
-                this.openList.Add(start);
+                if(!this.IsCurrentlyCalcing){
+                    var start = new SubWaypoint(startingPoint, null, this.Goal);
+                    this.openList.Add(start);
 
-                while(this.openList.Count > 0){
+                    this.IsCurrentlyCalcing = true;
+                }
+
+                if(this.openList.Count > 0){
                     var lowestF = this.getLowestFFromOpenList();
                     if(lowestF != null){
                         this.openList.Remove(lowestF);
@@ -64,14 +69,17 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
                         if(lowestF.Pos == this.goalRounded){
                             this.savePath(lowestF);
                             this.IsCalced = true;
+                            this.IsCurrentlyCalcing = false;
                             return;
                         }
 
                         this.addToOpenList(lowestF, entity);
                     }
                 }
-
-                this.Failed = true;
+                else{
+                    this.Failed = true;
+                    this.IsCurrentlyCalcing = false;
+                }
             }
         }
 

@@ -30,11 +30,13 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
             this.path = path;
 
-            PathsForCalcing.Add(path);
-            if(pathCalcThread == null || !pathCalcThread.IsAlive){
-                pathCalcThread = new Thread(calcPaths);
-                pathCalcThread.IsBackground = true;
-                pathCalcThread.Start();
+            if(this.path != null){
+                PathsForCalcing.Add(path);
+                if(pathCalcThread == null || !pathCalcThread.IsAlive){
+                    pathCalcThread = new Thread(calcPaths);
+                    pathCalcThread.IsBackground = true;
+                    pathCalcThread.Start();
+                }
             }
         }
 
@@ -49,10 +51,11 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         private static void calcPaths(){
             while(PathsForCalcing.Count > 0){
                 var path = PathsForCalcing[0];
-                if(path != null){
-                    path.calcAll();
+                if(path.calcAll()){
+                    PathsForCalcing.Remove(path);
                 }
-                PathsForCalcing.Remove(path);
+
+                Thread.Sleep(1);
             }
         }
     }

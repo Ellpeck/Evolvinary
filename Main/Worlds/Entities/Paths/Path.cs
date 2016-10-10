@@ -14,6 +14,8 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         private int currentTarget;
         private readonly List<PathWaypoint> waypoints = new List<PathWaypoint>();
 
+        private int calcAt;
+
         public Path(EntityPathable entity, PathWaypoint goal, bool doesLoop, bool continueTryingWhenFailed) : this(entity, new[]{goal}, doesLoop, continueTryingWhenFailed){
         }
 
@@ -25,12 +27,17 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             this.waypoints.AddRange(waypoints);
         }
 
-        public void calcAll(){
-            var oldEnd = this.entity.Pos;
-            foreach(var waypoint in this.waypoints){
-                waypoint.calculate(oldEnd, this.entity, this);
-                oldEnd = waypoint.Goal;
+        public bool calcAll(){
+            var currWaypoint = this.waypoints[this.calcAt];
+            var lastWaypoint = this.calcAt <= 0 ? this.entity.Pos : this.waypoints[this.calcAt-1].Goal;
+
+            currWaypoint.updateCalcing(lastWaypoint, this.entity, this);
+
+            if(currWaypoint.IsCalced || currWaypoint.Failed){
+                this.calcAt++;
+                return this.calcAt >= this.waypoints.Count;
             }
+            return false;
         }
 
         public bool update(GameTime time){
