@@ -70,7 +70,6 @@
     <Compile Include="Main\Items\ItemEntityHolder.cs" />
     <Compile Include="Main\Items\Stack.cs" />
     <Compile Include="Main\PlayerData.cs" />
-    <Compile Include="Main\Worlds\Cells\Cell.cs" />
     <Compile Include="Main\Worlds\Chunk.cs" />
     <Compile Include="Main\Worlds\Entities\Entity.cs" />
     <Compile Include="Main\Worlds\Entities\EntityCow.cs" />
@@ -110,6 +109,7 @@
     <Folder Include="Main\Guis\" />
     <Folder Include="Main\" />
     <Folder Include="Main\Input\" />
+    <Folder Include="Main\Worlds" />
     <Folder Include="Main\Worlds\" />
     <Folder Include="Main\Worlds\Entities\Paths" />
     <Folder Include="Rendering" />

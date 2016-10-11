@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Evolvinary.Helper;
 using Evolvinary.Launch;
-using Evolvinary.Main.Worlds.Cells;
 using Evolvinary.Main.Worlds.Entities;
+using Evolvinary.Main.Worlds.Tiles;
 using Evolvinary.Rendering.Renderers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,20 +40,20 @@ namespace Evolvinary.Main.Worlds{
                     }
 
                     var tile = GameData.getTileByColor(color);
-                    this.setCell(x, y, tile.makeCell(this, new Vector2(x, y)));
+                    this.setTile(x, y, tile);
                 }
             }
         }
 
-        public Cell getCell(int x, int y){
+        public Tile getTile(int x, int y){
             var chunk = this.getChunkFromWorldCoords(x, y);
-            return chunk != null ? chunk.getCell(x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY)) : null;
+            return chunk != null ? chunk.getTile(x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY)) : null;
         }
 
-        public void setCell(int x, int y, Cell cell){
+        public void setTile(int x, int y, Tile tile){
             var chunk = this.getChunkFromWorldCoords(x, y);
             if(chunk != null){
-                chunk.setCell(cell, x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY));
+                chunk.setTile(tile, x-toWorldCoord(chunk.PosX), y-toWorldCoord(chunk.PosY));
             }
         }
 
@@ -134,7 +134,7 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public bool isWalkableExcept(int x, int y, Entity except){
-            var cell = this.getCell(x, y);
+            var cell = this.getTile(x, y);
             if(cell == null || !cell.isWalkable()){
                 return false;
             }

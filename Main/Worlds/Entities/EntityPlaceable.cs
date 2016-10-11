@@ -25,7 +25,7 @@ namespace Evolvinary.Main.Worlds.Entities{
 
                 for(var x = 0; x < box.Width; x++){
                     for(var y = 0; y < box.Height; y++){
-                        var cell = world.getCell(MathHelp.floor(box.X+x), MathHelp.floor(box.Y+y));
+                        var cell = world.getTile(MathHelp.floor(box.X+x), MathHelp.floor(box.Y+y));
                         if(cell == null || !cell.isWalkable()){
                             return false;
                         }

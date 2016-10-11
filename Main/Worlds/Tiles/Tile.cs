@@ -1,5 +1,4 @@
 ﻿using System;
-using Evolvinary.Main.Worlds.Cells;
 using Evolvinary.Rendering.Renderers.Tiles;
 using Microsoft.Xna.Framework;
 
@@ -34,10 +33,6 @@ namespace Evolvinary.Main.Worlds.Tiles{
         public Tile setWalkable(){
             this.IsWalkable = true;
             return this;
-        }
-
-        public Cell makeCell(World world, Vector2 pos){
-            return new Cell(this, world, pos);
         }
 
         public void Dispose(){

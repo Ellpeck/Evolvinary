@@ -1,4 +1,5 @@
-﻿using Evolvinary.Launch;
+﻿using System;
+using Evolvinary.Launch;
 using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Input;
 using Evolvinary.Main.Input.Setting;
@@ -29,9 +30,9 @@ namespace Evolvinary.Main.Guis{
 
             for(var x = 0; x < sizeX; x++){
                 for(var y = 0; y < sizeY; y++){
-                    var cell = map.getCell(x, y);
-                    if(cell?.Tile != null){
-                        this.MapData[x, y] = cell.Tile.UniqueColor;
+                    var tile = map.getTile(x, y);
+                    if(tile != null){
+                        this.MapData[x, y] = tile.UniqueColor;
                     }
                 }
             }

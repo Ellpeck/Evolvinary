@@ -20,7 +20,10 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 var srcRect = new Rectangle(0, 0, tileSize, tileSize);
                 for(var x = 0; x < gui.MapData.GetLength(0); x++){
                     for(var y = 0; y < gui.MapData.GetLength(1); y++){
-                        manager.Batch.Draw(GraphicsHelper.SolidWhite, new Vector2(x * tileSize, y * tileSize), srcRect, gui.MapData[x, y]);
+                        var pos = new Vector2(x * tileSize, y * tileSize);
+                        if(pos.X >= 0 && pos.Y >= 0 && pos.X < manager.getScreenWidth() && pos.Y < manager.getScreenHeight()){
+                            manager.Batch.Draw(GraphicsHelper.SolidWhite, pos, srcRect, gui.MapData[x, y]);
+                        }
                     }
                 }
             }

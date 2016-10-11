@@ -1,5 +1,4 @@
 ﻿using System;
-using Evolvinary.Main.Worlds.Cells;
 using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 
@@ -12,7 +11,7 @@ namespace Evolvinary.Rendering.Renderers.Tiles{
             this.textureRect = new Rectangle(textureX*Tile.Size, textureY*Tile.Size, Tile.Size, Tile.Size);
         }
 
-        public void draw(Cell cell, Vector2 pos, RenderManager manager, GameTime time){
+        public void draw(Tile tile, Vector2 pos, RenderManager manager, GameTime time){
             manager.Batch.Draw(manager.TileTexture, pos, this.textureRect, Color.White);
         }
 
