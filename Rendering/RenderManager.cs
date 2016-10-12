@@ -52,7 +52,7 @@ namespace Evolvinary.Rendering{
                 this.Batch.End();
             }
 
-            this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Matrix.CreateScale(Gui.Scale));
+            this.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Gui.ScaleMatrix);
             this.CurrentGuiRenderer.draw(this, time);
             this.Batch.End();
         }

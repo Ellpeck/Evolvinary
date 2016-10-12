@@ -6,6 +6,8 @@ using Evolvinary.Main.Worlds.Tiles;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main{
+    //TODO Add staff entity that has a click hoverover gui where you can select tasks and give it items etc
+    //TODO In the future, add sub staff entities and give it tasks for seperate actions
     public class GameData{
         public static List<Tile> TileRegistry = new List<Tile>();
 

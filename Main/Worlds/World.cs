@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Evolvinary.Main.Worlds{
     public class World : IDisposable{
-        private readonly Dictionary<Vector2, Chunk> chunks = new Dictionary<Vector2, Chunk>();
+        private Chunk[,] chunks;
 
         public readonly WorldRenderer Renderer;
         public readonly Random SeededRand;
@@ -29,15 +29,19 @@ namespace Evolvinary.Main.Worlds{
             var data = new Color[texture.Width * texture.Height];
             texture.GetData(data);
 
+            var chunkAmountX = toChunkCoord(texture.Width);
+            var chunkAmountY = toChunkCoord(texture.Height);
+            this.chunks = new Chunk[chunkAmountX,chunkAmountY];
+
+            for(var x = 0; x < chunkAmountX; x++){
+                for(var y = 0; y < chunkAmountY; y++){
+                     this.chunks[x, y] = new Chunk(this, x, y);
+                }
+            }
+
             for(var x = 0; x < texture.Width; x++){
                 for(var y = 0; y < texture.Height; y++){
                     var color = data[x+y * texture.Width];
-
-                    var chunkX = toChunkCoord(x);
-                    var chunkY = toChunkCoord(y);
-                    if(this.getChunkFromChunkCoords(chunkX, chunkY) == null){
-                        this.chunks.Add(new Vector2(chunkX, chunkY), new Chunk(this, chunkX, chunkY));
-                    }
 
                     var tile = GameData.getTileByColor(color);
                     this.setTile(x, y, tile);
@@ -70,11 +74,10 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public Chunk getChunkFromChunkCoords(int chunkX, int chunkY){
-            var pos = new Vector2(chunkX, chunkY);
-            return this.chunks.ContainsKey(pos) ? this.chunks[pos] : null;
+            return chunkX >= 0 && chunkY >= 0 && this.chunks.GetLength(0) > chunkX && this.chunks.GetLength(1) > chunkY ? this.chunks[chunkX, chunkY] : null;
         }
 
-        public Dictionary<Vector2, Chunk> getChunks(){
+        public Chunk[,] getChunks(){
             return this.chunks;
         }
 
@@ -83,7 +86,7 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public void update(GameTime time){
-            foreach(var chunk in this.chunks.Values){
+            foreach(var chunk in this.chunks){
                 chunk.update(time);
             }
         }
@@ -188,23 +191,11 @@ namespace Evolvinary.Main.Worlds{
         }
 
         public int getChunkSizeX(){
-            var highest = 0;
-            foreach(var chunk in this.chunks.Values){
-                if(chunk.PosX > highest){
-                    highest = chunk.PosX;
-                }
-            }
-            return highest+1;
+            return this.chunks.GetLength(0);
         }
 
         public int getChunkSizeY(){
-            var highest = 0;
-            foreach(var chunk in this.chunks.Values){
-                if(chunk.PosY > highest){
-                    highest = chunk.PosY;
-                }
-            }
-            return highest+1;
+            return this.chunks.GetLength(1);
         }
 
         public int getWorldSizeX(){

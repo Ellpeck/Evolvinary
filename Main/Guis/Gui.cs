@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework;
 namespace Evolvinary.Main.Guis{
     public abstract class Gui{
         public static readonly float Scale = 1.6F;
+        public static readonly Matrix ScaleMatrix = Matrix.CreateScale(Scale);
+
         public Vector2 Pos;
         public int SizeX;
         public int SizeY;

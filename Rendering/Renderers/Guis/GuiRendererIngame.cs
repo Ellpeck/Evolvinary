@@ -21,8 +21,6 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 if(entity?.CurrentRenderer != null){
                     entity.CurrentRenderer.drawOverlay(entity, EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Gui.Scale, InputProcessor.getMousePos().ToVector2(), manager, time);
                 }
-
-                drawHoveringOverlay(manager.Batch, gui.CurrentPlayer.Money+" Moneys", 0, 0, Color.White, 0, false);
             }
         }
 

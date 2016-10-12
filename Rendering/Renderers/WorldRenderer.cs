@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Worlds;
 using Evolvinary.Main.Worlds.Entities;
@@ -19,27 +20,33 @@ namespace Evolvinary.Rendering.Renderers{
             var cam = EvolvinaryMain.get().Camera;
             var entities = new List<Entity>();
 
-            foreach(var chunk in this.world.getChunks().Values){
-                for(var y = Chunk.Size-1; y >= 0; y--){
-                    for(var x = 0; x < Chunk.Size; x++){
-                        var tile = chunk.getTile(x, y);
+            //top left culling
+            var chunkStart = Vector2.Max(Vector2.Zero, cam.toWorldPos(Vector2.Zero));
+            var chunkStartX = World.toChunkCoord(MathHelp.floor(chunkStart.X));
+            var chunkStartY = World.toChunkCoord(MathHelp.floor(chunkStart.Y));
+            //bottom right culling
+            var chunkEnd = cam.toWorldPos(new Vector2(manager.getScreenWidth(), manager.getScreenHeight()));
+            var chunkEndX = Math.Min(this.world.getChunkSizeX()-1, World.toChunkCoord(MathHelp.floor(chunkEnd.X)));
+            var chunkEndY = Math.Min(this.world.getChunkSizeY()-1, World.toChunkCoord(MathHelp.floor(chunkEnd.Y)));
 
-                        if(tile.Renderer != null){
-                            var pos = new Vector2(chunk.PosX*Chunk.Size+x, chunk.PosY*Chunk.Size+y);
-                            var topLeftCam = cam.toCameraPos(pos);
-                            var bottomRightCam = cam.toCameraPos(Vector2.Add(pos, Vector2.One));
+            for(var chunkX = chunkStartX; chunkX <= chunkEndX; chunkX++){
+                for(var chunkY = chunkStartY; chunkY <= chunkEndY; chunkY++){
+                    var chunk = this.world.getChunkFromChunkCoords(chunkX, chunkY);
 
-                            if(bottomRightCam.X >= 0 && bottomRightCam.Y >= 0){
-                                if(topLeftCam.X < manager.getScreenWidth() && topLeftCam.Y < manager.getScreenHeight()){
-                                    tile.Renderer.draw(tile, pos * Tile.Size, manager, time);
-                                }
+                    for(var y = 0; y < Chunk.Size; y++){
+                        for(var x = 0; x < Chunk.Size; x++){
+                            var tile = chunk.getTile(x, y);
+
+                            if(tile.Renderer != null){
+                                var pos = new Vector2(chunkX * Chunk.Size+x, chunkY * Chunk.Size+y);
+                                tile.Renderer.draw(tile, pos * Tile.Size, manager, time);
                             }
                         }
                     }
-                }
 
-                if(chunk.Entities.Count > 0){
-                    entities.AddRange(chunk.Entities);
+                    if(chunk.Entities.Count > 0){
+                        entities.AddRange(chunk.Entities);
+                    }
                 }
             }
 
