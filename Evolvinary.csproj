@@ -60,6 +60,8 @@
     <Compile Include="Main\Guis\Lists\ListComponentObjectPanel.cs" />
     <Compile Include="Main\Guis\Lists\ScrollList.cs" />
     <Compile Include="Main\Guis\Lists\ListComponent.cs" />
+    <Compile Include="Main\Guis\Selection\GuiSelection.cs" />
+    <Compile Include="Main\Guis\Selection\GuiSelectionAnimal.cs" />
     <Compile Include="Main\Input\Camera.cs" />
     <Compile Include="Main\Input\InputProcessor.cs" />
     <Compile Include="Main\Input\Setting\InputSetting.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererItem.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListComponentRendererObjectPanel.cs" />
     <Compile Include="Rendering\Renderers\Guis\Lists\ListRenderer.cs" />
+    <Compile Include="Rendering\Renderers\Guis\Selection\GuiRendererSelection.cs" />
     <Compile Include="Rendering\Renderers\Tiles\TileRenderer.cs" />
     <Compile Include="Rendering\Renderers\WorldRenderer.cs" />
     <Compile Include="Rendering\RenderManager.cs" />
@@ -106,8 +109,10 @@
   <ItemGroup>
     <Folder Include="Helper" />
     <Folder Include="Main" />
+    <Folder Include="Main\Guis" />
     <Folder Include="Main\Guis\" />
     <Folder Include="Main\" />
+    <Folder Include="Main\Guis\Buttons" />
     <Folder Include="Main\Input\" />
     <Folder Include="Main\Worlds" />
     <Folder Include="Main\Worlds\" />

@@ -1,7 +1,6 @@
 ﻿using Evolvinary.Launch;
 using Evolvinary.Main.Guis;
 using Evolvinary.Main.Guis.Lists;
-using Evolvinary.Main.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,18 +8,16 @@ namespace Evolvinary.Rendering.Renderers.Guis{
     public class GuiRendererIngame : GuiRenderer{
         public static Texture2D MenuTextures = EvolvinaryMain.loadContent<Texture2D>("Textures/Guis/Menu");
 
+        public GuiRenderer SelectionGuiRenderer;
+
         public GuiRendererIngame(Gui gui) : base(gui){
         }
 
         public override void draw(RenderManager manager, GameTime time){
             base.draw(manager, time);
 
-            var gui = this.Gui as GuiIngame;
-            if(gui != null){
-                var entity = gui.SelectedEntity;
-                if(entity?.CurrentRenderer != null){
-                    entity.CurrentRenderer.drawOverlay(entity, EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Gui.Scale, InputProcessor.getMousePos().ToVector2(), manager, time);
-                }
+            if(this.SelectionGuiRenderer != null){
+                this.SelectionGuiRenderer.draw(manager, time);
             }
         }
 
@@ -28,6 +25,18 @@ namespace Evolvinary.Rendering.Renderers.Guis{
             var renderer = list.getRenderer();
             if(renderer != null){
                 renderer.draw(manager, time);
+            }
+        }
+
+        public void openSubGui(GuiRenderer gui){
+            if(this.SelectionGuiRenderer != null){
+                this.SelectionGuiRenderer.onClosed();
+            }
+
+            this.SelectionGuiRenderer = gui;
+
+            if(this.SelectionGuiRenderer != null){
+                this.SelectionGuiRenderer.onOpened();
             }
         }
     }

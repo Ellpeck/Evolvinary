@@ -2,6 +2,7 @@
 using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Guis.Buttons;
+using Evolvinary.Main.Guis.Selection;
 using Evolvinary.Main.Input;
 using Evolvinary.Main.Input.Setting;
 using Evolvinary.Main.Worlds.Entities;
@@ -12,6 +13,7 @@ using Microsoft.Xna.Framework;
 namespace Evolvinary.Main.Guis{
     public class GuiIngame : Gui{
         public Entity SelectedEntity;
+        public GuiSelection SelectionGui;
 
         private readonly Dictionary<Button, Entity> selectableEntities = new Dictionary<Button, Entity>();
 
@@ -34,8 +36,13 @@ namespace Evolvinary.Main.Guis{
             return new GuiRendererIngame(this);
         }
 
+        private void setSelectedEntity(Entity entity){
+            this.SelectedEntity = entity;
+            this.openSubGui(this.SelectedEntity == null ? null : this.SelectedEntity.onSelected(this));
+        }
+
         public override void onActionPerformed(Button button){
-            this.SelectedEntity = null;
+            this.setSelectedEntity(null);
 
             switch(button.Id){
                 case 0:
@@ -50,7 +57,7 @@ namespace Evolvinary.Main.Guis{
                 default:
                     if(this.selectableEntities.ContainsKey(button)){
                         var entity = this.selectableEntities[button];
-                        this.SelectedEntity = entity;
+                        this.setSelectedEntity(entity);
                     }
                     break;
             }
@@ -61,16 +68,34 @@ namespace Evolvinary.Main.Guis{
             this.selectableEntities.Clear();
         }
 
+        private void openSubGui(GuiSelection gui){
+            if(this.SelectionGui != null){
+                this.SelectionGui.onClosed();
+            }
+
+            this.SelectionGui = gui;
+
+            if(this.SelectionGui != null){
+                this.SelectionGui.Entity = this.SelectedEntity;
+                this.SelectionGui.onOpened();
+            }
+
+            var renderer = EvolvinaryMain.get().RenderManager.CurrentGuiRenderer as GuiRendererIngame;
+            if(renderer != null){
+                renderer.openSubGui(gui == null ? null : gui.getRenderer());
+            }
+        }
+
         public override bool doesGameGoOn(){
-            return true;
+            return this.SelectionGui == null || this.SelectionGui.doesGameGoOn();
         }
 
         public override bool canMoveCamera(){
-            return true;
+            return this.SelectionGui == null || this.SelectionGui.canMoveCamera();
         }
 
         public virtual bool canSelectEntities(){
-            return true;
+            return this.SelectionGui == null || this.SelectionGui.canSelectEntities();
         }
 
         public override void onTryClose(){
@@ -94,7 +119,7 @@ namespace Evolvinary.Main.Guis{
                                     }
                                 }
                                 else{
-                                    this.SelectedEntity = null;
+                                    this.setSelectedEntity(null);
                                     toReturn = true;
                                 }
                             }
@@ -111,7 +136,7 @@ namespace Evolvinary.Main.Guis{
                                     }
 
                                     if(this.selectableEntities.Count > 0){
-                                        this.SelectedEntity = null;
+                                        this.setSelectedEntity(null);
                                         this.ButtonList.AddRange(this.selectableEntities.Keys);
 
                                         toReturn = true;
@@ -119,7 +144,7 @@ namespace Evolvinary.Main.Guis{
                                 }
                                 else{
                                     var entity = entities[0];
-                                    this.SelectedEntity = entity;
+                                    this.setSelectedEntity(entity);
 
                                     toReturn = true;
                                 }
@@ -152,6 +177,10 @@ namespace Evolvinary.Main.Guis{
                     button.Area.X = (int) pos.X;
                     button.Area.Y = (int) pos.Y;
                 }
+            }
+
+            if(this.SelectionGui != null){
+                this.SelectionGui.update(time);
             }
         }
     }

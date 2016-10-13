@@ -21,8 +21,10 @@ namespace Evolvinary.Main.Guis{
             var height = getUnscaledHeight();
             this.List = new ItemList(-4823, this, 65, height-250, 350, 250, this.CurrentPlayer.Inventory);
 
-            var invButton = this.ButtonList[1];
-            invButton.setRenderer(new ButtonRendererStatic(invButton, new Rectangle(286, 0, 30, 30)));
+            var renderer = this.ButtonList[1].getRenderer() as ButtonRendererStatic;
+            if(renderer != null){
+                renderer.setRenderRect(new Rectangle(286, 0, 30, 30));
+            }
         }
 
         public override void update(GameTime time){
@@ -40,7 +42,7 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override bool canSelectEntities(){
-            return this.List.getSelectedComponent() == null;
+            return this.List.getSelectedComponent() == null && base.canSelectEntities();
         }
 
         public override bool onMousePress(MouseSetting mouse){
@@ -85,7 +87,7 @@ namespace Evolvinary.Main.Guis{
         }
 
         public override bool canMoveCamera(){
-            return !this.List.isMouseOver();
+            return !this.List.isMouseOver() && base.canMoveCamera();
         }
 
         public override void onActionPerformed(Button button){

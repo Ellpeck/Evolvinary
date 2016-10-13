@@ -1,5 +1,7 @@
 ﻿using System;
 using Evolvinary.Helper;
+using Evolvinary.Main.Guis;
+using Evolvinary.Main.Guis.Selection;
 using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
@@ -88,6 +90,10 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public virtual bool isWalkable(){
             return true;
+        }
+
+        public virtual GuiSelection onSelected(GuiIngame gui){
+            return null;
         }
     }
 }

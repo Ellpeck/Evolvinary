@@ -1,5 +1,7 @@
 ﻿using System;
 using Evolvinary.Helper;
+using Evolvinary.Main.Guis;
+using Evolvinary.Main.Guis.Selection;
 using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Main.Worlds.Tiles;
 using Evolvinary.Rendering.Renderers.Entities;
@@ -55,6 +57,10 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public override bool isWalkable(){
             return false;
+        }
+
+        public override GuiSelection onSelected(GuiIngame gui){
+            return new GuiSelectionAnimal(gui.CurrentPlayer, 200, 50);
         }
     }
 }

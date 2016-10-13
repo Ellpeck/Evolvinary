@@ -33,8 +33,9 @@ namespace Evolvinary.Main.Guis.Lists{
         }
 
         public virtual void redefineAreas(){
-            var totalHeight = this.scrollOffset;
+            this.unselectAllExcept(null);
 
+            var totalHeight = this.scrollOffset;
             foreach(var component in this.Components){
                 component.redefineArea(new Rectangle(this.Area.X, this.Area.Y+totalHeight, this.Area.Width, component.Height));
                 component.IsVisible = totalHeight >= 0 && totalHeight < this.Area.Height;

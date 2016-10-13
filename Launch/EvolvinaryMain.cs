@@ -74,10 +74,10 @@ namespace Evolvinary.Launch{
                 this.CurrentGui.onClosed();
             }
 
-            this.RenderManager.openGui(gui.getRenderer());
-
             this.CurrentGui = gui;
             this.CurrentGui.onOpened();
+
+            this.RenderManager.openGui(gui.getRenderer());
         }
     }
 }

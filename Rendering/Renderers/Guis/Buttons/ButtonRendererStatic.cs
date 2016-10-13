@@ -3,9 +3,13 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Rendering.Renderers.Guis.Buttons{
     public class ButtonRendererStatic : ButtonRenderer{
-        protected readonly Rectangle RenderRect;
+        protected Rectangle RenderRect;
 
         public ButtonRendererStatic(Button button, Rectangle renderRect) : base(button){
+            this.RenderRect = renderRect;
+        }
+
+        public void setRenderRect(Rectangle renderRect){
             this.RenderRect = renderRect;
         }
 

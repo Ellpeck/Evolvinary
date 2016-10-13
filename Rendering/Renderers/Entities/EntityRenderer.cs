@@ -1,7 +1,6 @@
 ﻿using System;
 using Evolvinary.Launch;
 using Evolvinary.Main.Worlds.Entities;
-using Evolvinary.Rendering.Renderers.Guis;
 using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Rendering.Renderers.Entities{
@@ -15,10 +14,6 @@ namespace Evolvinary.Rendering.Renderers.Entities{
         }
 
         public virtual void Dispose(){
-        }
-
-        public virtual void drawOverlay(Entity entity, Vector2 posOnScreen, Vector2 mousePos, RenderManager manager, GameTime time){
-            GuiRenderer.drawHoveringOverlay(manager.Batch, "My coordinates in the world are "+entity.Pos+"!", (int) posOnScreen.X, (int) posOnScreen.Y, Color.White, 450, true);
         }
     }
 }
