@@ -40,7 +40,7 @@ namespace Evolvinary.Main.Guis{
 
         public override void onActionPerformed(Button button){
             if(button.Id == 0){
-                EvolvinaryMain.get().openGui(new GuiIngame(this.CurrentPlayer));
+                EvolvinaryMain.get().openGui(null);
             }
         }
     }

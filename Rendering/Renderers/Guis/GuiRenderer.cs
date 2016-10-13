@@ -4,6 +4,7 @@ using System.Linq;
 using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Guis;
+using Evolvinary.Main.Guis.Lists;
 using Evolvinary.Main.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,13 @@ namespace Evolvinary.Rendering.Renderers.Guis{
                 if(renderer != null){
                     renderer.draw(manager, time);
                 }
+            }
+        }
+
+        protected void drawList(ScrollList list, RenderManager manager, GameTime time){
+            var renderer = list.getRenderer();
+            if(renderer != null){
+                renderer.draw(manager, time);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Evolvinary.Helper;
 using Evolvinary.Launch;
 using Evolvinary.Main.Guis.Buttons;
@@ -36,36 +37,41 @@ namespace Evolvinary.Main.Guis{
             return new GuiRendererIngame(this);
         }
 
-        private void setSelectedEntity(Entity entity){
+        public void setSelectedEntity(Entity entity){
             this.SelectedEntity = entity;
             this.openSubGui(this.SelectedEntity == null ? null : this.SelectedEntity.onSelected(this));
         }
 
         public override void onActionPerformed(Button button){
-            this.setSelectedEntity(null);
-
             switch(button.Id){
                 case 0:
                     EvolvinaryMain.get().openGui(new GuiIngameMenu(this.CurrentPlayer));
                     break;
                 case 1:
-                    EvolvinaryMain.get().openGui(new GuiIngameInventory(this.CurrentPlayer));
+                    var inv = new GuiIngameInventory(this.CurrentPlayer);
+                    EvolvinaryMain.get().openGui(inv);
+                    inv.setSelectedEntity(this.SelectedEntity);
                     break;
                 case 3:
                     EvolvinaryMain.get().openGui(new GuiMap(this.CurrentPlayer));
                     break;
+                case 2:
+                    break;
                 default:
+                    this.setSelectedEntity(null);
+
                     if(this.selectableEntities.ContainsKey(button)){
                         var entity = this.selectableEntities[button];
                         this.setSelectedEntity(entity);
                     }
+
+                    foreach(var key in this.selectableEntities.Keys){
+                        this.ButtonList.Remove(key);
+                    }
+                    this.selectableEntities.Clear();
+
                     break;
             }
-
-            foreach(var key in this.selectableEntities.Keys){
-                this.ButtonList.Remove(key);
-            }
-            this.selectableEntities.Clear();
         }
 
         private void openSubGui(GuiSelection gui){
@@ -73,15 +79,15 @@ namespace Evolvinary.Main.Guis{
                 this.SelectionGui.onClosed();
             }
 
+            var renderer = EvolvinaryMain.get().RenderManager.CurrentGuiRenderer as GuiRendererIngame;
+            if(renderer != null){
+                renderer.openSubGui(gui == null ? null : gui.getRenderer());
+            }
+
             this.SelectionGui = gui;
 
             if(this.SelectionGui != null){
                 this.SelectionGui.onOpened();
-            }
-
-            var renderer = EvolvinaryMain.get().RenderManager.CurrentGuiRenderer as GuiRendererIngame;
-            if(renderer != null){
-                renderer.openSubGui(gui == null ? null : gui.getRenderer());
             }
         }
 
@@ -104,7 +110,7 @@ namespace Evolvinary.Main.Guis{
         public override bool onMousePress(MouseSetting mouse){
             if(!base.onMousePress(mouse)){
                 if(this.canSelectEntities()){
-                    if(mouse == InputProcessor.LeftMouse && this.canMoveCamera()){
+                    if(mouse == InputProcessor.LeftMouse){
                         if(this.selectableEntities.Count <= 0){
                             var mousePos = EvolvinaryMain.get().Camera.toWorldPos(InputProcessor.getMousePos().ToVector2());
 

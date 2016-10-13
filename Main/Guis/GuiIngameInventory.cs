@@ -4,6 +4,7 @@ using Evolvinary.Main.Guis.Buttons;
 using Evolvinary.Main.Guis.Lists;
 using Evolvinary.Main.Input;
 using Evolvinary.Main.Input.Setting;
+using Evolvinary.Main.Worlds.Entities;
 using Evolvinary.Rendering.Renderers.Guis;
 using Evolvinary.Rendering.Renderers.Guis.Buttons;
 using Microsoft.Xna.Framework;
@@ -34,7 +35,7 @@ namespace Evolvinary.Main.Guis{
 
         public override void onTryClose(){
             if(this.List.getSelectedComponent() == null){
-                EvolvinaryMain.get().openGui(null);
+                this.openIngame();
             }
             else{
                 this.List.unselectAllExcept(null);
@@ -90,11 +91,18 @@ namespace Evolvinary.Main.Guis{
             return !this.List.isMouseOver() && base.canMoveCamera();
         }
 
-        public override void onActionPerformed(Button button){
-            base.onActionPerformed(button);
+        private void openIngame(){
+            var ingame = new GuiIngame(this.CurrentPlayer);
+            EvolvinaryMain.get().openGui(ingame);
+            ingame.setSelectedEntity(this.SelectedEntity);
+        }
 
+        public override void onActionPerformed(Button button){
             if(button.Id == 1){
-                EvolvinaryMain.get().openGui(null);
+                this.openIngame();
+            }
+            else{
+                base.onActionPerformed(button);
             }
         }
     }
