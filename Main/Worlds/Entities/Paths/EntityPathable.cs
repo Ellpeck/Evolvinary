@@ -8,13 +8,23 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         private static Thread pathCalcThread;
 
         private Path path;
+        public bool MovementStopped;
 
         public override void update(GameTime time){
             base.update(time);
 
+            if(!this.MovementStopped){
+                    this.updatePath(time);
+            }
+            else{
+                this.setPath(null);
+            }
+        }
+
+        protected virtual void updatePath(GameTime time){
             if(this.path != null){
                 if(!this.path.update(time)){
-                    this.path = null;
+                    this.setPath(null);
                 }
             }
         }

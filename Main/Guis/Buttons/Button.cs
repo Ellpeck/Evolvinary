@@ -29,5 +29,9 @@ namespace Evolvinary.Main.Guis.Buttons{
         public bool isMouseOver(){
             return this.Area.Contains(InputProcessor.getMousePos().ToVector2()/Gui.Scale);
         }
+
+        public virtual void onPressed(){
+            this.Gui.onActionPerformed(this);
+        }
     }
 }

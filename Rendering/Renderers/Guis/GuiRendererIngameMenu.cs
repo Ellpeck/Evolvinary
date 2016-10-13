@@ -11,9 +11,9 @@ namespace Evolvinary.Rendering.Renderers.Guis{
             var gui = this.Gui as GuiIngameMenu;
             if(gui != null){
                 var amount = gui.ShouldClose ? 256-gui.FadeTime : gui.FadeTime;
-                var size = new Point(amount, this.Gui.SizeY);
+                var size = new Point(amount, this.Gui.Area.Width);
                 var source = new Rectangle(0, 0, amount, 128);
-                manager.Batch.Draw(GraphicsHelper.WhiteGradient, new Rectangle(this.Gui.Pos.ToPoint(), size), source, Color.Black);
+                manager.Batch.Draw(GraphicsHelper.WhiteGradient, new Rectangle(this.Gui.Area.Location, size), source, Color.Black);
             }
 
             base.draw(manager, time);

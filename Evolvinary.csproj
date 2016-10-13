@@ -48,6 +48,7 @@
     <Compile Include="Main\Guis\Buttons\Button.cs" />
     <Compile Include="Main\Guis\Buttons\ButtonRenderedRect.cs" />
     <Compile Include="Main\Guis\Buttons\ButtonTextOnly.cs" />
+    <Compile Include="Main\Guis\Buttons\ButtonToggleMovement.cs" />
     <Compile Include="Main\Guis\Gui.cs" />
     <Compile Include="Main\Guis\GuiIngame.cs" />
     <Compile Include="Main\Guis\GuiIngameInventory.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Main\Guis\Lists\ScrollList.cs" />
     <Compile Include="Main\Guis\Lists\ListComponent.cs" />
     <Compile Include="Main\Guis\Selection\GuiSelection.cs" />
-    <Compile Include="Main\Guis\Selection\GuiSelectionAnimal.cs" />
+    <Compile Include="Main\Guis\Selection\GuiSelectionCow.cs" />
     <Compile Include="Main\Input\Camera.cs" />
     <Compile Include="Main\Input\InputProcessor.cs" />
     <Compile Include="Main\Input\Setting\InputSetting.cs" />
@@ -112,7 +113,6 @@
     <Folder Include="Main\Guis" />
     <Folder Include="Main\Guis\" />
     <Folder Include="Main\" />
-    <Folder Include="Main\Guis\Buttons" />
     <Folder Include="Main\Input\" />
     <Folder Include="Main\Worlds" />
     <Folder Include="Main\Worlds\" />

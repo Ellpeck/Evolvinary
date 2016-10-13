@@ -76,7 +76,6 @@ namespace Evolvinary.Main.Guis{
             this.SelectionGui = gui;
 
             if(this.SelectionGui != null){
-                this.SelectionGui.Entity = this.SelectedEntity;
                 this.SelectionGui.onOpened();
             }
 

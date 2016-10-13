@@ -14,18 +14,14 @@ namespace Evolvinary.Main.Guis{
         public static readonly float Scale = 1.6F;
         public static readonly Matrix ScaleMatrix = Matrix.CreateScale(Scale);
 
-        public Vector2 Pos;
-        public int SizeX;
-        public int SizeY;
+        public Rectangle Area;
         public PlayerData CurrentPlayer;
 
         public List<Button> ButtonList = new List<Button>();
 
         public Gui(PlayerData currentPlayer, int posX, int posY, int sizeX, int sizeY){
             this.CurrentPlayer = currentPlayer;
-            this.Pos = new Vector2(posX, posY);
-            this.SizeX = sizeX;
-            this.SizeY = sizeY;
+            this.Area = new Rectangle(posX, posY, sizeX, sizeY);
         }
 
         public virtual void update(GameTime time){
@@ -47,6 +43,18 @@ namespace Evolvinary.Main.Guis{
             }
         }
 
+        public virtual void setPosition(Point newLoc){
+            var diff = this.Area.Location-newLoc;
+
+            if(diff != Point.Zero){
+                this.Area.Location = newLoc;
+
+                foreach(var button in this.ButtonList){
+                    button.Area.Location -= diff;
+                }
+            }
+        }
+
         public virtual void onKeyPress(KeySetting key){
             if(key == InputProcessor.Escape){
                 this.onTryClose();
@@ -58,7 +66,7 @@ namespace Evolvinary.Main.Guis{
                 for(var i = 0; i < this.ButtonList.Count; i++){
                     var button = this.ButtonList[i];
                     if(button.isMouseOver()){
-                        this.onActionPerformed(button);
+                        button.onPressed();
                         return true;
                     }
                 }
@@ -96,6 +104,10 @@ namespace Evolvinary.Main.Guis{
 
         public virtual void onTryClose(){
             EvolvinaryMain.get().openGui(null);
+        }
+
+        public bool isMouseOver(){
+            return this.Area.Contains(InputProcessor.getMousePos().ToVector2() / Scale);
         }
     }
 }

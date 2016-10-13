@@ -29,8 +29,8 @@ namespace Evolvinary.Main.Worlds.Entities{
             return "Cow";
         }
 
-        public override void update(GameTime time){
-            base.update(time);
+        protected override void updatePath(GameTime time){
+            base.updatePath(time);
 
             if(this.eatCooldown <= 0){
                 if(this.getPath() == null){
@@ -60,7 +60,7 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public override GuiSelection onSelected(GuiIngame gui){
-            return new GuiSelectionAnimal(gui.CurrentPlayer, 200, 50);
+            return new GuiSelectionCow(gui.CurrentPlayer, this);
         }
     }
 }

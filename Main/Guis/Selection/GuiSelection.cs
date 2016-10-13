@@ -8,16 +8,22 @@ namespace Evolvinary.Main.Guis.Selection{
     public abstract class GuiSelection : Gui{
         public Entity Entity;
 
-        public GuiSelection(PlayerData currentPlayer, int sizeX, int sizeY) : base(currentPlayer, 0, 0, sizeX, sizeY){
+        public GuiSelection(PlayerData currentPlayer, int sizeX, int sizeY, Entity entity) : base(currentPlayer, 0, 0, sizeX, sizeY){
+            this.Entity = entity;
+            this.updatePos();
         }
 
         public override void update(GameTime time){
             base.update(time);
-            this.Pos = EvolvinaryMain.get().Camera.toCameraPos(this.Entity.Pos) / Scale;
+            this.updatePos();
+        }
+
+        private void updatePos(){
+            this.setPosition((EvolvinaryMain.get().Camera.toCameraPos(this.Entity.Pos) / Scale).ToPoint());
         }
 
         public virtual bool canSelectEntities(){
-            return true;
+            return !this.isMouseOver();
         }
 
         public override GuiRenderer getRenderer(){

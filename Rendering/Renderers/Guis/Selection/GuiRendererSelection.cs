@@ -10,8 +10,8 @@ namespace Evolvinary.Rendering.Renderers.Guis.Selection{
         public override void draw(RenderManager manager, GameTime time){
             base.draw(manager, time);
 
-            var source = new Rectangle(0, 0, this.Gui.SizeX, this.Gui.SizeY);
-            manager.Batch.Draw(GraphicsHelper.TranslucentWhite, this.Gui.Pos, source, Color.Black);
+            var source = new Rectangle(0, 0, this.Gui.Area.Width, this.Gui.Area.Height);
+            manager.Batch.Draw(GraphicsHelper.TranslucentWhite, this.Gui.Area, source, Color.Black);
         }
     }
 }
