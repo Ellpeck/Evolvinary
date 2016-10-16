@@ -14,7 +14,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             base.update(time);
 
             if(!this.MovementStopped){
-                    this.updatePath(time);
+                this.updatePath(time);
             }
             else{
                 this.setPath(null);

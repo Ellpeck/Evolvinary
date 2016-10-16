@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities.Paths{
     public class Path{
-
         private readonly bool doesLoop;
         private readonly bool continueTryingWhenFailed;
         private readonly EntityPathable entity;
@@ -42,31 +41,34 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
         public bool update(GameTime time){
             if(this.currentTarget >= 0){
+                var speed = this.entity.getSpeed();
+
                 var target = this.getCurrentWaypoint();
-
                 if(target.IsCalced){
-                    var nextGoal = target.getNextPos();
-                    var speed = this.entity.getSpeed();
-                    var distance = this.entity.Pos-nextGoal;
-
-                    if(MathHelp.isCloseTo(this.entity.Pos, nextGoal, speed)){
+                    if(MathHelp.isCloseTo(this.entity.Pos, target.getNextPos(), speed)){
                         if(!this.goOn(target, true)){
                             return false;
                         }
                     }
-                    else{
-                        var moveX = 0F;
-                        if(!MathHelp.isInbetween(distance.X, -speed, speed)){
-                            moveX = distance.X < 0 ? speed : -speed;
-                        }
+                }
 
-                        var moveY = 0F;
-                        if(!MathHelp.isInbetween(distance.Y, -speed, speed)){
-                            moveY = distance.Y < 0 ? speed : -speed;
-                        }
+                //In case the waypoint changed from the goOn method called above
+                target = this.getCurrentWaypoint();
+                if(target.IsCalced){
+                    var nextGoal = target.getNextPos();
+                    var distance = this.entity.Pos-nextGoal;
 
-                        this.entity.move(moveX, moveY);
+                    var moveX = 0F;
+                    if(!MathHelp.isInbetween(distance.X, -speed, speed)){
+                        moveX = distance.X < 0 ? speed : -speed;
                     }
+
+                    var moveY = 0F;
+                    if(!MathHelp.isInbetween(distance.Y, -speed, speed)){
+                        moveY = distance.Y < 0 ? speed : -speed;
+                    }
+
+                    this.entity.move(moveX, moveY);
                 }
 
                 if(target.Failed){

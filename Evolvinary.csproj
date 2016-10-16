@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\BoundBox.cs" />
+    <Compile Include="Helper\Direction.cs" />
     <Compile Include="Helper\GraphicsHelper.cs" />
     <Compile Include="Helper\MathHelp.cs" />
     <Compile Include="Launch\EvolvinaryMain.cs" />
@@ -85,8 +86,8 @@
     <Compile Include="Main\Worlds\Entities\Paths\SubWaypoint.cs" />
     <Compile Include="Main\Worlds\Tiles\Tile.cs" />
     <Compile Include="Main\Worlds\World.cs" />
+    <Compile Include="Rendering\Renderers\Entities\AnimatedSpriteEntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Entities\EntityRenderer.cs" />
-    <Compile Include="Rendering\Renderers\Entities\SingleTextureEntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Entities\StaticEntityRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRenderer.cs" />
     <Compile Include="Rendering\Renderers\Guis\Buttons\ButtonRendererStatic.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Rendering\RenderManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helper" />
     <Folder Include="Main" />
     <Folder Include="Main\Guis" />
     <Folder Include="Main\Guis\" />
@@ -121,6 +121,7 @@
     <Folder Include="Rendering\" />
     <Folder Include="Rendering\Renderers" />
     <Folder Include="Rendering\Renderers\" />
+    <Folder Include="Rendering\Renderers\Entities" />
     <Folder Include="Rendering\Renderers\Guis\" />
   </ItemGroup>
   <ItemGroup>

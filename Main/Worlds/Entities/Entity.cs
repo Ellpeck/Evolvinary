@@ -2,7 +2,6 @@
 using Evolvinary.Helper;
 using Evolvinary.Main.Guis;
 using Evolvinary.Main.Guis.Selection;
-using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
 
@@ -12,6 +11,11 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public World World;
         public Vector2 Pos;
+        public Direction Facing;
+
+        private float lastX;
+        private float lastY;
+        public bool IsMoving;
 
         public BoundBox BoundingBox;
         public BoundBox MouseSelectBox;
@@ -41,16 +45,28 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public void move(Vector2 move){
-            this.setPosition(this.Pos+move);
+            var facingToSet = Direction.Down;
+            if(move.X > 0){
+                facingToSet = Direction.Right;
+            }
+            else if(move.X < 0){
+                facingToSet = Direction.Left;
+            }
+            else if(move.Y < 0){
+                facingToSet = Direction.Up;
+            }
+
+            this.setPosition(this.Pos+move, facingToSet);
         }
 
         public void move(float x, float y){
             this.move(new Vector2(x, y));
         }
 
-        public void setPosition(Vector2 pos){
+        public void setPosition(Vector2 pos, Direction facing){
             this.switchChunk(pos, false);
             this.Pos = pos;
+            this.Facing = facing;
         }
 
         public void setWorld(World world){
@@ -60,7 +76,7 @@ namespace Evolvinary.Main.Worlds.Entities{
 
         public void set(World world, Vector2 pos){
             this.setWorld(world);
-            this.setPosition(pos);
+            this.setPosition(pos, Direction.Up);
         }
 
         private void switchChunk(Vector2 newPos, bool force){
@@ -78,6 +94,15 @@ namespace Evolvinary.Main.Worlds.Entities{
         }
 
         public virtual void update(GameTime time){
+            if(this.lastX != this.Pos.X || this.lastY != this.Pos.Y){
+                this.IsMoving = true;
+
+                this.lastX = this.Pos.X;
+                this.lastY = this.Pos.Y;
+            }
+            else{
+                this.IsMoving = false;
+            }
         }
 
         public virtual string getDisplayName(){

@@ -1,20 +1,22 @@
 ﻿using System;
 using Evolvinary.Helper;
+using Evolvinary.Launch;
 using Evolvinary.Main.Guis;
 using Evolvinary.Main.Guis.Selection;
 using Evolvinary.Main.Worlds.Entities.Paths;
 using Evolvinary.Main.Worlds.Tiles;
 using Evolvinary.Rendering.Renderers.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Evolvinary.Main.Worlds.Entities{
     public class EntityCow : EntityPathable{
         private int eatCooldown;
 
-        private static readonly EntityRenderer Renderer = new StaticEntityRenderer(new Rectangle(48, 0, 48, 32));
+        private static readonly Texture2D Sprite = EvolvinaryMain.loadContent<Texture2D>("Textures/Entities/Cow");
 
         public EntityCow(){
-            this.attachRenderer(Renderer);
+            this.attachRenderer(new AnimatedSpriteEntityRenderer(Sprite, 32, 28, 4, 0.2));
         }
 
         public override BoundBox getMouseSelectBox(){
@@ -53,10 +55,6 @@ namespace Evolvinary.Main.Worlds.Entities{
                 }
             }
             this.eatCooldown = 200+this.Rand.Next(200);
-        }
-
-        public override bool isWalkable(){
-            return false;
         }
 
         public override GuiSelection onSelected(GuiIngame gui){
