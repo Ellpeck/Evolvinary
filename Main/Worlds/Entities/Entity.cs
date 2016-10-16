@@ -120,5 +120,13 @@ namespace Evolvinary.Main.Worlds.Entities{
         public virtual GuiSelection onSelected(GuiIngame gui){
             return null;
         }
+
+        public virtual bool canSelect(){
+            return false;
+        }
+
+        public override string ToString(){
+            return this.getDisplayName()+"@"+this.Pos;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.Xna.Framework;
 
@@ -58,18 +59,27 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         }
 
         private static void calcPaths(){
-            var counter = 0;
+            var iterationsForOne = 0;
+            var pauseCounter = 0;
             while(PathsForCalcing.Count > 0){
-                counter++;
+                pauseCounter++;
+
+                iterationsForOne++;
+                var failed = iterationsForOne >= 30000;
 
                 var path = PathsForCalcing[0];
-                if(path.calcAll()){
+                if(path.calcAll() || failed){
                     PathsForCalcing.Remove(path);
+                    iterationsForOne = 0;
+
+                    if(failed){
+                        Console.WriteLine("Couldn't calculate Path for "+path+" with entity "+path.Entity+"!");
+                    }
                 }
 
-                if(counter >= 50){
+                if(pauseCounter >= 30){
                     Thread.Sleep(10);
-                    counter = 0;
+                    pauseCounter = 0;
                 }
             }
         }

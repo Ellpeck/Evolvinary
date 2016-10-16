@@ -60,5 +60,9 @@ namespace Evolvinary.Main.Worlds.Entities{
         public override GuiSelection onSelected(GuiIngame gui){
             return new GuiSelectionCow(gui.CurrentPlayer, this);
         }
+
+        public override bool canSelect(){
+            return true;
+        }
     }
 }

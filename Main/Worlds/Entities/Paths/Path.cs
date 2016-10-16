@@ -8,7 +8,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
     public class Path{
         private readonly bool doesLoop;
         private readonly bool continueTryingWhenFailed;
-        private readonly EntityPathable entity;
+        public readonly EntityPathable Entity;
 
         private int currentTarget;
         private readonly List<PathWaypoint> waypoints = new List<PathWaypoint>();
@@ -19,7 +19,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         }
 
         public Path(EntityPathable entity, IEnumerable<PathWaypoint> waypoints, bool doesLoop, bool continueTryingWhenFailed){
-            this.entity = entity;
+            this.Entity = entity;
             this.doesLoop = doesLoop;
             this.continueTryingWhenFailed = continueTryingWhenFailed;
 
@@ -28,9 +28,9 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
         public bool calcAll(){
             var currWaypoint = this.waypoints[this.calcAt];
-            var lastWaypoint = this.calcAt <= 0 ? this.entity.Pos : this.waypoints[this.calcAt-1].Goal;
+            var lastWaypoint = this.calcAt <= 0 ? this.Entity.Pos : this.waypoints[this.calcAt-1].Goal;
 
-            currWaypoint.updateCalcing(lastWaypoint, this.entity, this);
+            currWaypoint.updateCalcing(lastWaypoint, this.Entity, this);
 
             if(currWaypoint.IsCalced || currWaypoint.Failed){
                 this.calcAt++;
@@ -41,11 +41,11 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
         public bool update(GameTime time){
             if(this.currentTarget >= 0){
-                var speed = this.entity.getSpeed();
+                var speed = this.Entity.getSpeed();
 
                 var target = this.getCurrentWaypoint();
                 if(target.IsCalced){
-                    if(MathHelp.isCloseTo(this.entity.Pos, target.getNextPos(), speed)){
+                    if(MathHelp.isCloseTo(this.Entity.Pos, target.getNextPos(), speed)){
                         if(!this.goOn(target, true)){
                             return false;
                         }
@@ -56,7 +56,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
                 target = this.getCurrentWaypoint();
                 if(target.IsCalced){
                     var nextGoal = target.getNextPos();
-                    var distance = this.entity.Pos-nextGoal;
+                    var distance = this.Entity.Pos-nextGoal;
 
                     var moveX = 0F;
                     if(!MathHelp.isInbetween(distance.X, -speed, speed)){
@@ -68,7 +68,7 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
                         moveY = distance.Y < 0 ? speed : -speed;
                     }
 
-                    this.entity.move(moveX, moveY);
+                    this.Entity.move(moveX, moveY);
                 }
 
                 if(target.Failed){
@@ -103,6 +103,10 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
 
         public PathWaypoint getCurrentWaypoint(){
             return this.waypoints[this.currentTarget];
+        }
+
+        public override string ToString(){
+            return "Path@"+this.waypoints;
         }
     }
 }

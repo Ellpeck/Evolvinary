@@ -134,7 +134,7 @@ namespace Evolvinary.Main.Guis{
                             if(entities.Count > 0){
                                 if(entities.Count > 1){
                                     foreach(var entity in entities){
-                                        if(entity.MouseSelectBox != BoundBox.Empty){
+                                        if(entity.canSelect() && entity.MouseSelectBox != BoundBox.Empty){
                                             var pos = EvolvinaryMain.get().Camera.toCameraPos(entity.Pos) / Scale;
                                             this.selectableEntities.Add(new ButtonTextOnly(this.selectableEntities.Count-102834, this, (int) pos.X, (int) pos.Y, 30, 10, entity.getDisplayName(), 1F), entity);
                                         }
@@ -149,9 +149,11 @@ namespace Evolvinary.Main.Guis{
                                 }
                                 else{
                                     var entity = entities[0];
-                                    this.setSelectedEntity(entity);
+                                    if(entity.canSelect()){
+                                        this.setSelectedEntity(entity);
 
-                                    toReturn = true;
+                                        toReturn = true;
+                                    }
                                 }
                             }
 

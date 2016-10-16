@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds{
     public class Chunk{
-        public static readonly int Size = 32;
+        public static readonly int Size = 16;
 
         public World World;
         public int PosX;

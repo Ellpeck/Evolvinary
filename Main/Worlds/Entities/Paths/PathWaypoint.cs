@@ -147,5 +147,9 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
         public Vector2 getNextPos(){
             return this.pointsToGoTo[this.currentPointAt];
         }
+
+        public override string ToString(){
+            return "PathWaypoint@"+this.Goal+", Calcing? "+this.IsCurrentlyCalcing+", Failed? "+this.Failed+", Success? "+this.IsCalced;
+        }
     }
 }
