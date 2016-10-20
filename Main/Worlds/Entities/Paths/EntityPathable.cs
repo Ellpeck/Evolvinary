@@ -58,6 +58,10 @@ namespace Evolvinary.Main.Worlds.Entities.Paths{
             return 0.03F;
         }
 
+        public override bool canSelect(){
+            return true;
+        }
+
         private static void calcPaths(){
             var iterationsForOne = 0;
             var pauseCounter = 0;

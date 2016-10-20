@@ -8,6 +8,7 @@ namespace Evolvinary.Main{
             this.Inventory.add(new Stack(GameData.ItemGrass, 6000));
             this.Inventory.add(new Stack(GameData.ItemSilo, 15));
             this.Inventory.add(new Stack(GameData.ItemCow, 10));
+            this.Inventory.add(new Stack(GameData.ItemWorker, 10));
         }
     }
 }

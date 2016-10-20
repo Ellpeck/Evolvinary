@@ -78,8 +78,10 @@
     <Compile Include="Main\Worlds\Entities\Entity.cs" />
     <Compile Include="Main\Worlds\Entities\EntityCow.cs" />
     <Compile Include="Main\Worlds\Entities\EntityGrassTuft.cs" />
+    <Compile Include="Main\Worlds\Entities\EntityHuman.cs" />
     <Compile Include="Main\Worlds\Entities\EntityPlaceable.cs" />
     <Compile Include="Main\Worlds\Entities\EntitySilo.cs" />
+    <Compile Include="Main\Worlds\Entities\EntityWorker.cs" />
     <Compile Include="Main\Worlds\Entities\Paths\EntityPathable.cs" />
     <Compile Include="Main\Worlds\Entities\Paths\Path.cs" />
     <Compile Include="Main\Worlds\Entities\Paths\PathWaypoint.cs" />

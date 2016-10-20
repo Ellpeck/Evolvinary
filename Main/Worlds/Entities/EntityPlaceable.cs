@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework;
 
 namespace Evolvinary.Main.Worlds.Entities{
     public class EntityPlaceable : Entity{
-        public PlayerData PlacerPlayer;
+        public PlayerData OwningPlayer;
 
         public virtual void place(PlayerData placerPlayer, World world, Vector2 pos){
-            this.PlacerPlayer = placerPlayer;
+            this.OwningPlayer = placerPlayer;
             this.set(world, pos);
         }
 
